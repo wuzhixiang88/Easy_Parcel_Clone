@@ -1,5 +1,27 @@
 {
+  "name": "easy_parcel_clone",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "build": "cd client && npm install && npm run build",
+    "start": "node server.js"
+  },
+  "devDependencies": {},
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
   "dependencies": {
-    "express": "^4.17.1"
-  }
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "mongoose": "^6.0.9"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wuzhixiang88/Easy_Parcel_Clone.git"
+  },
+  "bugs": {
+    "url": "https://github.com/wuzhixiang88/Easy_Parcel_Clone/issues"
+  },
+  "homepage": "https://github.com/wuzhixiang88/Easy_Parcel_Clone#readme"
 }
