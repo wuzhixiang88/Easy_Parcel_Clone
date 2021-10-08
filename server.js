@@ -1,9 +1,9 @@
 require('dotenv').config();
 
-
 const express = require('express');
 const mongoose = require('mongoose');
-
+const passport = require('passport');
+const strategy = require('./passport');
 
 //Controller Routers
 const homepageController = require("./controllers/homepageController");
@@ -28,9 +28,13 @@ dbConnection.on("disconnected", () => console.log("The database connection has e
 const app = express();
 
 
+passport.use("customer-jwt", strategy.customerStrategy);
+passport.use("deliveryman-jwt", strategy.deliverymanStrategy);
+
 //Middleware
 app.use(express.json());
 app.use(express.urlencoded({extended: true }))
+app.use(passport.initialize())
 
 //Routers
 app.use("/api",homepageController);
