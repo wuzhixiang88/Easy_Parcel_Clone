@@ -36,3 +36,23 @@
     transform: rotate(360deg);
   }
 }
+
+#quote-input {
+  text-align: right;
+  width: 500px;
+  background-color: fuchsia;
+  margin: auto;
+  padding-right: 250px;
+}
+
+#quote-show {
+  text-align: center;
+  width: 800px;
+  background-color: orange;
+  margin: auto;
+  margin-top: 50px;
+}
+
+#quote-table {
+  text-align: center;
+}
