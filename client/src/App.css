@@ -38,11 +38,10 @@
 }
 
 #quote-input {
-  text-align: right;
+  text-align: center;
   width: 500px;
   background-color: fuchsia;
   margin: auto;
-  padding-right: 250px;
 }
 
 #quote-show {

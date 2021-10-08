@@ -2,8 +2,8 @@ import React, { useState } from "react";
 
 //distance to be taken from API (distance between 2 postcodes)
 //standardRate is a constant set by us
-const standardRate = 0.5;
-const standardSpeed = 5;
+const standardRate = 0.3;
+const standardSpeed = 1.5;
 // const quotation = distance * parcelWeight * standardRate;
 // const duration = distance * standardSpeed;
 
@@ -14,34 +14,46 @@ const QuotePage = () => {
   const [duration, setDuration] = useState(0);
 
   const handleDistanceInput = (e) => {
+    console.log(e.target.value);
     setDistance(e.target.value);
   };
 
   const handleParcelWeightInput = (e) => {
+    console.log(e.target.value);
     setParcelWeight(e.target.value);
   };
 
   const handleClickRequestQuotation = () => {
-    console.log("quotation requested");
-    setQuotation(parcelWeight * standardRate);
+    console.log(distance, parcelWeight);
+    setQuotation(distance * (parcelWeight / 1.2) * standardRate);
     setDuration(distance * standardSpeed);
   };
 
   return (
     <div>
       <div id="quote-input">
-        <h1>Quote Page</h1>
-        <label for="Origin">Origin Postcode</label>
-        <input type="text" />
+        <h3>Get A Quote Now!</h3>
+
+        <input type="text" placeholder="Origin Postcode" />
         <br />
-        <label for="Destination">Destination Postcode</label>
-        <input type="text" />
+
+        <input type="text" placeholder="Destination Postcode" />
         <br />
-        <label for="Distance">Distance (testing)</label>
-        <input type="number" onChange={handleDistanceInput} />
+
+        <input
+          type="number"
+          placeholder="Distance (testing)"
+          value={distance}
+          onChange={handleDistanceInput}
+        />
         <br />
-        <label for="Weight">Parcel Weight in KG</label>
-        <input type="number" onChange={handleParcelWeightInput} />
+
+        <input
+          type="number"
+          placeholder="Parcel Weight (KG)"
+          value={parcelWeight}
+          onChange={handleParcelWeightInput}
+        />
         <br />
         <button onClick={handleClickRequestQuotation}>Quote</button>
         <br />
@@ -61,6 +73,7 @@ const QuotePage = () => {
             <td>${quotation}</td>
           </tr>
         </table>
+        <button>Proceed</button>
       </div>
     </div>
   );
