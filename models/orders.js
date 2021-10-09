@@ -3,6 +3,7 @@ const { Schema } = mongoose;
 
 const orderSchema = new Schema(
     {
+        user: { type: Schema.Types.ObjectId, ref: "User" },
         weightKg: Number,
         status: String,
     }
