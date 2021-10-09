@@ -5,6 +5,9 @@ const Navbar = () => {
   return (
     <ul>
       <li>
+        <Link to="/">HomePage</Link>
+      </li>
+      <li>
         <Link to="/customer">Customer</Link>
       </li>
       <li>
