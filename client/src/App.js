@@ -1,19 +1,19 @@
-import './App.css';
-import { Route, Switch } from 'react-router';
-import Navbar from './components/Navbar.jsx';
-import QuotePage from './pages/QuotePage.jsx';
-import DetailsPage from './pages/DetailsPage.jsx';
+import "./App.css";
+import { Route, Switch } from "react-router";
+import Navbar from "./components/Navbar.jsx";
+import CustomerPage from "./pages/CustomerPage";
+import DeliverymanPage from "./pages/DeliverymanPage";
 
 function App() {
   return (
     <div className="App">
       <Navbar />
       <Switch>
-        <Route path="/quote" >
-          <QuotePage />
+        <Route path="/customer">
+          <CustomerPage />
         </Route>
-        <Route path="/details" >
-          <DetailsPage />
+        <Route path="/deliveryman">
+          <DeliverymanPage />
         </Route>
       </Switch>
     </div>
