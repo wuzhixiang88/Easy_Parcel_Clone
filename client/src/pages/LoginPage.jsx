@@ -18,7 +18,7 @@ const LoginPage = () => {
   };
 
   const handleClickLogin = async () => {
-    const response = await fetch("/api", {
+    const response = await fetch("/api/users/login", {
       method: "POST",
       headers: {
         "content-type": "application/json",
