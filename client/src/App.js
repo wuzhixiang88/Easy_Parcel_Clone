@@ -4,8 +4,6 @@ import Navbar from "./components/Navbar.jsx";
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
-import QuotePage from "./pages/QuotePage.jsx";
-import DetailsPage from "./pages/DetailsPage.jsx";
 import CustomerPage from "./pages/CustomerPage";
 import DeliverymanPage from "./pages/DeliverymanPage";
 
@@ -23,11 +21,6 @@ function App() {
         <Route path="/signup">
           <RegisterPage />
         </Route>
-        <Route path="/quote">
-          <QuotePage />
-        </Route>
-        <Route path="/details">
-          <DetailsPage />
         <Route path="/customer">
           <CustomerPage />
         </Route>
