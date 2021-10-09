@@ -1,36 +1,31 @@
 const passportJwt = require('passport-jwt');
-const customerModel = require('./models/customers');
-const deliverymanModel = require("./models/deliverymen")
-const { JwtStrategy, ExtractJwt } = passportJwt;
+const userModel = require("./models/users")
+const { Strategy } = passportJwt;
+
+const cookieExtractor = (req) => {
+    let token = null;
+    if (req && req.cookies)
+    {
+        token = req.cookies.token;
+    }
+    return token;
+};
+
 
 const options = {
     secretOrKey: process.env.SECRET_KEY_JWT,
-    jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken
+    jwtFromRequest: cookieExtractor,
 }
 
-const customerStrategy = new JwtStrategy(options, async (payload, done) => {
-    const customer = customerModel.findOne({ username: payload.username })
+const userStrategy = new Strategy(options, async (payload, done) => {
+    const user = userModel.findOne({ username: payload.username })
 
     if (err) {
         return done(err, false)
     }
-    if (customer) {
+    if (user) {
         return done(null, {username: customer.username})
     }
 });
 
-const deliverymanStrategy = new JwtStrategy(options, async (payload, done) => {
-    const deliveryman = deliverymanModel.findOne({ username: payload.username })
-
-    if (err) {
-        return done(err, false)
-    }
-    if (customer) {
-        return done(null, {username: deliveryman.username})
-    }
-});
-
-module.exports = {
-    customerStrategy,
-    deliverymanStrategy
-}
+module.exports = userStrategy;

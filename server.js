@@ -9,6 +9,7 @@ const strategy = require('./passport');
 const homepageController = require("./controllers/homepageController");
 const dashboardController = require("./controllers/dashboardController");
 const userController = require("./controllers/userController");
+const cookieParser = require('cookie-parser');
 
 
 const mongoURL = process.env.MONGODB_URL;
@@ -27,19 +28,18 @@ dbConnection.on("disconnected", () => console.log("The database connection has e
 
 const app = express();
 
-
-passport.use("customer-jwt", strategy.customerStrategy);
-passport.use("deliveryman-jwt", strategy.deliverymanStrategy);
+passport.use(strategy);
 
 //Middleware
 app.use(express.json());
 app.use(express.urlencoded({extended: true }))
 app.use(passport.initialize())
+app.use(cookieParser())
 
 //Routers
-app.use("/api",homepageController);
+// app.use("/api",homepageController);
 app.use("/api/users", userController);
-app.use("/api/dashboard", dashboardController);
+// app.use("/api/dashboard", dashboardController);
 
 
 const PORT = process.env.PORT
