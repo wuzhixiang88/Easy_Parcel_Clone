@@ -5,6 +5,8 @@ const RegisterPage = () => {
   const [registerDetails, setRegisterDetails] = useState({
     username: "",
     password: "",
+    confirmpw: "",
+    email: "",
   });
 
   const handleInputChange = (e) => {
@@ -18,7 +20,7 @@ const RegisterPage = () => {
   };
 
   const handClickRegister = async () => {
-    await fetch("/api", {
+    await fetch("/api/users/signup", {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -26,16 +28,17 @@ const RegisterPage = () => {
       body: JSON.stringify({
         username: registerDetails.username,
         password: registerDetails.password,
+        confirmpw: registerDetails.confirmpw,
+        email: registerDetails.email,
       }),
     });
-
-    alert("User account successfully created");
   };
 
   return (
     <>
       <div>
         <input
+          type="text"
           name="username"
           placeholder="Username"
           value={registerDetails.username}
@@ -48,6 +51,24 @@ const RegisterPage = () => {
           name="password"
           placeholder="Password"
           value={registerDetails.password}
+          onChange={handleInputChange}
+        />
+      </div>
+      <div>
+        <input
+          type="password"
+          name="confirmpw"
+          placeholder="Confirm Password"
+          value={registerDetails.confirmpw}
+          onChange={handleInputChange}
+        />
+      </div>
+      <div>
+        <input
+          type="text"
+          name="email"
+          placeholder="Email Address"
+          value={registerDetails.email}
           onChange={handleInputChange}
         />
       </div>
