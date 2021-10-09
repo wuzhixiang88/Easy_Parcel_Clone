@@ -1,6 +1,13 @@
 import React from "react";
 
-const ShowQuote = () => {
+const ShowQuote = (props) => {
+  const handleClickProceedQuotation = () => {
+    props.setShowPage({
+      showQuote: true,
+      showBookingDetails: true,
+    });
+  };
+
   return (
     <div id="showquote">
       <h3>show quote component</h3>
@@ -14,11 +21,11 @@ const ShowQuote = () => {
         <tr>
           <td>JKZ Transportation</td>
           <td>Door-to-Door</td>
-          <td>--duration-- mins</td>
-          <td>$--quotation--</td>
+          <td>{props.duration} mins</td>
+          <td>${props.quotation}</td>
         </tr>
       </table>
-      <button>Proceed</button>
+      <button onClick={handleClickProceedQuotation}>Proceed</button>
     </div>
   );
 };

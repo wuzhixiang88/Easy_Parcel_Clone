@@ -7,11 +7,9 @@ const standardSpeed = 1.5;
 // const quotation = distance * parcelWeight * standardRate;
 // const duration = distance * standardSpeed;
 
-const Quote = () => {
+const Quote = (props) => {
   const [distance, setDistance] = useState(0);
   const [parcelWeight, setParcelWeight] = useState(0);
-  const [quotation, setQuotation] = useState(0);
-  const [duration, setDuration] = useState(0);
 
   const handleDistanceInput = (e) => {
     console.log(e.target.value);
@@ -24,9 +22,9 @@ const Quote = () => {
   };
 
   const handleClickRequestQuotation = () => {
-    console.log(distance, parcelWeight);
-    setQuotation(distance * (parcelWeight / 1.2) * standardRate);
-    setDuration(distance * standardSpeed);
+    props.setShowPage({ ...props.showPage, showQuote: true });
+    props.setQuotation(distance * (parcelWeight / 1.2) * standardRate);
+    props.setDuration(distance * standardSpeed);
   };
 
   return (
