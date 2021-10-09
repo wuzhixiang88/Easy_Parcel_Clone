@@ -7,11 +7,9 @@ const standardSpeed = 1.5;
 // const quotation = distance * parcelWeight * standardRate;
 // const duration = distance * standardSpeed;
 
-const QuotePage = () => {
+const Quote = (props) => {
   const [distance, setDistance] = useState(0);
   const [parcelWeight, setParcelWeight] = useState(0);
-  const [quotation, setQuotation] = useState(0);
-  const [duration, setDuration] = useState(0);
 
   const handleDistanceInput = (e) => {
     console.log(e.target.value);
@@ -24,15 +22,15 @@ const QuotePage = () => {
   };
 
   const handleClickRequestQuotation = () => {
-    console.log(distance, parcelWeight);
-    setQuotation(distance * (parcelWeight / 1.2) * standardRate);
-    setDuration(distance * standardSpeed);
+    props.setShowPage({ ...props.showPage, showQuote: true });
+    props.setQuotation(distance * (parcelWeight / 1.2) * standardRate);
+    props.setDuration(distance * standardSpeed);
   };
 
   return (
     <div>
-      <div id="quote-input">
-        <h3>Get A Quote Now!</h3>
+      <div id="quote">
+        <h3>quote component</h3>
 
         <input type="text" placeholder="Origin Postcode" />
         <br />
@@ -58,25 +56,8 @@ const QuotePage = () => {
         <button onClick={handleClickRequestQuotation}>Quote</button>
         <br />
       </div>
-      <div id="quote-show">
-        <table id="quote-table">
-          <tr>
-            <th>Company</th>
-            <th>Service Type</th>
-            <th>Estimated Duration</th>
-            <th>Quotation</th>
-          </tr>
-          <tr>
-            <td>JKZ Transportation</td>
-            <td>Door-to-Door</td>
-            <td>{duration} mins</td>
-            <td>${quotation}</td>
-          </tr>
-        </table>
-        <button>Proceed</button>
-      </div>
     </div>
   );
 };
 
-export default QuotePage;
+export default Quote;
