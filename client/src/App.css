@@ -36,3 +36,18 @@
     transform: rotate(360deg);
   }
 }
+
+#showquote,
+#quote-table {
+  text-align: center;
+  margin: auto;
+  background-color: fuchsia;
+}
+
+#quote {
+  background-color: greenyellow;
+}
+
+#bookingdetails {
+  background-color: lightcoral;
+}
