@@ -3,9 +3,31 @@ const { Schema } = mongoose;
 
 const orderSchema = new Schema(
     {
-        user: { type: Schema.Types.ObjectId, ref: "User" },
-        weightKg: Number,
+        customer: { type: Schema.Types.ObjectId, ref: "User" },
+        deliveryman: { type: Schema.Types.ObjectId, ref: "User" },
         status: String,
+        orderDetails: {
+            content: String,
+            weightKg: Number,
+            fragile: Boolean,
+            price: Number
+        },
+        senderDetails: {
+            name: String,
+            emailAddress: String,
+            contactNumber: String,
+            address: String,
+            unitNum: String,
+            postalCode: String
+        },
+        receiverDetails: {
+            name: String,
+            emailAddress: String,
+            contactNumber: String,
+            address: String,
+            unitNum: String,
+            postalCode: String
+        }
     }
 );
 

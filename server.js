@@ -6,7 +6,6 @@ const passport = require('passport');
 const strategy = require('./passport');
 
 //Controller Routers
-const homepageController = require("./controllers/homepageController");
 const dashboardController = require("./controllers/dashboardController");
 const userController = require("./controllers/userController");
 const cookieParser = require('cookie-parser');
@@ -37,9 +36,8 @@ app.use(passport.initialize())
 app.use(cookieParser())
 
 //Routers
-// app.use("/api",homepageController);
 app.use("/api/users", userController);
-// app.use("/api/dashboard", dashboardController);
+app.use("/api/dashboard", dashboardController);
 
 
 const PORT = process.env.PORT
