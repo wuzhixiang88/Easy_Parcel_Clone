@@ -75,9 +75,13 @@ controller.post("/login",
         res.cookie('token', token, { httpONly: true, sameSite: "strict", secure: true })
 
         res.json({
-            token: token
+            token
         });
     }
 )
+
+controller.get("/logout", (req, res) => {
+    res.clearCookie("token")
+})
 
 module.exports = controller;

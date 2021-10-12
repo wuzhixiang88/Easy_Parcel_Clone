@@ -3,8 +3,8 @@ const { Schema } = mongoose;
 
 const orderSchema = new Schema(
     {
-        customer: { type: Schema.Types.ObjectId, ref: "User" },
-        deliveryman: { type: Schema.Types.ObjectId, ref: "User" },
+        customer: String,
+        deliveryman: String,
         status: String,
         orderDetails: {
             content: String,
