@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 const BookingDetails = () => {
   const [senderDetails, setSenderDetails] = useState({
@@ -53,7 +54,7 @@ const BookingDetails = () => {
   };
 
   const handleSubmit = async (e) => {
-    // to post to server database for order details
+    // post to server database for order details
   };
 
   return (
@@ -170,10 +171,14 @@ const BookingDetails = () => {
       </div>
 
       <div>
-        <button onClick={handleSubmit}>Confirm Order</button>
+        <Link to="/customerinbox">
+          <button onClick={handleSubmit}>Confirm Order</button>
+        </Link>
       </div>
     </div>
   );
 };
 
 export default BookingDetails;
+
+<Link to="/customerinbox" />;
