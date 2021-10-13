@@ -57,9 +57,8 @@
 .nav-main {
   text-align: left;
   display: inline-block;
-  padding-left: 50px;
 
-  margin-left: 50px;
+  margin-right: 50px;
 }
 
 #main-nav-bar {
@@ -77,13 +76,16 @@
 }
 
 #sidebar-wrapper {
-  padding: 50px;
   vertical-align: text-top;
 
   display: inline-block;
-  width: 150px;
-  height: 500px;
+  width: 250px;
+  height: 600px;
   background-color: yellow;
+}
+
+#nav-sidebar {
+  text-align: left;
 }
 
 #page-wrapper {

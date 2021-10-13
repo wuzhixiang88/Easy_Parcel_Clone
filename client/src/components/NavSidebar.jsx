@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const NavSidebar = () => {
   return (
-    <div>
+    <div id="nav-sidebar">
       <p>(Side Nav Bar)</p>
       <ul>
         Guest Nav
@@ -26,10 +26,10 @@ const NavSidebar = () => {
       <ul>
         Deliveryman Nav
         <li>
-          <Link to="/customer">Check Available Jobs</Link>
+          <Link to="/deliveryman">Available Jobs</Link>
         </li>
         <li>
-          <Link to="/customerinbox">My Job Details</Link>
+          <Link to="/deliverymaninbox">Accepted Jobs</Link>
         </li>
         <li>
           <Link to="/route">Delivery Route</Link>
