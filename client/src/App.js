@@ -8,6 +8,7 @@ import RegisterPage from "./pages/RegisterPage";
 import CustomerPage from "./pages/CustomerPage";
 import CustomerInboxPage from "./pages/CustomerInboxPage.jsx";
 import DeliverymanPage from "./pages/DeliverymanPage";
+import DeliveryRoute from "./components/DeliveryRoute";
 
 function App() {
   return (
@@ -39,6 +40,9 @@ function App() {
             </Route>
             <Route path="/deliveryman">
               <DeliverymanPage />
+            </Route>
+            <Route path="/route">
+              <DeliveryRoute />
             </Route>
           </Switch>
         </div>

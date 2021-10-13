@@ -21,7 +21,7 @@ const ShowQuote = (props) => {
         <tr>
           <td>JKZ Transportation</td>
           <td>Door-to-Door</td>
-          <td>{props.duration} mins</td>
+          <td>{props.duration}</td>
           <td>${props.quotation}</td>
         </tr>
       </table>
