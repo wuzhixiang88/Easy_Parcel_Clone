@@ -31,6 +31,9 @@ const NavSidebar = () => {
         <li>
           <Link to="/customerinbox">My Job Details</Link>
         </li>
+        <li>
+          <Link to="/route">Delivery Route</Link>
+        </li>
       </ul>
     </div>
   );

@@ -1,30 +1,32 @@
-require('dotenv').config();
+require("dotenv").config();
 
-const express = require('express');
-const mongoose = require('mongoose');
-const passport = require('passport');
-const strategy = require('./passport');
+const express = require("express");
+const mongoose = require("mongoose");
+const passport = require("passport");
+const strategy = require("./passport");
 
 //Controller Routers
 const homepageController = require("./controllers/homepageController");
 const dashboardController = require("./controllers/dashboardController");
 const userController = require("./controllers/userController");
-const cookieParser = require('cookie-parser');
-
+const cookieParser = require("cookie-parser");
 
 const mongoURL = process.env.MONGODB_URL;
 const dbConnection = mongoose.connection;
 
 mongoose.connect(mongoURL, {
-    useNewUrlParser: true, 
-    useUnifiedTopology: true,
-    ignoreUndefined: true
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  ignoreUndefined: true,
 });
 
-
 dbConnection.on("error", (err) => console.log(err.message));
-dbConnection.on("connected", () => console.log("Successfully connected to my database"));
-dbConnection.on("disconnected", () => console.log("The database connection has ended"));
+dbConnection.on("connected", () =>
+  console.log("Successfully connected to my database")
+);
+dbConnection.on("disconnected", () =>
+  console.log("The database connection has ended")
+);
 
 const app = express();
 
@@ -32,15 +34,14 @@ passport.use(strategy);
 
 //Middleware
 app.use(express.json());
-app.use(express.urlencoded({extended: true }))
-app.use(passport.initialize())
-app.use(cookieParser())
+app.use(express.urlencoded({ extended: true }));
+app.use(passport.initialize());
+app.use(cookieParser());
 
 //Routers
 // app.use("/api",homepageController);
 app.use("/api/users", userController);
 // app.use("/api/dashboard", dashboardController);
 
-
-const PORT = process.env.PORT
+const PORT = process.env.PORT;
 app.listen(PORT);
