@@ -9,6 +9,8 @@ import CustomerPage from "./pages/CustomerPage";
 import CustomerInboxPage from "./pages/CustomerInboxPage.jsx";
 import DeliverymanPage from "./pages/DeliverymanPage";
 import DeliveryRoute from "./components/DeliveryRoute";
+import DeliverymanInboxPage from "./pages/DeliverymanInboxPage";
+import AboutUsPage from "./pages/AboutUsPage";
 
 function App() {
   return (
@@ -25,6 +27,9 @@ function App() {
           <Switch>
             <Route exact path="/">
               <HomePage />
+            </Route>
+            <Route exact path="/about">
+              <AboutUsPage />
             </Route>
             <Route path="/login">
               <LoginPage />
@@ -43,6 +48,9 @@ function App() {
             </Route>
             <Route path="/route">
               <DeliveryRoute />
+            </Route>
+            <Route path="/deliverymaninbox">
+              <DeliverymanInboxPage />
             </Route>
           </Switch>
         </div>
