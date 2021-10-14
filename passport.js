@@ -6,7 +6,7 @@ const cookieExtractor = (req) => {
     let token = null;
     if (req && req.cookies)
     {
-        token = req.cookies.token;
+        token = req.cookies.jwt;
     }
     return token;
 };
@@ -24,7 +24,7 @@ const userStrategy = new Strategy(options, async (payload, done) => {
         return done(err, false)
     }
     if (user) {
-        return done(null, {username: customer.username})
+        return done(null, { username: user.username, role: user.role, userid: user._id })
     }
 });
 
