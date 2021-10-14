@@ -18,6 +18,9 @@ const saltRounds = 10;
     1. Password is of proper length and complexity (i.e. include lowercase, uppercase and special symbols).
     2. Email/ Username is not a duplicate
 */
+
+controller.get("/profile")
+
     
 controller.post("/signup", 
     body('username').custom(async value => {
@@ -36,7 +39,9 @@ controller.post("/signup",
     async (req, res) => {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
-            return res.status(400).json({ errors: errors.array() });
+            return res.status(400).json({ 
+                errors: errors.array()
+            })
         }
         const { username, email, password, confirmpw, role } = req.body;
         const salt = await bcrypt.genSalt(saltRounds);
@@ -70,7 +75,7 @@ controller.post("/login",
             res.json({ error: "You have entered the wrong password!"})
         }
 
-        const token = jwt.sign({ username: username }, process.env.SECRET_KEY_JWT, { expiresIn: "30m"})
+        const token = jwt.sign({ username: username }, process.env.SECRET_KEY_JWT, { expiresIn: "10m"})
 
         res.cookie('token', token, { httpONly: true, sameSite: "strict", secure: true })
 
@@ -80,8 +85,30 @@ controller.post("/login",
     }
 )
 
+// Forgot Password Route - Might add Email Verification
+controller.put("/changepassword", 
+    async(req, res) => {
+        const selectedUser = await userModel.findOne({username: req.body.username});
+        if (!selectedUser) {
+            res.json({ error: "The username entered is not valid."})
+        } 
+        if (bcrypt.compareSync(req.body.oldpw, selectedUser.password)) {
+            const salt = await bcrypt.genSalt(saltRounds);
+            const hashedPassword = await bcrypt.hash(req.body.password, salt)
+            const hashedConfirmPassword = await bcrypt.hash(req.body.confirmpw, salt)
+            if (hashedPassword === hashedConfirmPassword) {
+                await userModel.updateOne( { username: req.body.username }, { $set: { password: hashedPassword }})
+                res.json({ message: "The password has been succesfully changed."})
+            } 
+        } else {
+            res.json({ error: "You have entered an invalid password"})
+        }
+    }
+)
+
 controller.get("/logout", (req, res) => {
     res.clearCookie("token")
 })
+
 
 module.exports = controller;

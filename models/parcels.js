@@ -1,12 +1,12 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
-const orderSchema = new Schema(
+const parcelSchema = new Schema(
     {
         customer: String,
         deliveryman: String,
         status: String,
-        orderDetails: {
+        parcelDetails: {
             content: String,
             weightKg: Number,
             fragile: Boolean,
@@ -31,6 +31,6 @@ const orderSchema = new Schema(
     }
 );
 
-const Order = mongoose.model("Order", orderSchema);
+const Parcel = mongoose.model("Parcel", parcelSchema);
 
-module.exports = Order;
+module.exports = Parcel;
