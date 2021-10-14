@@ -5,16 +5,16 @@ const CustomerInboxPage = () => {
   return (
     <div>
       <h2>Customer Inbox Page</h2>
-      <h4>Parcel Status - Booked</h4>
-      <p>A deliveryman will soon be in touch</p>
+
       <ul>
-        Parcel Statuses
-        <li>Booked</li>
-        <li>Accepted</li>
-        <li>In Transit</li>
-        <li>Received</li>
-        <li>Complete</li>
+        Your Parcels
+        <li>Parcel E: Tanjong Pagar to Punggol - Booked</li>
+        <li>Parcel C: Yishun to Clementi - In Transit</li>
+        <li>Parcel D: Bedok to Ang Mo Kio - Received</li>
       </ul>
+      <p>
+        <i>Parcel Statuses: Booked → Accepted → In Transit → Received</i>
+      </p>
 
       <Link to="/customer">
         <button>Book another parcel</button>
