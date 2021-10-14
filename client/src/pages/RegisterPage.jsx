@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 const RegisterPage = () => {
   const [registerDetails, setRegisterDetails] = useState({
@@ -7,7 +7,10 @@ const RegisterPage = () => {
     password: "",
     confirmpw: "",
     email: "",
+    role: "",
   });
+
+  const history = useHistory();
 
   const handleInputChange = (e) => {
     const key = e.target.name;
@@ -20,7 +23,7 @@ const RegisterPage = () => {
   };
 
   const handClickRegister = async () => {
-    await fetch("/api/users/signup", {
+    const response = await fetch("/api/users/signup", {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -30,8 +33,13 @@ const RegisterPage = () => {
         password: registerDetails.password,
         confirmpw: registerDetails.confirmpw,
         email: registerDetails.email,
+        role: registerDetails.role,
       }),
     });
+
+    if (response.ok) {
+      history.push("/login");
+    }
   };
 
   return (
@@ -69,6 +77,15 @@ const RegisterPage = () => {
           name="email"
           placeholder="Email Address"
           value={registerDetails.email}
+          onChange={handleInputChange}
+        />
+      </div>
+      <div>
+        <input
+          type="text"
+          name="role"
+          placeholder="Role"
+          value={registerDetails.role}
           onChange={handleInputChange}
         />
       </div>

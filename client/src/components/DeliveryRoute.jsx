@@ -13,7 +13,7 @@ const DeliveryRoute = () => {
           height="450"
           loading="lazy"
           allowfullscreen
-          src={`https://www.google.com/maps/embed/v1/directions?key=AIzaSyBpIWS_8jsYNEW7R5-e0G43TZiIHdkg914&origin="672635"&destination="General Assembly"`}
+          src={`https://www.google.com/maps/embed/v1/directions?key=${process.env.REACT_APP_GMAP_API_KEY}&origin="672635"&destination="General Assembly"`}
         ></iframe>
       </div>
     </>
