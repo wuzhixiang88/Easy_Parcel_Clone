@@ -1,20 +1,35 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 const CustomerInboxPage = () => {
+  const [parcels, setParcels] = useState([]);
+  useEffect(() => {
+    const fetchParcels = async () => {
+      const response = await fetch("/customer/parcels");
+      const results = await response.json();
+      setParcels(results.parcels);
+    };
+    fetchParcels();
+  }, []);
+
   return (
     <div>
       <h2>Customer Inbox Page</h2>
 
-      <ul>
-        Your Parcels
-        <li>Parcel E: Tanjong Pagar to Punggol - Booked</li>
-        <li>Parcel C: Yishun to Clementi - In Transit</li>
-        <li>Parcel D: Bedok to Ang Mo Kio - Received</li>
-      </ul>
-      <p>
-        <i>Parcel Statuses: Booked → Accepted → In Transit → Received</i>
-      </p>
+      <div>
+        <h2>Parcels</h2>
+        {parcels.length !== 0 &&
+          parcels.map((parcel) => (
+            <div>
+              <h3>{parcel.parcels}</h3>
+              <p>
+                From {parcel.parcels.sender}
+                {/* {format(new Date(post.publishedDate), "dd MMM yyyy")} */}
+              </p>
+              <p>{parcel.parcels.content}</p>
+            </div>
+          ))}
+      </div>
 
       <Link to="/customer">
         <button>Book another parcel</button>

@@ -10,6 +10,7 @@ const CustomerPage = () => {
   });
   const [quotation, setQuotation] = useState(0);
   const [duration, setDuration] = useState(0);
+  // const [parcelWeight, setParcelWeight] = useState(0);
 
   return (
     <div>
