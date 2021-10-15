@@ -107,7 +107,7 @@ controller.put("/changepassword",
 )
 
 controller.get("/logout", (req, res) => {
-    res.clearCookie("jwt")
+    res.clearCookie("token")
 })
 
 

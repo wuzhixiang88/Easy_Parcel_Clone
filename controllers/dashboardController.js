@@ -114,6 +114,16 @@ controller.get("/deliveryman/allparcels/:id",
     }
 )
 
+controller.get("/deliveryman/parcels/:id",
+    passport.authenticate("jwt", { session: false }),
+    async (req, res) => {
+      const acceptedParcelDetails = await parcelModel.findOne({ _id: req.params.id })
+      res.json({
+        parcel: acceptedParcelDetails
+      })
+    }
+)
+
 // Update Parcel Details (For future reference) (Customer)
 
 controller.put("/orders/:id")

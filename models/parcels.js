@@ -6,8 +6,6 @@ const parcelSchema = new Schema(
         customer: String,
         deliveryman: String,
         status: String,
-        routeOrigin: String,
-        routeDestination: String, 
         parcelDetails: {
             content: String,
             weightKg: Number,
