@@ -26,7 +26,7 @@ const Quote = ({ showPage, setShowPage, setQuotation, setDuration }) => {
   useEffect(() => {
     (async () => {
       const loader = new Loader({
-        apiKey: "AIzaSyBpIWS_8jsYNEW7R5-e0G43TZiIHdkg914",
+        apiKey: process.env.REACT_APP_GMAP_API_KEY,
         version: "weekly",
         libraries: ["places"],
       });

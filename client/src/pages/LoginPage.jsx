@@ -1,11 +1,13 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 const LoginPage = () => {
   const [userDetails, setUserDetails] = useState({
     username: "",
     password: "",
   });
+
+  const history = useHistory();
 
   const handleInputChange = (e) => {
     const key = e.target.name;
@@ -29,11 +31,9 @@ const LoginPage = () => {
       }),
     });
 
-    const result = await response.json();
-
-    result.token
-      ? localStorage.setItem("token", result.token)
-      : alert("Error! Please login again.");
+    if (response.ok) {
+      history.push("/customer");
+    }
   };
 
   return (

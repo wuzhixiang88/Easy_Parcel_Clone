@@ -1,31 +1,34 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
+// import { useHistory } from "react-router-dom";
 
-const BookingDetails = () => {
+const BookingDetails = (props) => {
   const [senderDetails, setSenderDetails] = useState({
     senderName: "",
-    emailAddress: "",
-    contactNum: "",
-    address: "",
-    unitNum: "",
-    postal: "",
+    senderEmailAddress: "",
+    senderContactNum: "",
+    senderAddress: "",
+    senderUnitNum: "",
+    senderPostal: "",
   });
 
   const [receiverDetails, setReceiverDetails] = useState({
     receiverName: "",
-    emailAddress: "",
-    contactNum: "",
-    address: "",
-    unitNum: "",
-    postal: "",
+    receiverEmailAddress: "",
+    receiverContactNum: "",
+    receiverAddress: "",
+    receiverUnitNum: "",
+    receiverPostal: "",
   });
 
   const [parcelDetails, setParcelDetails] = useState({
     content: "",
-    price: "",
+    value: "",
   });
 
   const [pickUpDate, setPickUpDate] = useState("");
+
+  const history = useHistory();
 
   const handleInputChange = (e) => {
     const key = e.target.name;
@@ -46,15 +49,49 @@ const BookingDetails = () => {
       [key]: value,
     });
 
-    setPickUpDate(value);
-
-    console.log("senderDetails - " + senderDetails.senderName);
-    console.log("receiverDetails - " + receiverDetails.receiverName);
-    console.log("date - " + pickUpDate);
+    if (key === "date") {
+      setPickUpDate(value);
+    }
   };
 
-  const handleSubmit = async (e) => {
-    // post to server database for order details
+  const handleSubmit = async () => {
+    const response = await fetch("/api/dashboard/customer/new", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({
+        customer: senderDetails.senderName,
+        deliveryman: "",
+        status: "Booked",
+        parcelDetails: {
+          content: parcelDetails.content,
+          weightKg: 999,
+          fragile: true,
+          price: parcelDetails.value,
+        },
+        senderDetails: {
+          name: senderDetails.senderName,
+          emailAddress: senderDetails.senderEmailAddress,
+          contactNumber: senderDetails.senderContactNum,
+          address: senderDetails.senderAddress,
+          unitNum: senderDetails.senderUnitNum,
+          postalCode: senderDetails.senderPostal,
+        },
+        receiverDetails: {
+          name: receiverDetails.receiverName,
+          emailAddress: receiverDetails.receiverEmailAddress,
+          contactNumber: receiverDetails.receiverContactNum,
+          address: receiverDetails.receiverAddress,
+          unitNum: receiverDetails.receiverUnitNum,
+          postalCode: receiverDetails.receiverPostal,
+        },
+      }),
+    });
+
+    if (response.ok) {
+      history.push("/customerinbox");
+    }
   };
 
   return (
@@ -153,7 +190,7 @@ const BookingDetails = () => {
           onChange={handleInputChange}
         />
         <input
-          name="price"
+          name="value"
           placeholder="Parcel Value"
           value={parcelDetails.price}
           onChange={handleInputChange}
@@ -171,9 +208,9 @@ const BookingDetails = () => {
       </div>
 
       <div>
-        <Link to="/customerinbox">
-          <button onClick={handleSubmit}>Confirm Order</button>
-        </Link>
+        {/* <Link to="/customerinbox"> */}
+        <button onClick={handleSubmit}>Confirm Order</button>
+        {/* </Link> */}
       </div>
     </div>
   );

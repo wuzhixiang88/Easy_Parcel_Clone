@@ -12,18 +12,20 @@ const ShowQuote = (props) => {
     <div id="showquote">
       <h3>show quote component</h3>
       <table id="quote-table">
-        <tr>
-          <th>Company</th>
-          <th>Service Type</th>
-          <th>Estimated Duration</th>
-          <th>Quotation</th>
-        </tr>
-        <tr>
-          <td>JKZ Transportation</td>
-          <td>Door-to-Door</td>
-          <td>{props.duration}</td>
-          <td>${props.quotation}</td>
-        </tr>
+        <tbody>
+          <tr>
+            <th>Company</th>
+            <th>Service Type</th>
+            <th>Estimated Duration</th>
+            <th>Quotation</th>
+          </tr>
+          <tr>
+            <td>JKZ Transportation</td>
+            <td>Door-to-Door</td>
+            <td>{props.duration}</td>
+            <td>${props.quotation}</td>
+          </tr>
+        </tbody>
       </table>
       <button onClick={handleClickProceedQuotation}>Proceed</button>
     </div>
