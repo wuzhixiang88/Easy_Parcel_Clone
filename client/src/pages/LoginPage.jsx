@@ -31,8 +31,20 @@ const LoginPage = () => {
       }),
     });
 
-    if (response.ok) {
+    const result = await response.json();
+
+    if (result.error) {
+      alert("Cannot login");
+    }
+
+    if (result.token) {
+      localStorage.setItem("username", result.username);
+    }
+
+    if (response.ok && result.role.toLowerCase() === "customer") {
       history.push("/customer");
+    } else if (response.ok && result.role.toLowerCase() === "deliveryman") {
+      history.push("/deliveryman");
     }
   };
 

@@ -16,9 +16,11 @@ const CustomerPage = () => {
   const [duration, setDuration] = useState("");
   const [parcelWeight, setParcelWeight] = useState("");
 
+  const loggedInUser = localStorage.getItem("username");
+
   return (
     <div>
-      <h2>Welcome --Customer Name-- </h2>
+      <h2>Welcome {loggedInUser} </h2>
       <Quote
         setQuotation={setQuotation}
         setDuration={setDuration}
