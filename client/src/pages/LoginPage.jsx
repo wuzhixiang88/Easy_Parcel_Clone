@@ -31,12 +31,6 @@ const LoginPage = () => {
       }),
     });
 
-    const result = await response.json();
-
-    result.token
-      ? localStorage.setItem("token", result.token)
-      : alert("Error! Please login again.");
-
     if (response.ok) {
       history.push("/customer");
     }

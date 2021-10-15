@@ -21,9 +21,6 @@ const Quote = ({ showPage, setShowPage, setQuotation, setDuration }) => {
 
     setShowPage({ ...showPage, showQuote: true });
     setQuotation(quotePrice.toFixed(2));
-    console.log(parcelWeight);
-    console.log(distance);
-    console.log(inputLocationARef.current);
   };
 
   useEffect(() => {
