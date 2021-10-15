@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 // import { useHistory } from "react-router-dom";
 
 const BookingDetails = (props) => {
@@ -28,6 +28,8 @@ const BookingDetails = (props) => {
 
   const [pickUpDate, setPickUpDate] = useState("");
 
+  const history = useHistory();
+
   const handleInputChange = (e) => {
     const key = e.target.name;
     const value = e.target.value;
@@ -47,17 +49,13 @@ const BookingDetails = (props) => {
       [key]: value,
     });
 
-    setPickUpDate(value);
-
-    console.log("senderDetails - " + senderDetails.senderName);
-    console.log("receiverDetails - " + receiverDetails.receiverName);
-    console.log("date - " + pickUpDate);
+    if (key === "date") {
+      setPickUpDate(value);
+    }
   };
 
-  const handleSubmit = async (e) => {
-    // post to server database for order details
-    e.preventDefault();
-    const response = await fetch("/customer/new", {
+  const handleSubmit = async () => {
+    const response = await fetch("/api/dashboard/customer/new", {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -70,39 +68,30 @@ const BookingDetails = (props) => {
           content: parcelDetails.content,
           weightKg: 999,
           fragile: true,
-          price: parcelDetails.price,
+          price: parcelDetails.value,
         },
         senderDetails: {
           name: senderDetails.senderName,
-          emailAddress: senderDetails.emailAddress,
-          contactNumber: senderDetails.contactNum,
-          address: senderDetails.address,
-          unitNum: senderDetails.unitNum,
-          postalCode: senderDetails.postal,
+          emailAddress: senderDetails.senderEmailAddress,
+          contactNumber: senderDetails.senderContactNum,
+          address: senderDetails.senderAddress,
+          unitNum: senderDetails.senderUnitNum,
+          postalCode: senderDetails.senderPostal,
         },
         receiverDetails: {
           name: receiverDetails.receiverName,
-          emailAddress: receiverDetails.emailAddress,
-          contactNumber: receiverDetails.contactNum,
-          address: receiverDetails.address,
-          unitNum: receiverDetails.unitNum,
-          postalCode: receiverDetails.postal,
+          emailAddress: receiverDetails.receiverEmailAddress,
+          contactNumber: receiverDetails.receiverContactNum,
+          address: receiverDetails.receiverAddress,
+          unitNum: receiverDetails.receiverUnitNum,
+          postalCode: receiverDetails.receiverPostal,
         },
       }),
     });
-    // if (response.ok) {
 
-    //   history.push("/");
-    //   // redirect user to /posts
-    // }
-
-    console.log(senderDetails);
-    console.log(receiverDetails);
-    console.log(parcelDetails);
-    console.log(pickUpDate);
-    console.log(props.quotation);
-    console.log(props.duration);
-    console.log(senderDetails.senderName);
+    if (response.ok) {
+      history.push("/customerinbox");
+    }
   };
 
   return (
