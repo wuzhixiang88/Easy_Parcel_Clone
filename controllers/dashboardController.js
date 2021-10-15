@@ -49,6 +49,7 @@ controller.get(
   "/customer/parcels",
   passport.authenticate("jwt", { session: false }),
   async (req, res) => {
+    console.log(req.user)
     const parcels = await userModel
       .findOne({ username: req.user.username })
       .populate("parcels")

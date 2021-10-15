@@ -75,8 +75,7 @@ controller.post("/login",
             res.json({ error: "You have entered the wrong password!"})
         }
 
-        const token = jwt.sign({ username: username }, process.env.SECRET_KEY_JWT, { expiresIn: "10m"})
-
+        const token = jwt.sign({ username: selectedUser.username }, process.env.SECRET_KEY_JWT, { expiresIn: "10m"})
         res.cookie('jwt', token, { httpONly: true, expiresIn: "10m" })
 
         res.json({
