@@ -8,35 +8,22 @@ const { body, validationResult } = require("express-validator");
 // Post A Parcel Route (Customer) - Add Server Side Validation
 controller.post(
   "/customer/new",
-  // body("senderEmailAddress", "A valid E-mail address must be entered")
-  //   .isEmail()
-  //   .normalizeEmail(),
-  // body("receiverEmailAddress", "A valid E-mail address must be entered")
-  //   .isEmail()
-  //   .normalizeEmail(),
-  // passport.authenticate("jwt", { session: false }),
+  body('senderDetails.senderEmailAddress', "A valid E-mail address must be entered").isEmail().normalizeEmail(),
+  body('senderDetails.receiverEmailAddress', "A valid E-mail address must be entered").isEmail().normalizeEmail(),
+  passport.authenticate("jwt", { session: false }),
   async (req, res) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      console.log(errors);
-      return res.status(400).json({
-        errors: errors.array(),
-      });
-    }
-    console.log(req.body);
     const inputs = {
-      customer: req.body.customer,
+      customer: req.user.username,
       status: req.body.status,
       parcelDetails: req.body.parcelDetails,
       senderDetails: req.body.senderDetails,
       receiverDetails: req.body.receiverDetails,
     };
-    console.log("input - " + inputs);
     const newParcel = await parcelModel.create(inputs);
-    // await userModel.findOne(
-    //   { username: "wzx88" },
-    //   { $push: { orders: newParcel._id } }
-    // );
+    await userModel.updateOne(
+      { username: req.user.username },
+      { $push: { orders: newParcel._id } }
+    );
     res.json({
       status: "Parcel successfully booked!",
     });

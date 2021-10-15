@@ -77,10 +77,11 @@ controller.post("/login",
 
         const token = jwt.sign({ username: username }, process.env.SECRET_KEY_JWT, { expiresIn: "10m"})
 
-        res.cookie('jwt', token, { httpONly: true, sameSite: "strict", secure: true })
+        res.cookie('jwt', token, { httpONly: true, expiresIn: "10m" })
 
         res.json({
-            token
+            token: token,
+            role: selectedUser.role
         });
     }
 )
@@ -107,7 +108,7 @@ controller.put("/changepassword",
 )
 
 controller.get("/logout", (req, res) => {
-    res.clearCookie("token")
+    res.clearCookie("jwt")
 })
 
 
