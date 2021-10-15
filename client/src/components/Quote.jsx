@@ -3,9 +3,16 @@ import { Loader } from "@googlemaps/js-api-loader";
 
 const STANDARD_RATE = 0.3;
 
-const Quote = ({ showPage, setShowPage, setQuotation, setDuration }) => {
+const Quote = ({
+  showPage,
+  setShowPage,
+  setQuotation,
+  setDuration,
+  setLocation,
+  parcelWeight,
+  setParcelWeight,
+}) => {
   const [distance, setDistance] = useState();
-  const [parcelWeight, setParcelWeight] = useState();
 
   const mapRef = useRef();
   const inputLocationARef = useRef();
@@ -94,6 +101,10 @@ const Quote = ({ showPage, setShowPage, setQuotation, setDuration }) => {
                 window.alert("Directions request failed");
                 return;
               } else {
+                setLocation({
+                  origin: inputLocationARef.current.value,
+                  destination: inputLocationBRef.current.value,
+                });
                 setDistance(directionsData.distance.text);
                 setDuration(directionsData.duration.text);
               }
@@ -121,14 +132,14 @@ const Quote = ({ showPage, setShowPage, setQuotation, setDuration }) => {
           <input
             ref={inputLocationARef}
             id="pac-input"
-            class="controls"
+            className="controls"
             type="text"
             placeholder="Origin"
           />
           <input
             ref={inputLocationBRef}
             id="pac-input2"
-            class="controls"
+            className="controls"
             type="text"
             placeholder="Destination"
           />

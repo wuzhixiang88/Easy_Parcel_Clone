@@ -3,14 +3,14 @@ import { Link } from "react-router-dom";
 
 const CustomerInboxPage = () => {
   const [parcels, setParcels] = useState([]);
-  useEffect(() => {
-    const fetchParcels = async () => {
-      const response = await fetch("/customer/parcels");
-      const results = await response.json();
-      setParcels(results.parcels);
-    };
-    fetchParcels();
-  }, []);
+  // useEffect(() => {
+  //   const fetchParcels = async () => {
+  //     const response = await fetch("/api/dashboard/customer/parcels");
+  //     const results = await response.json();
+  //     setParcels(results.parcels);
+  //   };
+  //   fetchParcels();
+  // }, []);
 
   return (
     <div>

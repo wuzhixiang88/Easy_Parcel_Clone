@@ -8,9 +8,13 @@ const CustomerPage = () => {
     showQuote: false,
     showBookingDetails: false,
   });
-  const [quotation, setQuotation] = useState(0);
-  const [duration, setDuration] = useState(0);
-  // const [parcelWeight, setParcelWeight] = useState(0);
+  const [location, setLocation] = useState({
+    origin: "",
+    destination: "",
+  });
+  const [quotation, setQuotation] = useState("");
+  const [duration, setDuration] = useState("");
+  const [parcelWeight, setParcelWeight] = useState("");
 
   return (
     <div>
@@ -18,6 +22,9 @@ const CustomerPage = () => {
       <Quote
         setQuotation={setQuotation}
         setDuration={setDuration}
+        setLocation={setLocation}
+        parcelWeight={parcelWeight}
+        setParcelWeight={setParcelWeight}
         setShowPage={setShowPage}
         showpage={showPage}
       />
@@ -29,7 +36,12 @@ const CustomerPage = () => {
         />
       ) : null}
       {showPage.showBookingDetails ? (
-        <BookingDetails quotation={quotation} duration={duration} />
+        <BookingDetails
+          location={location}
+          quotation={quotation}
+          duration={duration}
+          parcelWeight={parcelWeight}
+        />
       ) : null}
     </div>
   );
