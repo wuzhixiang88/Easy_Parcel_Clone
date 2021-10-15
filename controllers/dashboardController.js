@@ -36,7 +36,7 @@ controller.post(
     const newParcel = await parcelModel.create(inputs);
     await userModel.updateOne(
       { username: req.user.username },
-      { $push: { parcels: newParcel._id } }
+      { $push: { orders: newParcel._id } }
     );
     res.json({
       status: "Parcel successfully booked!",
@@ -49,6 +49,7 @@ controller.get(
   "/customer/parcels",
   passport.authenticate("jwt", { session: false }),
   async (req, res) => {
+    console.log(req.user)
     const parcels = await userModel
       .findOne({ username: req.user.username })
       .populate("parcels")
@@ -151,7 +152,7 @@ controller.put(
     );
     await userModel.updateOne(
       { username: req.user.username },
-      { $push: { parcels: updatedParcel._id } }
+      { $push: { orders: updatedParcel._id } }
     );
     res.json({
       message: "Parcel successfully accepted",

@@ -76,7 +76,7 @@ controller.post("/login",
         }
 
         const token = jwt.sign({ username: selectedUser.username }, process.env.SECRET_KEY_JWT, { expiresIn: "10m"})
-        res.cookie('jwt', token, { httpOnly: true, expiresIn: "10m" })
+        res.cookie('jwt', token, { httpONly: true, expiresIn: "10m" })
 
         res.json({
             token: token,

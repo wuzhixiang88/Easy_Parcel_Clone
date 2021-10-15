@@ -41,11 +41,5 @@ app.use(cookieParser());
 app.use("/api/users", userController);
 app.use("/api/dashboard", dashboardController);
 
-app.use(function (err, req, res, next) {
-  console.error(err.stack)
-  res.status(500).send('Something broke!')
-})
-
-
 const PORT = process.env.PORT;
 app.listen(PORT);

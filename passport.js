@@ -17,7 +17,7 @@ const options = {
 
 const userStrategy = new Strategy(options, async (payload, done) => {
   const user = await userModel.findOne({ username: payload.username });
-  
+
   if (!user) {
     return done(null, false, { message: "User is not authorized"})
   }
