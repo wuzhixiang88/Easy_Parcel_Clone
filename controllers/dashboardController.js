@@ -5,6 +5,8 @@ const parcelModel = require("../models/parcels");
 const passport = require("passport");
 const { body, validationResult } = require("express-validator");
 
+
+
 // Post A Parcel Route (Customer) - Add Server Side Validation
 controller.post(
   "/customer/new",
@@ -36,7 +38,7 @@ controller.post(
     const newParcel = await parcelModel.create(inputs);
     await userModel.updateOne(
       { username: req.user.username },
-      { $push: { orders: newParcel._id } }
+      { $push: { parcels: newParcel._id } }
     );
     res.json({
       status: "Parcel successfully booked!",
@@ -151,7 +153,7 @@ controller.put(
     );
     await userModel.updateOne(
       { username: req.user.username },
-      { $push: { orders: updatedParcel._id } }
+      { $push: { parcels: updatedParcel._id } }
     );
     res.json({
       message: "Parcel successfully accepted",
