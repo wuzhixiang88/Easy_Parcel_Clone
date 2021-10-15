@@ -8,13 +8,27 @@ const { body, validationResult } = require("express-validator");
 // Post A Parcel Route (Customer) - Add Server Side Validation
 controller.post(
   "/customer/new",
-  body('senderDetails.senderEmailAddress', "A valid E-mail address must be entered").isEmail().normalizeEmail(),
-  body('senderDetails.receiverEmailAddress', "A valid E-mail address must be entered").isEmail().normalizeEmail(),
   passport.authenticate("jwt", { session: false }),
+  body("senderDetails.emailAddress", "A valid E-mail address must be entered")
+    .isEmail()
+    .normalizeEmail(),
+  body("receiverDetails.emailAddress", "A valid E-mail address must be entered")
+    .isEmail()
+    .normalizeEmail(),
   async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      console.log(errors);
+      return res.status(400).json({
+        errors: errors.array(),
+      });
+    }
     const inputs = {
       customer: req.user.username,
       status: req.body.status,
+      location: req.body.location,
+      quotation: req.body.quotation,
+      duration: req.body.duration,
       parcelDetails: req.body.parcelDetails,
       senderDetails: req.body.senderDetails,
       receiverDetails: req.body.receiverDetails,
