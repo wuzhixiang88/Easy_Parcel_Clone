@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 // import { useHistory } from "react-router-dom";
 
-const BookingDetails = (props) => {
+const BookingDetails = ({ location, quotation, duration, parcelWeight }) => {
   const [senderDetails, setSenderDetails] = useState({
     senderName: "",
     senderEmailAddress: "",
@@ -62,13 +62,14 @@ const BookingDetails = (props) => {
       },
       body: JSON.stringify({
         customer: senderDetails.senderName,
-        deliveryman: "",
         status: "Booked",
+        location: location,
+        quotation: quotation,
+        duration: duration,
         parcelDetails: {
           content: parcelDetails.content,
-          weightKg: 999,
-          fragile: true,
-          price: parcelDetails.value,
+          weightKg: parcelWeight,
+          value: parcelDetails.value,
         },
         senderDetails: {
           name: senderDetails.senderName,
