@@ -7,7 +7,8 @@ const CustomerInboxPage = () => {
   //   const fetchParcels = async () => {
   //     const response = await fetch("/api/dashboard/customer/parcels");
   //     const results = await response.json();
-  //     setParcels(results.parcels);
+  //     console.log(results);
+  //     // setParcels(results.parcels);
   //   };
   //   fetchParcels();
   // }, []);

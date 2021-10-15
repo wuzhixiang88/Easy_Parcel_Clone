@@ -61,7 +61,6 @@ const BookingDetails = ({ location, quotation, duration, parcelWeight }) => {
         "content-type": "application/json",
       },
       body: JSON.stringify({
-        customer: senderDetails.senderName,
         status: "Booked",
         location: location,
         quotation: quotation,
