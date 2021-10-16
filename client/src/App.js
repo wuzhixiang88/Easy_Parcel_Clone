@@ -1,16 +1,17 @@
 import "./App.css";
 import { Route, Switch } from "react-router";
-import Navbar from "./components/Navbar.jsx";
-import NavSidebar from "./components/NavSidebar.jsx";
+import Navbar from "./components/Navbar";
+import NavSidebar from "./components/NavSidebar";
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import CustomerPage from "./pages/CustomerPage";
-import CustomerInboxPage from "./pages/CustomerInboxPage.jsx";
+import CustomerInboxPage from "./pages/CustomerInboxPage";
 import DeliverymanPage from "./pages/DeliverymanPage";
 import DeliveryRoute from "./components/DeliveryRoute";
 import DeliverymanInboxPage from "./pages/DeliverymanInboxPage";
 import AboutUsPage from "./pages/AboutUsPage";
+import Thread from "./components/Thread";
 
 function App() {
   return (
@@ -49,8 +50,11 @@ function App() {
             <Route path="/route">
               <DeliveryRoute />
             </Route>
-            <Route path="/deliverymaninbox">
+            <Route exact path="/deliverymaninbox">
               <DeliverymanInboxPage />
+            </Route>
+            <Route exact path="/deliverymaninbox/:id">
+              <Thread />
             </Route>
           </Switch>
         </div>
