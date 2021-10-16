@@ -4,14 +4,13 @@ import { Link } from "react-router-dom";
 const NavSidebar = () => {
   return (
     <div id="nav-sidebar">
-      <p>(Side Nav Bar)</p>
       <ul>
         Guest Nav
         <li>
           <Link to="/login">Login</Link>
         </li>
         <li>
-          <Link to="/signup">Register</Link>
+          <Link to="/signup">Sign Up</Link>
         </li>
       </ul>
       <ul>
