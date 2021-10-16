@@ -11,6 +11,7 @@ import DeliverymanPage from "./pages/DeliverymanPage";
 import DeliveryRoute from "./components/DeliveryRoute";
 import DeliverymanInboxPage from "./pages/DeliverymanInboxPage";
 import AboutUsPage from "./pages/AboutUsPage";
+import Thread from "./components/Thread";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
