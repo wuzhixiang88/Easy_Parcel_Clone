@@ -188,4 +188,10 @@ body {
   width: 345px;
 }
 
+.parcel-customer-show {
+  background-color: lightseagreen;
+  padding: 10px;
+  margin: 10px;
+}
+
 /* FOR GOOGLE MAP */

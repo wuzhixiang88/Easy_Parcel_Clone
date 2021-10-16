@@ -5,8 +5,6 @@ const parcelModel = require("../models/parcels");
 const passport = require("passport");
 const { body, validationResult } = require("express-validator");
 
-
-
 // Post A Parcel Route (Customer) - Add Server Side Validation
 controller.post(
   "/customer/new",
