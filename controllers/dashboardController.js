@@ -76,19 +76,20 @@ controller.get(
 );
 
 controller.get(
-  "deliveryman/parcels",
+  "/deliveryman/parcels",
   passport.authenticate("jwt", { session: false }),
   async (req, res) => {
-    const acceptedParcels = await userModel
+    const parcels = await userModel
       .findOne({ username: req.user.username })
       .populate("parcels")
       .exec();
-    if (acceptedParcels.parcels.length < 1) {
-      res.json({ message: "You have not accepted any parcel orders." });
+    if (parcels.parcels.length < 1) {
+      res.json({ message: "You have no parcels." });
+    } else {
+      res.json({
+        parcels: parcels.parcels,
+      });
     }
-    res.json({
-      parcels: acceptedParcels,
-    });
   }
 );
 
@@ -151,7 +152,7 @@ controller.put(
     );
     await userModel.updateOne(
       { username: req.user.username },
-      { $push: { parcels: updatedParcel._id } }
+      { $push: { parcels: req.params.id } }
     );
     res.json({
       message: "Parcel successfully accepted",

@@ -1,9 +1,30 @@
 import React from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useHistory } from "react-router-dom";
 
 const DeliveryRoute = () => {
+  const history = useHistory();
   const location = useLocation();
-  const { origin, destination } = location.state;
+  const { origin, destination, parcelId } = location.state;
+
+  const handleClickAccept = async () => {
+    const response = await fetch(
+      `/api/dashboard/deliveryman/allparcels/${parcelId}`,
+      {
+        method: "PUT",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify({
+          status: "Accepted",
+          deliverman: "",
+        }),
+      }
+    );
+
+    if (response.ok) {
+      history.push("/deliverymaninbox");
+    }
+  };
 
   return (
     <>
@@ -22,7 +43,7 @@ const DeliveryRoute = () => {
         ></iframe>
       </div>
       <div>
-        <button>Accept</button>
+        <button onClick={handleClickAccept}>Accept</button>
       </div>
     </>
   );

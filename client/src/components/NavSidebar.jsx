@@ -31,9 +31,6 @@ const NavSidebar = () => {
         <li>
           <Link to="/deliverymaninbox">Accepted Jobs</Link>
         </li>
-        <li>
-          <Link to="/route">Delivery Route</Link>
-        </li>
       </ul>
     </div>
   );

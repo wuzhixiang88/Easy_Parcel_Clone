@@ -1,21 +1,43 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import DeliveryRoute from "../components/DeliveryRoute";
 
 const DeliverymanInboxPage = () => {
+  const [parcels, setParcels] = useState([]);
+  useEffect(() => {
+    const fetchParcels = async () => {
+      const response = await fetch("/api/dashboard/deliveryman/parcels");
+      const results = await response.json();
+
+      setParcels(results.parcels);
+    };
+    fetchParcels();
+  }, []);
+
   return (
     <div>
       <h2>Deliveryman Inbox Page</h2>
-      <DeliveryRoute />
-      <ul>
-        Your accepted jobs
-        <li>
-          Woodlands to Sentosa<button>Update Status</button>
-        </li>
-        <li>
-          Tuas to Changi<button>Update Status</button>
-        </li>
-      </ul>
+      <h4>Your Accepted Jobs</h4>
+      {parcels.length !== 0 &&
+        parcels.map((parcel) => (
+          <div className="parcel-customer-show">
+            <p>
+              <b>Parcel ID: </b>
+              {parcel._id}
+            </p>
+            <p>
+              <b>Status: </b>
+              {parcel.status}
+            </p>
+            <p>
+              <b>From: </b>
+              {JSON.stringify(parcel.location.origin)}
+            </p>
+            <p>
+              <b>To: </b>
+              {JSON.stringify(parcel.location.destination)}
+            </p>
+          </div>
+        ))}
 
       <Link to="/deliveryman">
         <button>Browse More Jobs</button>

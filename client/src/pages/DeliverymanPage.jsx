@@ -25,6 +25,7 @@ const CustomerInboxPage = () => {
               state: {
                 origin: parcel.location.origin,
                 destination: parcel.location.destination,
+                parcelId: parcel._id,
               },
             }}
           >
@@ -51,9 +52,6 @@ const CustomerInboxPage = () => {
             </div>
           </Link>
         ))}
-      <Link to="/deliverymaninbox">
-        <button>View my accepted parcels</button>
-      </Link>
     </div>
   );
 };
