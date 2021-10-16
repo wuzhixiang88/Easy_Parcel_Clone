@@ -3,34 +3,41 @@ import { Link } from "react-router-dom";
 
 const CustomerInboxPage = () => {
   const [parcels, setParcels] = useState([]);
-  // useEffect(() => {
-  //   const fetchParcels = async () => {
-  //     const response = await fetch("/api/dashboard/customer/parcels");
-  //     const results = await response.json();
-  //     console.log(results);
-  //     // setParcels(results.parcels);
-  //   };
-  //   fetchParcels();
-  // }, []);
+  useEffect(() => {
+    const fetchParcels = async () => {
+      const response = await fetch("/api/dashboard/customer/parcels");
+      const results = await response.json();
+
+      setParcels(results.parcels);
+    };
+    fetchParcels();
+  }, []);
 
   return (
     <div>
       <h2>Customer Inbox Page</h2>
-
-      <div>
-        <h2>Parcels</h2>
-        {parcels.length !== 0 &&
-          parcels.map((parcel) => (
-            <div>
-              <h3>{parcel.parcels}</h3>
-              <p>
-                From {parcel.parcels.sender}
-                {/* {format(new Date(post.publishedDate), "dd MMM yyyy")} */}
-              </p>
-              <p>{parcel.parcels.content}</p>
-            </div>
-          ))}
-      </div>
+      <h4>Your Parcels</h4>
+      {parcels.length !== 0 &&
+        parcels.map((parcel) => (
+          <div className="parcel-customer-show">
+            <p>
+              <b>Parcel ID: </b>
+              {parcel._id}
+            </p>
+            <p>
+              <b>Status: </b>
+              {parcel.status}
+            </p>
+            <p>
+              <b>From: </b>
+              {JSON.stringify(parcel.location.origin)}
+            </p>
+            <p>
+              <b>To: </b>
+              {JSON.stringify(parcel.location.destination)}
+            </p>
+          </div>
+        ))}
 
       <Link to="/customer">
         <button>Book another parcel</button>
