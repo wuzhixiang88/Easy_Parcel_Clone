@@ -15,9 +15,9 @@ const Navbar = () => {
     }
   };
   return (
-    <div className="nav-main">
+    <div>
       <ul className="nav-main">
-        <p>(Main Nav Bar)</p>
+        <p>Welcome to EZ Package Pte Ltd</p>
         <li className="nav-main">
           <Link to="/">HomePage</Link>
         </li>
@@ -29,7 +29,9 @@ const Navbar = () => {
           <Link to="/deliveryman">My Account</Link>
         </li>
       </ul>
-      <button onClick={handleClickLogout}>Logout</button>
+      <button className="btn-logout" onClick={handleClickLogout}>
+        Logout
+      </button>
     </div>
   );
 };

@@ -41,47 +41,51 @@
 #quote-table {
   text-align: center;
   margin: auto;
-  background-color: fuchsia;
+  background-color: white;
 }
 
 #quote {
-  background-color: greenyellow;
+  background-color: white;
   text-align: center;
 }
 
 #bookingdetails {
-  background-color: lightcoral;
+  background-color: white;
   text-align: center;
 }
 
 .nav-main {
   text-align: left;
   display: inline-block;
-
+  color: white;
   margin-right: 50px;
+  background-color: #072b4d;
 }
 
 #main-nav-bar {
-  background-color: palevioletred;
+  background-color: #072b4d;
   width: 1200px;
-  margin-left: 50px;
+  margin: auto;
+  color: white;
+  position: sticky;
+  top: 0;
 }
 
 #main-wrapper {
   text-align: left;
-  margin-left: 50px;
+  margin: auto;
   width: 1200px;
-  height: 600px;
-  background-color: darkblue;
+  height: auto;
+  background-color: #a0c0cd;
+  color: #072b4d;
 }
 
 #sidebar-wrapper {
   vertical-align: text-top;
-
   display: inline-block;
-  width: 250px;
-  height: 600px;
-  background-color: yellow;
+  width: 150px;
+  height: 100vh;
+  background-color: #5b7c93;
 }
 
 #nav-sidebar {
@@ -93,8 +97,8 @@
   vertical-align: text-top;
   display: inline-block;
   width: 850px;
-  height: 500px;
-  background-color: orange;
+  height: 100%;
+  background-color: #a0c0cd;
 }
 
 /* FOR GOOGLE MAP */
@@ -189,9 +193,27 @@ body {
 }
 
 .parcel-customer-show {
-  background-color: lightseagreen;
+  background-color: #6f889b;
   padding: 10px;
   margin: 10px;
+  border-radius: 10px;
 }
 
+.btn {
+  margin: 5px;
+}
+
+a:visited {
+  color: white;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #cbc7cb;
+  text-decoration: none;
+}
+
+.btn-logout {
+  text-align: right;
+}
 /* FOR GOOGLE MAP */

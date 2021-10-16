@@ -15,7 +15,6 @@ const CustomerInboxPage = () => {
 
   return (
     <div>
-      <h2>Deliveryman Page</h2>
       <h4>Available Parcels</h4>
       {parcels.length !== 0 &&
         parcels.map((parcel) => (
