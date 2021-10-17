@@ -7,8 +7,13 @@ const HomePage = () => {
   return (
     <div>
       <h3>Welcome to EZ Package</h3>
+      <img
+        className="images"
+        src="https://i.imgur.com/AXATdgK.png"
+        height="200"
+      />
 
-      <h4>Start sending packages in 3 easy steps!</h4>
+      <h4>Start sending packages in 3 EZ steps!</h4>
       <ul>
         <li>Sign up - its free!</li>
         <li>Get a quote</li>

@@ -28,7 +28,7 @@
   color: #61dafb;
 }
 
-ul {
+ul li {
   list-style-type: none;
   padding: 1;
   margin: 0;
@@ -95,6 +95,10 @@ ul {
   top: 0;
 }
 
+.images {
+  border-radius: 10px;
+}
+
 #main-wrapper {
   text-align: left;
   margin: auto;
@@ -117,7 +121,7 @@ ul {
 }
 
 #page-wrapper {
-  padding: 20px;
+  padding: 10px;
   vertical-align: text-top;
   display: inline-block;
   width: 850px;
