@@ -69,7 +69,9 @@ const LoginPage = ({ setLoggedInUserRole }) => {
         />
       </div>
       <div>
-        <button onClick={handleClickLogin}>Login</button>
+        <button className="btn" onClick={handleClickLogin}>
+          Login
+        </button>
       </div>
       <div>
         Don't have an account?

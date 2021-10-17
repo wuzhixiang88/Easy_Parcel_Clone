@@ -28,6 +28,12 @@
   color: #61dafb;
 }
 
+ul li {
+  list-style-type: none;
+  padding: 1;
+  margin: 0;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
@@ -37,20 +43,30 @@
   }
 }
 
-#showquote,
-#quote-table {
+#quote #bookingdetails #showquote {
+  background-color: #a0c0cd;
+  text-align: left;
+  border-radius: 10px;
+  padding: 20px;
+}
+.quote-table-header {
+  background-color: #072b4d;
+  color: white;
+  padding: 0px 20px;
+}
+#quote-table #quote-table-body {
   text-align: center;
   margin: auto;
-  background-color: white;
+  background-color: #a0c0cd;
+  padding: 10px;
+  border-radius: 10px;
 }
 
-#quote {
-  background-color: white;
-  text-align: center;
+.quote-header {
+  margin-top: 30px;
 }
-
-#bookingdetails {
-  background-color: white;
+.quote-table-cells {
+  padding: 10px;
   text-align: center;
 }
 
@@ -61,6 +77,14 @@
   margin-right: 50px;
   background-color: #072b4d;
 }
+.nav-main-link {
+  padding: 5px 10px;
+  border-radius: 7px;
+  border-style: solid;
+  border-color: white;
+  border-width: thin;
+  font-weight: bold;
+}
 
 #main-nav-bar {
   background-color: #072b4d;
@@ -69,6 +93,10 @@
   color: white;
   position: sticky;
   top: 0;
+}
+
+.images {
+  border-radius: 10px;
 }
 
 #main-wrapper {
@@ -93,12 +121,13 @@
 }
 
 #page-wrapper {
-  padding: 50px;
+  padding: 10px;
   vertical-align: text-top;
   display: inline-block;
   width: 850px;
   height: 100%;
   background-color: #a0c0cd;
+  overflow-y: hidden;
 }
 
 /* FOR GOOGLE MAP */
@@ -201,6 +230,8 @@ body {
 
 .btn {
   margin: 5px;
+  background-color: #072b4d;
+  color: white;
 }
 
 a:visited {
@@ -215,5 +246,8 @@ a:hover {
 
 .btn-logout {
   text-align: right;
+  background-color: #072b4d;
+  color: white;
+  margin-right: 10px;
 }
 /* FOR GOOGLE MAP */
