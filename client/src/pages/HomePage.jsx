@@ -14,10 +14,10 @@ const HomePage = () => {
         <li>Get a quote</li>
         <li>Book a Parcel!</li>
       </ul>
-      <button type="button" className="btn btn-secondary">
+      <button className="btn">
         <Link to="/login">Login</Link>
       </button>
-      <button type="button" className="btn btn-secondary">
+      <button className="btn">
         <Link to="/signup">Sign Up</Link>
       </button>
     </div>

@@ -96,8 +96,8 @@ const BookingDetails = ({ location, quotation, duration, parcelWeight }) => {
 
   return (
     <div id="bookingdetails">
-      <h3>booking details component</h3>
-      <div>Fill in sender details</div>
+      <h4 className="quote-header">Complete your booking</h4>
+      <div>Sender details</div>
       <div>
         <input
           name="senderName"
@@ -139,7 +139,7 @@ const BookingDetails = ({ location, quotation, duration, parcelWeight }) => {
         />
       </div>
 
-      <div>Fill in receiver details</div>
+      <div>Receiver details</div>
       <div>
         <input
           name="receiverName"
@@ -181,7 +181,7 @@ const BookingDetails = ({ location, quotation, duration, parcelWeight }) => {
         />
       </div>
 
-      <div>Fill in parcel details</div>
+      <div>Parcel details</div>
       <div>
         <input
           name="content"

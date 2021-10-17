@@ -30,6 +30,7 @@ const CustomerPage = () => {
         setShowPage={setShowPage}
         showpage={showPage}
       />
+
       {showPage.showQuote ? (
         <ShowQuote
           quotation={quotation}

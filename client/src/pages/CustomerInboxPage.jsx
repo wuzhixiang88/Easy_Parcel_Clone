@@ -40,7 +40,7 @@ const CustomerInboxPage = () => {
         ))}
 
       <Link to="/customer">
-        <button>Book another parcel</button>
+        <button className="btn">Book another parcel</button>
       </Link>
     </div>
   );

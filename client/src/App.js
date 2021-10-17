@@ -25,7 +25,6 @@ function App() {
           <NavSidebar />
         </div>
         <div id="page-wrapper">
-          <p>(Page Display)</p>
           <Switch>
             <Route exact path="/">
               <HomePage />
