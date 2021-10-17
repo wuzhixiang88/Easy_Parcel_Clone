@@ -1,4 +1,5 @@
 import "./App.css";
+import { useState } from "react";
 import { Route, Switch } from "react-router";
 import Navbar from "./components/Navbar";
 import NavSidebar from "./components/NavSidebar";
@@ -15,14 +16,16 @@ import Thread from "./components/Thread";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
+  const [loggedInUserRole, setLoggedInUserRole] = useState();
+
   return (
     <div className="App">
       <div id="main-nav-bar">
-        <Navbar />
+        <Navbar setLoggedInUserRole={setLoggedInUserRole} />
       </div>
       <div id="main-wrapper">
         <div id="sidebar-wrapper">
-          <NavSidebar />
+          <NavSidebar loggedInUserRole={loggedInUserRole} />
         </div>
         <div id="page-wrapper">
           <p>(Page Display)</p>
@@ -34,7 +37,7 @@ function App() {
               <AboutUsPage />
             </Route>
             <Route path="/login">
-              <LoginPage />
+              <LoginPage setLoggedInUserRole={setLoggedInUserRole} />
             </Route>
             <Route path="/signup">
               <RegisterPage />

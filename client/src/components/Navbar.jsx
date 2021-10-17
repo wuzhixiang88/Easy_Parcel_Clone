@@ -1,7 +1,7 @@
 import React from "react";
 import { Link, useHistory } from "react-router-dom";
 
-const Navbar = () => {
+const Navbar = ({ setLoggedInUserRole }) => {
   const history = useHistory();
 
   const handleClickLogout = async () => {
@@ -11,6 +11,7 @@ const Navbar = () => {
 
     if (response.ok) {
       localStorage.removeItem("username");
+      setLoggedInUserRole(null);
       history.push("/");
     }
   };
