@@ -1,6 +1,7 @@
 const express = require("express");
 const controller = express.Router();
 const userModel = require("../models/users");
+const refreshTokenModel = require("../models/refreshtoken")
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { body, validationResult } = require("express-validator");
@@ -19,7 +20,19 @@ const saltRounds = 10;
     2. Email/ Username is not a duplicate
 */
 
-controller.get("/profile");
+controller.get(
+  "/profile",
+  async (req, res) => {
+    
+  }
+);
+
+controller.put(
+  "/profile",
+  async (req, res) => {
+
+  }
+);
 
 controller.post(
   "/signup",
@@ -57,6 +70,7 @@ controller.post(
     };
     if (hashedPassword === hashedConfirmPassword) {
       await userModel.create(user);
+      await refreshTokenModel.create({ username: user.username })
       res.json({
         username: user.username,
       });
@@ -64,58 +78,108 @@ controller.post(
   }
 );
 
-controller.post("/login", async (req, res) => {
-  const { username, password } = req.body;
-  const selectedUser = await userModel.findOne({ username: username });
+controller.post(
+  "/login", 
+  async (req, res) => {
+    const { username, password } = req.body;
+    const selectedUser = await userModel.findOne({ username: username });
+    const isCorrectPassword = bcrypt.compareSync(password, selectedUser.password);
 
-  if (!selectedUser) {
-    res.json({ error: "The username entered is not valid." });
+    if ((!selectedUser) || (!isCorrectPassword)) {
+      res.json({ error: "The username/password entered is not valid." });
+    }
+
+    const token = jwt.sign(
+      { username: selectedUser.username },
+      process.env.SECRET_KEY_JWT,
+      { expiresIn: "15m" }
+    );
+
+    const refreshtoken = jwt.sign(
+      { username: selectedUser.username },
+      process.env.REFRESH_KEY_JWT,
+      { expiresIn: "4h" }
+    );
+
+    await refreshTokenModel.updateOne({ username: username }, { $set: { refreshToken: refreshtoken }})
+
+    res.cookie("jwt", token, { httpOnly: true });
+    res.cookie("refresh", refreshtoken, { httpOnly: true })
+
+    res.json({
+      role: selectedUser.role,
+      username: selectedUser.username
+    });
   }
-  const isCorrectPassword = bcrypt.compareSync(password, selectedUser.password);
+);
 
-  if (!isCorrectPassword) {
-    res.json({ error: "You have entered the wrong password!" });
+// Refresh Token Route
+
+controller.post(
+  "/token",
+  async (req, res) => {
+    let refreshToken = null;
+    if (req && req.cookies) {
+      refreshToken = req.cookies.refresh;
+    }
+    if (refreshToken === null) {
+      return res.status(401).json({ message: "You are not authorised."});
+    }
+    jwt.verify(refreshToken, process.env.REFRESH_KEY_JWT, async (err, user) => {
+      const refreshTokenExists = await refreshTokenModel.findOne(
+        { username: user.username, refreshToken: refreshToken})
+      if (!refreshTokenExists) {
+        return res.status(403)
+      }
+      if (err) return res.status(403)
+      const token = jwt.sign(
+        { username: user.username },
+        process.env.SECRET_KEY_JWT,
+        { expiresIn: "15m" }
+      );
+      const newRefreshToken = jwt.sign(
+        { username: user.username },
+        process.env.REFRESH_KEY_JWT,
+        { expiresIn: "4h" }
+      );
+      await refreshTokenModel.updateOne(
+        { username: user.username}, { $set: { refreshToken: newRefreshToken }})
+
+      res.cookie("jwt", token, { httpOnly: true });
+      res.cookie("refresh", newRefreshToken, { httpOnly: true })
+      return res.json({
+        message: "Token succesfully refreshed"
+      })
+    });
   }
-
-  const token = jwt.sign(
-    { username: selectedUser.username },
-    process.env.SECRET_KEY_JWT,
-    { expiresIn: "10m" }
-  );
-  res.cookie("jwt", token, { httpONly: true, expiresIn: "10m" });
-
-  res.json({
-    token: token,
-    role: selectedUser.role,
-    username: selectedUser.username,
-  });
-});
+)
 
 // Forgot Password Route - Might add Email Verification
 controller.put("/changepassword", async (req, res) => {
-  const selectedUser = await userModel.findOne({ username: req.body.username });
-  if (!selectedUser) {
-    res.json({ error: "The username entered is not valid." });
+  const { username, oldPassword, newPassword, confirmNewPassword } = req.body;
+  const selectedUser = await userModel.findOne({ username: username });
+  const isCorrectPassword = bcrypt.compareSync(oldPassword, selectedUser.password)
+
+  if ((!selectedUser) || (!isCorrectPassword)) {
+    res.json({ error: "The username/password entered is not valid." });
   }
-  if (bcrypt.compareSync(req.body.oldpw, selectedUser.password)) {
-    const salt = await bcrypt.genSalt(saltRounds);
-    const hashedPassword = await bcrypt.hash(req.body.password, salt);
-    const hashedConfirmPassword = await bcrypt.hash(req.body.confirmpw, salt);
-    if (hashedPassword === hashedConfirmPassword) {
-      await userModel.updateOne(
-        { username: req.body.username },
+
+  const salt = await bcrypt.genSalt(saltRounds);
+  const hashedPassword = await bcrypt.hash(newPassword, salt);
+  const hashedConfirmPassword = await bcrypt.hash(confirmNewPassword, salt);
+  if (hashedPassword === hashedConfirmPassword) {
+    await userModel.updateOne(
+        { username: username },
         { $set: { password: hashedPassword } }
-      );
-      res.json({ message: "The password has been succesfully changed." });
-    }
-  } else {
-    res.json({ error: "You have entered an invalid password" });
+    );
+    res.json({ message: "The password has been succesfully changed." });
   }
 });
 
 controller.get("/logout", (req, res) => {
-  res.clearCookie("jwt");
-  res.json({ message: "You have logout successfully." });
+  res.clearCookie("jwt", {httpOnly: true});
+  res.clearCookie("refresh", {httpOnly: true});
+  res.json({ message: "You have logged out successfully." });
 });
 
 module.exports = controller;

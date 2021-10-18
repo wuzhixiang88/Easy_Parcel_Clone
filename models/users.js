@@ -7,7 +7,11 @@ const userSchema = new Schema(
         email: { type: String, required: true, unique: true },
         password: { type: String, required: true },
         role: String,
-        parcels: [{ type: Schema.Types.ObjectId, ref: "Parcel" }]
+        firstname: String,
+        lastname: String,
+        homeAddress: String, 
+        contactNumber: String,
+        parcels: [{ type: Schema.Types.ObjectId, ref: "Parcel" }],
     }
 )
 
