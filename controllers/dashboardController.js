@@ -165,7 +165,7 @@ controller.put(
       status: "Accepted",
       deliveryman: req.user.username,
     };
-    const updatedParcel = await parcelModel.updateOne(
+    await parcelModel.updateOne(
       { _id: req.params.id },
       { $set: inputs }
     );
