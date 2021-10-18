@@ -74,7 +74,7 @@ controller.get(
     });
   }
 );
-
+//show deliveryman accepted orders
 controller.get(
   "/deliveryman/parcels",
   passport.authenticate("jwt", { session: false }),

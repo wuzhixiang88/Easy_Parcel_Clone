@@ -126,37 +126,44 @@ const Quote = ({
   return (
     <div>
       <div id="quote">
-        <h3>quote component</h3>
-
+        <h4 className="quote-header">Enter Pickup, Dropoff & Parcel Weight</h4>
+        <div>Pickup Point</div>
         <div>
           <input
             ref={inputLocationARef}
             id="pac-input"
-            className="controls"
+            className="input-group"
             type="text"
             placeholder="Origin"
           />
+        </div>
+        <div>Dropoff Point</div>
+        <div>
           <input
             ref={inputLocationBRef}
             id="pac-input2"
-            className="controls"
+            className="input-group"
             type="text"
             placeholder="Destination"
           />
+          <div>Distance (Auto)</div>
           <div ref={mapRef} id="map" style={{ display: "none" }}></div>
         </div>
 
         <input disabled type="text" placeholder="Distance" value={distance} />
         <br />
-
+        <div>Parcel Weight</div>
         <input
           type="number"
+          className="input-group"
           placeholder="Parcel Weight (kg)"
           value={parcelWeight}
           onChange={handleParcelWeightInput}
         />
         <br />
-        <button onClick={handleClickRequestQuotation}>Quote</button>
+        <button className="btn" onClick={handleClickRequestQuotation}>
+          Quote
+        </button>
         <br />
       </div>
     </div>

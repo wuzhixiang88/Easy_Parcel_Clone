@@ -90,7 +90,9 @@ const RegisterPage = () => {
         />
       </div>
       <div>
-        <button onClick={handClickRegister}>Register For Free</button>
+        <button className="btn" onClick={handClickRegister}>
+          Register For Free
+        </button>
       </div>
       <div>
         Already have an account?

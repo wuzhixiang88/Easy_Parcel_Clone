@@ -1,7 +1,7 @@
 import React from "react";
 import { Link, useHistory } from "react-router-dom";
 
-const Navbar = () => {
+const Navbar = ({ setLoggedInUserRole }) => {
   const history = useHistory();
 
   const handleClickLogout = async () => {
@@ -11,25 +11,35 @@ const Navbar = () => {
 
     if (response.ok) {
       localStorage.removeItem("username");
+      setLoggedInUserRole(null);
       history.push("/");
     }
   };
   return (
-    <div className="nav-main">
+    <div>
+      <img src="https://i.imgur.com/9gChk72.gif" height="100" />
       <ul className="nav-main">
-        <p>(Main Nav Bar)</p>
-        <li className="nav-main">
-          <Link to="/">HomePage</Link>
-        </li>
-        <li className="nav-main">
-          <Link to="/about">About</Link>
-        </li>
-        <li className="nav-main">
-          {/* use user session data to show a button to either Customer or Deliveryman Account */}
-          <Link to="/deliveryman">My Account</Link>
-        </li>
+        <Link to="/">
+          <li className="nav-main nav-main-link">Home</li>
+        </Link>
+        <Link to="/about">
+          <li className="nav-main nav-main-link">About</li>
+        </Link>
+        <Link to="/deliveryman">
+          <li className="nav-main nav-main-link">
+            {/* use user session data to show a button to either Customer or Deliveryman Account */}
+            My Account
+          </li>
+        </Link>
+        <Link to="/">
+          <li
+            className="nav-main btn-logout nav-main-link"
+            onClick={handleClickLogout}
+          >
+            Logout
+          </li>
+        </Link>
       </ul>
-      <button onClick={handleClickLogout}>Logout</button>
     </div>
   );
 };

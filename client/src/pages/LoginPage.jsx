@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 
-const LoginPage = () => {
+const LoginPage = ({ setLoggedInUserRole }) => {
   const [userDetails, setUserDetails] = useState({
     username: "",
     password: "",
@@ -39,6 +39,7 @@ const LoginPage = () => {
 
     if (result.token) {
       localStorage.setItem("username", result.username);
+      setLoggedInUserRole(result.role);
     }
 
     if (response.ok && result.role.toLowerCase() === "customer") {
@@ -68,7 +69,9 @@ const LoginPage = () => {
         />
       </div>
       <div>
-        <button onClick={handleClickLogin}>Login</button>
+        <button className="btn" onClick={handleClickLogin}>
+          Login
+        </button>
       </div>
       <div>
         Don't have an account?

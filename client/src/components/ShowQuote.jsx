@@ -10,24 +10,26 @@ const ShowQuote = (props) => {
 
   return (
     <div id="showquote">
-      <h3>show quote component</h3>
+      <h4 className="quote-header">We found the best rate for you!</h4>
       <table id="quote-table">
-        <tbody>
-          <tr>
-            <th>Company</th>
-            <th>Service Type</th>
-            <th>Estimated Duration</th>
-            <th>Quotation</th>
+        <tbody id="quote-table-body">
+          <tr className="quote-table-cells">
+            <th className="quote-table-header">Company</th>
+            <th className="quote-table-header">Service Type</th>
+            <th className="quote-table-header">Estimated Duration</th>
+            <th className="quote-table-header">Quotation</th>
           </tr>
           <tr>
-            <td>JKZ Transportation</td>
-            <td>Door-to-Door</td>
-            <td>{props.duration}</td>
-            <td>${props.quotation}</td>
+            <td className="quote-table-cells">JKZ Transportation</td>
+            <td className="quote-table-cells">Door-to-Door</td>
+            <td className="quote-table-cells">{props.duration}</td>
+            <td className="quote-table-cells">${props.quotation}</td>
           </tr>
         </tbody>
       </table>
-      <button onClick={handleClickProceedQuotation}>Proceed</button>
+      <button className="btn" onClick={handleClickProceedQuotation}>
+        Proceed
+      </button>
     </div>
   );
 };

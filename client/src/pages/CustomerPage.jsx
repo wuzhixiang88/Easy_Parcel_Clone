@@ -19,7 +19,7 @@ const CustomerPage = () => {
   const loggedInUser = localStorage.getItem("username");
 
   return (
-    <div>
+    <div id="customer-page">
       <h2>Welcome {loggedInUser} </h2>
       <Quote
         setQuotation={setQuotation}
@@ -30,6 +30,7 @@ const CustomerPage = () => {
         setShowPage={setShowPage}
         showpage={showPage}
       />
+
       {showPage.showQuote ? (
         <ShowQuote
           quotation={quotation}

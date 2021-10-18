@@ -14,10 +14,6 @@ const DeliveryRoute = () => {
         headers: {
           "content-type": "application/json",
         },
-        body: JSON.stringify({
-          status: "Accepted",
-          deliverman: "",
-        }),
       }
     );
 

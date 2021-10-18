@@ -15,7 +15,7 @@ const CustomerInboxPage = () => {
 
   return (
     <div>
-      <h2>Customer Inbox Page</h2>
+      <h2>Your Inbox</h2>
       <h4>Your Parcels</h4>
       {parcels.length !== 0 &&
         parcels.map((parcel) => (
@@ -40,7 +40,7 @@ const CustomerInboxPage = () => {
         ))}
 
       <Link to="/customer">
-        <button>Book another parcel</button>
+        <button className="btn">Book another parcel</button>
       </Link>
     </div>
   );
