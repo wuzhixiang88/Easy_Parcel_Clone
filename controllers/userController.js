@@ -23,7 +23,7 @@ const saltRounds = 10;
 controller.get(
   "/profile",
   async (req, res) => {
-    const user = userModel.findOne({ username: req.user.username })
+    const user = userModel.findOne({ username: req.user.username }, { parcels: 0, password: 0, role: 0 })
     res.json({
       user: user
     })

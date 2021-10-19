@@ -16,7 +16,9 @@ import Thread from "./components/Thread";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
-  const [loggedInUserRole, setLoggedInUserRole] = useState();
+  const [loggedInUserRole, setLoggedInUserRole] = useState(() => {
+    return localStorage.getItem("role");
+  });
 
   return (
     <div className="App">

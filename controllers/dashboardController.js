@@ -78,13 +78,35 @@ controller.get(
   async (req, res) => {
     const parcels = await userModel
       .findOne({ username: req.user.username })
-      .populate("parcels")
-      .exec();
+      .populate({
+        path: "parcels",
+        match: { $not: { status: "Delivered" }}
+      })
+      .exec()
     res.json({
       parcels: parcels.parcels,
     });
   }
 );
+
+controller.get(
+  "/customer/parcels/completed",
+  passport.authenticate("jwt", { session: false }),
+  roleCheck("customer"),
+  async (req, res) => {
+    const parcels = await userModel
+      .findOne({ username: req.user.username })
+      .populate({
+        path: "parcels",
+        match: { status: "Delivered" }
+      })
+      .exec()
+    res.json({
+      parcels: parcels.parcels,
+    });
+  }
+);
+
 
 // Show all Available Orders (Deliveryman)
 controller.get(
@@ -106,13 +128,34 @@ controller.get(
   async (req, res) => {
     const parcels = await userModel
       .findOne({ username: req.user.username })
-      .populate("parcels")
+      .populate({
+        path: "parcels",
+        match: { $or: [{ status: "Accepted" }, { status: "Transit" }]}
+      })
       .exec();
     res.json({
       parcels: parcels.parcels,
     });
   }
 );
+
+controller.get(
+  "deliveryman/parcels/completed",
+  passport.authenticate("jwt", { session: false }),
+  roleCheck("deliveryman"),
+  async (req, res) => {
+    const parcelsDelivered = await userModel
+      .findOne({ username: req.user.username })
+      .populate({
+        path: "parcels",
+        match: { status: "Delivered" }
+      })
+      .exec();
+    res.json({
+      parcels: parcelsDelivered
+    })
+  }
+)
 
 // Show Individual Parcel Details (Customer)
 controller.get(

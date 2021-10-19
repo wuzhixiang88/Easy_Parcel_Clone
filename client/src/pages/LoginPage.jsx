@@ -38,7 +38,7 @@ const LoginPage = ({ setLoggedInUserRole }) => {
     } else {
       localStorage.setItem("username", result.username);
       localStorage.setItem("role", result.role);
-      setLoggedInUserRole(localStorage.getItem("role"));
+      setLoggedInUserRole(result.role);
     }
 
     if (response.ok && result.role.toLowerCase() === "customer") {
