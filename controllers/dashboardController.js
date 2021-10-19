@@ -80,13 +80,9 @@ controller.get(
       .findOne({ username: req.user.username })
       .populate("parcels")
       .exec();
-    if (parcels.parcels.length < 1) {
-      res.json({ message: "You have no parcels." });
-    } else {
-      res.json({
-        parcels: parcels.parcels,
-      });
-    }
+    res.json({
+      parcels: parcels.parcels,
+    });
   }
 );
 
@@ -112,13 +108,9 @@ controller.get(
       .findOne({ username: req.user.username })
       .populate("parcels")
       .exec();
-    if (parcels.parcels.length < 1) {
-      res.json({ message: "You have no parcels." });
-    } else {
-      res.json({
-        parcels: parcels.parcels,
-      });
-    }
+    res.json({
+      parcels: parcels.parcels,
+    });
   }
 );
 
