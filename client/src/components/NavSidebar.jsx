@@ -37,7 +37,7 @@ const NavSidebar = ({ loggedInUserRole }) => {
             <Link to="/deliveryman">Available Jobs</Link>
           </li>
           <li>
-            <Link to="/deliverymaninbox">Inbox</Link>
+            <Link to="/deliverymaninbox">Accepted Jobs</Link>
           </li>
         </ul>
       );
