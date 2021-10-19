@@ -10,10 +10,14 @@ const NavSidebar = ({ loggedInUserRole }) => {
         <ul>
           Guest Nav
           <li>
-            <Link to="/login">Login</Link>
+            <Link className="sidebar-nav-link" to="/login">
+              <button className="btn">Login</button>
+            </Link>
           </li>
           <li>
-            <Link to="/signup">Sign Up</Link>
+            <Link className="sidebar-nav-link" to="/signup">
+              <button className="btn">Sign Up</button>
+            </Link>
           </li>
         </ul>
       );
@@ -22,10 +26,14 @@ const NavSidebar = ({ loggedInUserRole }) => {
         <ul>
           Customer Nav
           <li>
-            <Link to="/customer">Book a Parcel</Link>
+            <Link className="sidebar-nav-link" to="/customer">
+              <button className="btn">Book a Parcel</button>
+            </Link>
           </li>
           <li>
-            <Link to="/customerinbox">Inbox</Link>
+            <Link className="sidebar-nav-link" to="/customerinbox">
+              <button className="btn">Inbox</button>
+            </Link>
           </li>
         </ul>
       );
@@ -34,10 +42,14 @@ const NavSidebar = ({ loggedInUserRole }) => {
         <ul>
           Deliveryman Nav
           <li>
-            <Link to="/deliveryman">Available Jobs</Link>
+            <Link className="sidebar-nav-link" to="/deliveryman">
+              <button className="btn">Available Jobs</button>
+            </Link>
           </li>
           <li>
-            <Link to="/deliverymaninbox">Accepted Jobs</Link>
+            <Link className="sidebar-nav-link" to="/deliverymaninbox">
+              <button className="btn">Accepted Jobs</button>
+            </Link>
           </li>
         </ul>
       );

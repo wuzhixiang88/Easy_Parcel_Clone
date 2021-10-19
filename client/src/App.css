@@ -111,13 +111,17 @@ ul li {
 #sidebar-wrapper {
   vertical-align: text-top;
   display: inline-block;
-  width: 150px;
+  width: 200px;
   height: 100vh;
   background-color: #5b7c93;
 }
 
 #nav-sidebar {
   text-align: left;
+}
+
+.sidebar-nav-link {
+  color: white;
 }
 
 #page-wrapper {
@@ -226,21 +230,32 @@ body {
   padding: 10px;
   margin: 10px;
   border-radius: 10px;
+  max-width: 400px;
 }
 
 .btn {
   margin: 5px;
-  background-color: #072b4d;
+  background-color: #7f8d98;
   color: white;
+  min-width: 80px;
 }
 
-a:visited {
+.btn:hover {
+  background-color: #7f8d98;
+}
+.btn:visited .btn:active {
+  color: white;
+  background-color: #7f8d98;
+}
+
+a:visited a:active a:link {
   color: white;
   text-decoration: none;
+  background-color: #7f8d98;
 }
 
 a:hover {
-  color: #cbc7cb;
+  color: white;
   text-decoration: none;
 }
 
