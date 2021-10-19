@@ -20,12 +20,14 @@ const HomePage = () => {
         <li>Get a quote</li>
         <li>Book a Parcel!</li>
       </ul>
-      <Link to="/login">
-        <Button variant="secondary">Login</Button>
-      </Link>
-      <Link to="/signup">
-        <Button variant="secondary">Sign Up</Button>
-      </Link>
+      <div style={{ marginLeft: "-5px" }}>
+        <Link to="/login">
+          <Button variant="secondary">Login</Button>
+        </Link>
+        <Link to="/signup">
+          <Button variant="secondary">Sign Up</Button>
+        </Link>
+      </div>
     </div>
   );
 };

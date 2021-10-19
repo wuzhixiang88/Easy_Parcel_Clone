@@ -116,7 +116,7 @@ const LoginPage = ({ setLoggedInUserRole }) => {
               {errors.password}
             </Form.Control.Feedback>
           </Form.Group>
-          <Form.Group>
+          <Form.Group style={{ marginLeft: "-5px" }}>
             <Button variant="secondary" onClick={handleClickLogin}>
               Login
             </Button>
@@ -124,7 +124,7 @@ const LoginPage = ({ setLoggedInUserRole }) => {
         </Form>
       </div>
       <div>
-        <p style={{ marginLeft: "0.5rem" }}>
+        <p style={{ marginLeft: "0.2rem" }}>
           Don't have an account?
           <Link to="/signup"> Register now</Link>
         </p>

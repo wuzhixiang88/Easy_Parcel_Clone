@@ -168,7 +168,7 @@ const RegisterPage = () => {
               {errors.role}
             </Form.Control.Feedback>
           </Form.Group>
-          <Form.Group>
+          <Form.Group style={{ marginLeft: "-5px" }}>
             <Button variant="secondary" onClick={handClickRegister}>
               Register For Free
             </Button>
@@ -176,7 +176,7 @@ const RegisterPage = () => {
         </Form>
       </div>
       <div>
-        <p style={{ marginLeft: "0.5rem" }}>
+        <p style={{ marginLeft: "0.2rem" }}>
           Already have an account?
           <Link to="/login"> Login now</Link>
         </p>
