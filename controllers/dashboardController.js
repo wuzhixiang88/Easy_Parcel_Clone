@@ -130,7 +130,7 @@ controller.get(
       .findOne({ username: req.user.username })
       .populate({
         path: "parcels",
-        match: { $or: [{ status: "Accepted" }, { status: "In Transit" }]}
+        match: { $or: [{ status: "Accepted" }, { status: "Transit" }]}
       })
       .exec();
     res.json({
