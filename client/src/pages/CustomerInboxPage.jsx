@@ -13,9 +13,11 @@ const CustomerInboxPage = () => {
     fetchParcels();
   }, []);
 
+  const loggedInUser = localStorage.getItem("username");
+
   return (
     <div>
-      <h2>Inbox</h2>
+      <h3>{loggedInUser}'s inbox</h3>
       <h4>Your Parcels</h4>
       {parcels.length !== 0 &&
         parcels.map((parcel) => (

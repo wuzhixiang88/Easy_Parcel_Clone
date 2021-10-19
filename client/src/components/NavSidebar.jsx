@@ -7,51 +7,57 @@ const NavSidebar = ({ loggedInUserRole }) => {
   useEffect(() => {
     if (!loggedInUserRole) {
       setNavSideBar(
-        <ul>
-          Guest Nav
-          <li>
-            <Link className="sidebar-nav-link" to="/login">
-              <button className="btn">Login</button>
-            </Link>
-          </li>
-          <li>
-            <Link className="sidebar-nav-link" to="/signup">
-              <button className="btn">Sign Up</button>
-            </Link>
-          </li>
-        </ul>
+        <div className="sidebar-nav-link">
+          <h4 className="sidebar-nav-title">Welcome, Guest!</h4>
+          <ul>
+            <li>
+              <Link to="/login">
+                <button className="btn">Login</button>
+              </Link>
+            </li>
+            <li>
+              <Link to="/signup">
+                <button className="btn">Sign Up</button>
+              </Link>
+            </li>
+          </ul>
+        </div>
       );
     } else if (loggedInUserRole.toLowerCase() === "customer") {
       setNavSideBar(
-        <ul>
-          Customer Nav
-          <li>
-            <Link className="sidebar-nav-link" to="/customer">
-              <button className="btn">Book a Parcel</button>
-            </Link>
-          </li>
-          <li>
-            <Link className="sidebar-nav-link" to="/customerinbox">
-              <button className="btn">Inbox</button>
-            </Link>
-          </li>
-        </ul>
+        <div className="sidebar-nav-link">
+          <h4 className="sidebar-nav-title">Your Dashboard</h4>
+          <ul>
+            <li>
+              <Link to="/customer">
+                <button className="btn">Book a Parcel</button>
+              </Link>
+            </li>
+            <li>
+              <Link to="/customerinbox">
+                <button className="btn">Inbox</button>
+              </Link>
+            </li>
+          </ul>
+        </div>
       );
     } else if (loggedInUserRole.toLowerCase() === "deliveryman") {
       setNavSideBar(
-        <ul>
-          Deliveryman Nav
-          <li>
-            <Link className="sidebar-nav-link" to="/deliveryman">
-              <button className="btn">Available Jobs</button>
-            </Link>
-          </li>
-          <li>
-            <Link className="sidebar-nav-link" to="/deliverymaninbox">
-              <button className="btn">Accepted Jobs</button>
-            </Link>
-          </li>
-        </ul>
+        <div className="sidebar-nav-link">
+          <h4 className="sidebar-nav-title">Your Dashboard</h4>
+          <ul>
+            <li>
+              <Link to="/deliveryman">
+                <button className="btn">Available Jobs</button>
+              </Link>
+            </li>
+            <li>
+              <Link to="/deliverymaninbox">
+                <button className="btn">Accepted Jobs</button>
+              </Link>
+            </li>
+          </ul>
+        </div>
       );
     }
   }, [loggedInUserRole]);

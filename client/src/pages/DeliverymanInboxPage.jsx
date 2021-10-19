@@ -13,10 +13,12 @@ const DeliverymanInboxPage = () => {
     fetchParcels();
   }, []);
 
+  const loggedInUser = localStorage.getItem("username");
+
   return (
     <div>
-      <h2>Deliveryman Inbox Page</h2>
-      <h4>Your Accepted Jobs</h4>
+      <h3>{loggedInUser}'s inbox</h3>
+      <h4>Accepted Jobs</h4>
       {parcels.length !== 0 &&
         parcels.map((parcel) => (
           <Link
@@ -31,7 +33,7 @@ const DeliverymanInboxPage = () => {
               },
             }}
           >
-            <div className="parcel-customer-show">
+            <div className="parcel-deliveryman-show">
               <p>
                 <b>Parcel ID: </b>
                 {parcel._id}
@@ -56,7 +58,7 @@ const DeliverymanInboxPage = () => {
         ))}
 
       <Link to="/deliveryman">
-        <button>Browse More Jobs</button>
+        <button className="btn">Browse More Jobs</button>
       </Link>
     </div>
   );

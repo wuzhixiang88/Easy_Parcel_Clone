@@ -13,8 +13,11 @@ const CustomerInboxPage = () => {
     fetchParcels();
   }, []);
 
+  const loggedInUser = localStorage.getItem("username");
+
   return (
     <div>
+      <h3>Welcome {loggedInUser}</h3>
       <h4>Available Parcels</h4>
       {parcels.length !== 0 &&
         parcels.map((parcel) => (
@@ -28,7 +31,7 @@ const CustomerInboxPage = () => {
               },
             }}
           >
-            <div className="parcel-customer-show">
+            <div className="parcel-deliveryman-show">
               <p>
                 <b>Parcel ID: </b>
                 {parcel._id}
