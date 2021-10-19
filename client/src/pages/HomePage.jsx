@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
+import Button from "react-bootstrap/Button";
 
 const HomePage = () => {
   return (
@@ -20,10 +21,10 @@ const HomePage = () => {
         <li>Book a Parcel!</li>
       </ul>
       <Link to="/login">
-        <button className="btn">Login</button>
+        <Button variant="secondary">Login</Button>
       </Link>
       <Link to="/signup">
-        <button className="btn">Sign Up</button>
+        <Button variant="secondary">Sign Up</Button>
       </Link>
     </div>
   );
