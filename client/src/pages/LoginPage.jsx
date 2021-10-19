@@ -35,11 +35,10 @@ const LoginPage = ({ setLoggedInUserRole }) => {
 
     if (result.error) {
       alert("Cannot login");
-    }
-
-    if (result.token) {
+    } else {
       localStorage.setItem("username", result.username);
-      setLoggedInUserRole(result.role);
+      localStorage.setItem("role", result.role);
+      setLoggedInUserRole(localStorage.getItem("role"));
     }
 
     if (response.ok && result.role.toLowerCase() === "customer") {

@@ -7,13 +7,15 @@ const { body, validationResult } = require("express-validator");
 
 // Role Check Middleware
 function roleCheck(role) {
-   return (req, res, next) => {
-     if (req.user.role.includes(role)) {
-       next()
-     } else {
-       res.status(401).json({ message: "You are not authorised to access this page." })
-     }
-   }
+  return (req, res, next) => {
+    if (req.user.role.includes(role)) {
+      next();
+    } else {
+      res
+        .status(401)
+        .json({ message: "You are not authorised to access this page." });
+    }
+  };
 }
 
 // Post A Parcel Route (Customer) - Add Server Side Validation
@@ -165,10 +167,7 @@ controller.put(
       status: "Accepted",
       deliveryman: req.user.username,
     };
-    await parcelModel.updateOne(
-      { _id: req.params.id },
-      { $set: inputs }
-    );
+    await parcelModel.updateOne({ _id: req.params.id }, { $set: inputs });
     await userModel.updateOne(
       { username: req.user.username },
       { $push: { parcels: req.params.id } }
@@ -179,13 +178,13 @@ controller.put(
   }
 );
 
-controller.put(
+controller.patch(
   "/deliveryman/parcels/:id",
   passport.authenticate("jwt", { session: false }),
   roleCheck("deliveryman"),
   async (req, res) => {
     const inputs = {
-      status: req.body.statusUpdate,
+      status: req.body.status,
     };
     await parcelModel.updateOne({ _id: req.params.id }, { $set: inputs });
     res.json({

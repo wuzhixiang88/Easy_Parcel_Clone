@@ -1,7 +1,7 @@
 import React from "react";
 import { Link, useHistory } from "react-router-dom";
 
-const Navbar = ({ setLoggedInUserRole }) => {
+const Navbar = ({ loggedInUserRole, setLoggedInUserRole }) => {
   const history = useHistory();
 
   const handleClickLogout = async () => {
@@ -11,13 +11,14 @@ const Navbar = ({ setLoggedInUserRole }) => {
 
     if (response.ok) {
       localStorage.removeItem("username");
+      localStorage.removeItem("role");
       setLoggedInUserRole(null);
       history.push("/");
     }
   };
   return (
     <div>
-      <img src="https://i.imgur.com/9gChk72.gif" height="100" />
+      <img src="https://i.imgur.com/9gChk72.gif" alt="..." height="100" />
       <ul className="nav-main">
         <Link to="/">
           <li className="nav-main nav-main-link">Home</li>
@@ -31,14 +32,14 @@ const Navbar = ({ setLoggedInUserRole }) => {
             My Account
           </li>
         </Link>
-        <Link to="/">
+        {loggedInUserRole ? (
           <li
             className="nav-main btn-logout nav-main-link"
             onClick={handleClickLogout}
           >
             Logout
           </li>
-        </Link>
+        ) : null}
       </ul>
     </div>
   );
