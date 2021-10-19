@@ -12,7 +12,7 @@ const CustomerInboxPage = () => {
     };
     fetchParcels();
   }, []);
-
+  console.log(parcels);
   return (
     <div>
       <h2>Your Inbox</h2>
