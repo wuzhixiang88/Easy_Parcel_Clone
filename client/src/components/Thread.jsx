@@ -48,26 +48,21 @@ const Thread = () => {
 
   return (
     <>
-      <Link to="/deliverymaninbox">
-        <button>Back To Inbox</button>
-      </Link>
-      <div>Parcel ID: {parcelId}</div>
-      <div>Deliver To: {receivingCustomer}</div>
       <div>
-        {status === "Accepted" ? (
-          <button onClick={handleClickTransit}>
-            Update Parcel Status to "Transit"
-          </button>
-        ) : null}
-        {status === "Transit" ? (
-          <button onClick={handleClickDelivered}>
-            Update Parcel Status to "Delivered"
-          </button>
-        ) : null}
-        {status === "Delivered" ? (
-          <button disabled>Job Completed</button>
-        ) : null}
+        <h3>Parcel ID: {parcelId}</h3>
       </div>
+      <div>
+        <h4>Current Status: {status}</h4>
+      </div>
+      <div>
+        <h5>Receiver Name: {receivingCustomer}</h5>
+      </div>
+      <div>
+        <h5>
+          From {origin} to {destination}
+        </h5>
+      </div>
+
       <div>
         <iframe
           title="Route"
@@ -78,6 +73,26 @@ const Thread = () => {
           src={`https://www.google.com/maps/embed/v1/directions?key=${process.env.REACT_APP_GMAP_API_KEY}&origin=${origin}&destination=${destination}`}
         ></iframe>
       </div>
+      <div>
+        <Link to="/deliverymaninbox">
+          <button className="btn">Back To Inbox</button>
+        </Link>
+      </div>
+      <div>
+        {status === "Accepted" ? (
+          <button className="btn" onClick={handleClickTransit}>
+            Update Parcel Status to "Transit"
+          </button>
+        ) : null}
+        {status === "Transit" ? (
+          <button className="btn" onClick={handleClickDelivered}>
+            Update Parcel Status to "Delivered"
+          </button>
+        ) : null}
+        {status === "Delivered" ? (
+          <button disabled>Job Completed</button>
+        ) : null}
+      </div>
       <div>TO DISPLAY CHAT MESSAGES HERE</div>
       <div>
         <input
@@ -86,7 +101,9 @@ const Thread = () => {
           autofocus="autofocus"
           placeholder="Type here..."
         />
-        <button type="submit">Send</button>
+        <button className="btn" type="submit">
+          Send
+        </button>
       </div>
     </>
   );

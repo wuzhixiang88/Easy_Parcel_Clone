@@ -12,10 +12,12 @@ const CustomerInboxPage = () => {
     };
     fetchParcels();
   }, []);
-  console.log(parcels);
+
+  const loggedInUser = localStorage.getItem("username");
+
   return (
     <div>
-      <h2>Your Inbox</h2>
+      <h3>{loggedInUser}'s inbox</h3>
       <h4>Your Parcels</h4>
       {parcels.length !== 0 &&
         parcels.map((parcel) => (

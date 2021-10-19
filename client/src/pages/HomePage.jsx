@@ -19,12 +19,12 @@ const HomePage = () => {
         <li>Get a quote</li>
         <li>Book a Parcel!</li>
       </ul>
-      <button className="btn">
-        <Link to="/login">Login</Link>
-      </button>
-      <button className="btn">
-        <Link to="/signup">Sign Up</Link>
-      </button>
+      <Link to="/login">
+        <button className="btn">Login</button>
+      </Link>
+      <Link to="/signup">
+        <button className="btn">Sign Up</button>
+      </Link>
     </div>
   );
 };

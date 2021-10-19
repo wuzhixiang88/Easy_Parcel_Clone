@@ -30,8 +30,10 @@
 
 ul li {
   list-style-type: none;
-  padding: 1;
+  list-style-position: inside;
+  padding-left: 0;
   margin: 0;
+  text-indent: -10;
 }
 
 @keyframes App-logo-spin {
@@ -97,6 +99,7 @@ ul li {
 
 .images {
   border-radius: 10px;
+  margin-right: 10px;
 }
 
 #main-wrapper {
@@ -111,13 +114,21 @@ ul li {
 #sidebar-wrapper {
   vertical-align: text-top;
   display: inline-block;
-  width: 150px;
+  width: 200px;
   height: 100vh;
   background-color: #5b7c93;
 }
 
 #nav-sidebar {
   text-align: left;
+}
+
+.sidebar-nav-link {
+  display: inline-block;
+  width: 200px;
+}
+.sidebar-nav-title {
+  text-indent: 20px;
 }
 
 #page-wrapper {
@@ -140,8 +151,7 @@ ul li {
 }
 
 /* Optional: Makes the sample page fill the window. */
-html,
-body {
+html body {
   height: 100%;
   margin: 0;
   padding: 0;
@@ -221,26 +231,53 @@ body {
   width: 345px;
 }
 
-.parcel-customer-show {
-  background-color: #6f889b;
+.parcel-deliveryman-show {
+  background-color: #072b4d;
   padding: 10px;
   margin: 10px;
   border-radius: 10px;
+  max-width: 400px;
+  color: white;
+}
+
+.parcel-customer-show {
+  background-color: #072b4d;
+  padding: 10px;
+  margin: 10px;
+  border-radius: 10px;
+  max-width: 400px;
+  color: white;
+}
+
+.parcel-deliveryman-show:hover {
+  text-decoration: none;
+  background-color: #154664;
+  color: white;
 }
 
 .btn {
   margin: 5px;
-  background-color: #072b4d;
+  background-color: #7f8d98;
   color: white;
+  min-width: 80px;
 }
 
-a:visited {
+.btn:hover {
+  background-color: #7f8d98;
+}
+.btn:visited .btn:active {
+  color: white;
+  background-color: #7f8d98;
+}
+
+a:visited a:active a:link {
   color: white;
   text-decoration: none;
+  background-color: #7f8d98;
 }
 
 a:hover {
-  color: #cbc7cb;
+  color: white;
   text-decoration: none;
 }
 
@@ -250,4 +287,19 @@ a:hover {
   color: white;
   margin-right: 10px;
 }
+
+.btn-logout:hover {
+  cursor: pointer;
+}
+
+.about-us-div {
+  display: inline-flex;
+  margin-bottom: 20px;
+}
+
+.about-us-para {
+  text-align: justify;
+  margin-right: 10px;
+}
+
 /* FOR GOOGLE MAP */

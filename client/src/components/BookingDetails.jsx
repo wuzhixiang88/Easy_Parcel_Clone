@@ -177,7 +177,9 @@ const BookingDetails = ({ location, quotation, duration, parcelWeight }) => {
 
       <div>
         {/* <Link to="/customerinbox"> */}
-        <button onClick={handleSubmit}>Confirm Order</button>
+        <button className="btn" onClick={handleSubmit}>
+          Confirm Order
+        </button>
         {/* </Link> */}
       </div>
     </div>
