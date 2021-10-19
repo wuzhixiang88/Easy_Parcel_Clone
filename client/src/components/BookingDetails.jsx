@@ -7,18 +7,14 @@ const BookingDetails = ({ location, quotation, duration, parcelWeight }) => {
     senderName: "",
     senderEmailAddress: "",
     senderContactNum: "",
-    senderAddress: "",
     senderUnitNum: "",
-    senderPostal: "",
   });
 
   const [receiverDetails, setReceiverDetails] = useState({
     receiverName: "",
     receiverEmailAddress: "",
     receiverContactNum: "",
-    receiverAddress: "",
     receiverUnitNum: "",
-    receiverPostal: "",
   });
 
   const [parcelDetails, setParcelDetails] = useState({
@@ -74,17 +70,13 @@ const BookingDetails = ({ location, quotation, duration, parcelWeight }) => {
           name: senderDetails.senderName,
           emailAddress: senderDetails.senderEmailAddress,
           contactNumber: senderDetails.senderContactNum,
-          address: senderDetails.senderAddress,
           unitNum: senderDetails.senderUnitNum,
-          postalCode: senderDetails.senderPostal,
         },
         receiverDetails: {
           name: receiverDetails.receiverName,
           emailAddress: receiverDetails.receiverEmailAddress,
           contactNumber: receiverDetails.receiverContactNum,
-          address: receiverDetails.receiverAddress,
           unitNum: receiverDetails.receiverUnitNum,
-          postalCode: receiverDetails.receiverPostal,
         },
       }),
     });
@@ -111,30 +103,18 @@ const BookingDetails = ({ location, quotation, duration, parcelWeight }) => {
           value={senderDetails.emailAddress}
           onChange={handleInputChange}
         />
+      </div>
+      <div>
         <input
           name="senderContactNum"
           placeholder="Contact No."
           value={senderDetails.contactNum}
           onChange={handleInputChange}
         />
-      </div>
-      <div>
-        <input
-          name="senderAddress"
-          placeholder="Address"
-          value={senderDetails.address}
-          onChange={handleInputChange}
-        />
         <input
           name="senderUnitNum"
           placeholder="Unit No."
           value={senderDetails.unitNum}
-          onChange={handleInputChange}
-        />
-        <input
-          name="senderPostal"
-          placeholder="Postal"
-          value={senderDetails.postal}
           onChange={handleInputChange}
         />
       </div>
@@ -153,30 +133,18 @@ const BookingDetails = ({ location, quotation, duration, parcelWeight }) => {
           value={receiverDetails.emailAddress}
           onChange={handleInputChange}
         />
+      </div>
+      <div>
         <input
           name="receiverContactNum"
           placeholder="Contact No."
           value={receiverDetails.contactNum}
           onChange={handleInputChange}
         />
-      </div>
-      <div>
-        <input
-          name="receiverAddress"
-          placeholder="Address"
-          value={receiverDetails.address}
-          onChange={handleInputChange}
-        />
         <input
           name="receiverUnitNum"
           placeholder="Unit No."
           value={receiverDetails.unitNum}
-          onChange={handleInputChange}
-        />
-        <input
-          name="receiverPostal"
-          placeholder="Postal"
-          value={receiverDetails.postal}
           onChange={handleInputChange}
         />
       </div>
