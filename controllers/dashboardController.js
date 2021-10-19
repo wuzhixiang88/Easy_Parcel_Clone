@@ -18,6 +18,18 @@ function roleCheck(role) {
   };
 }
 
+controller.get(
+  "/customer/new",
+  passport.authenticate("jwt", { session: false }),
+  roleCheck("customer"),
+  async (req, res) => {
+    const user = userModel.findOne({ username: req.user.username })
+    res.json({
+      user: user.username
+    })
+  }
+)
+
 // Post A Parcel Route (Customer) - Add Server Side Validation
 controller.post(
   "/customer/new",

@@ -23,7 +23,10 @@ const saltRounds = 10;
 controller.get(
   "/profile",
   async (req, res) => {
-    
+    const user = userModel.findOne({ username: req.user.username })
+    res.json({
+      user: user
+    })
   }
 );
 
@@ -103,8 +106,8 @@ controller.post(
 
     await refreshTokenModel.updateOne({ username: username }, { $set: { refreshToken: refreshtoken }})
 
-    res.cookie("jwt", token, { httpOnly: true });
-    res.cookie("refresh", refreshtoken, { httpOnly: true })
+    res.cookie("jwt", token, { httpOnly: true, sameSite: "strict" });
+    res.cookie("refresh", refreshtoken, { httpOnly: true, sameSite: "strict" })
 
     res.json({
       role: selectedUser.role,
@@ -129,9 +132,9 @@ controller.post(
       const refreshTokenExists = await refreshTokenModel.findOne(
         { username: user.username, refreshToken: refreshToken})
       if (!refreshTokenExists) {
-        return res.status(403)
+        return res.status(401)
       }
-      if (err) return res.status(403)
+      if (err) return res.status(401)
       const token = jwt.sign(
         { username: user.username },
         process.env.SECRET_KEY_JWT,
