@@ -31,8 +31,8 @@ const DeliveryRoute = () => {
       <div>
         <iframe
           title="Route"
-          width="600"
-          height="450"
+          width="800"
+          height="500"
           loading="lazy"
           allowfullscreen
           src={`https://www.google.com/maps/embed/v1/directions?key=${process.env.REACT_APP_GMAP_API_KEY}&origin=${origin}&destination=${destination}`}

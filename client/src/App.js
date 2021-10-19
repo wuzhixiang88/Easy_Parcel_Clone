@@ -21,7 +21,10 @@ function App() {
   return (
     <div className="App">
       <div id="main-nav-bar">
-        <Navbar setLoggedInUserRole={setLoggedInUserRole} />
+        <Navbar
+          loggedInUserRole={loggedInUserRole}
+          setLoggedInUserRole={setLoggedInUserRole}
+        />
       </div>
       <div id="main-wrapper">
         <div id="sidebar-wrapper">

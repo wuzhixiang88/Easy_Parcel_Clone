@@ -23,9 +23,10 @@ const DeliverymanInboxPage = () => {
             to={{
               pathname: `/deliverymaninbox/${parcel._id}`,
               state: {
+                parcelId: parcel._id,
+                parcelStatus: parcel.status,
                 origin: parcel.location.origin,
                 destination: parcel.location.destination,
-                parcelId: parcel._id,
                 receivingCustomer: parcel.receiverDetails.name,
               },
             }}
