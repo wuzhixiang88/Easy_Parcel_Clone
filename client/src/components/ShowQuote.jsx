@@ -1,4 +1,7 @@
 import React from "react";
+import "bootstrap/dist/css/bootstrap.min.css";
+import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
 
 const ShowQuote = (props) => {
   const handleClickProceedQuotation = () => {
@@ -27,9 +30,11 @@ const ShowQuote = (props) => {
           </tr>
         </tbody>
       </table>
-      <button className="btn" onClick={handleClickProceedQuotation}>
-        Proceed
-      </button>
+      <Form.Group style={{ marginLeft: "-5px" }}>
+        <Button variant="secondary" onClick={handleClickProceedQuotation}>
+          Proceed
+        </Button>
+      </Form.Group>
     </div>
   );
 };
