@@ -12,7 +12,8 @@ import DeliverymanPage from "./pages/DeliverymanPage";
 import DeliveryRoute from "./components/DeliveryRoute";
 import DeliverymanInboxPage from "./pages/DeliverymanInboxPage";
 import AboutUsPage from "./pages/AboutUsPage";
-import Thread from "./components/Thread";
+import DeliverymanThread from "./components/DeliverymanThread";
+import CustomerThread from "./components/CustomerThread";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
@@ -49,8 +50,11 @@ function App() {
             <Route path="/customer">
               <CustomerPage />
             </Route>
-            <Route path="/customerinbox">
+            <Route exact path="/customerinbox">
               <CustomerInboxPage />
+            </Route>
+            <Route exact path="/customerinbox/:id">
+              <CustomerThread />
             </Route>
             <Route path="/deliveryman">
               <DeliverymanPage />
@@ -62,7 +66,7 @@ function App() {
               <DeliverymanInboxPage />
             </Route>
             <Route exact path="/deliverymaninbox/:id">
-              <Thread />
+              <DeliverymanThread />
             </Route>
           </Switch>
         </div>

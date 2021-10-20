@@ -17,7 +17,9 @@ const DeliverymanInboxPage = () => {
 
   return (
     <div>
-      <h3>{loggedInUser}'s inbox</h3>
+      <h3>
+        {loggedInUser !== null ? loggedInUser.toUpperCase() : null}'s Inbox
+      </h3>
       <h4>Accepted Jobs</h4>
       {parcels.length !== 0 &&
         parcels.map((parcel) => (

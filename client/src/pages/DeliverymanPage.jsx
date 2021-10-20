@@ -17,7 +17,9 @@ const CustomerInboxPage = () => {
 
   return (
     <div>
-      <h3>Welcome {loggedInUser}</h3>
+      <h3>
+        Welcome {loggedInUser !== null ? loggedInUser.toUpperCase() : null}!
+      </h3>
       <h4>Available Parcels</h4>
       {parcels.length !== 0 &&
         parcels.map((parcel) => (
