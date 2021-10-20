@@ -10,7 +10,6 @@ const { body, validationResult } = require("express-validator");
 const saltRounds = 10;
 
 
-
 controller.get(
   "/profile",
   passport.authenticate("jwt", { session: false }),
@@ -195,7 +194,7 @@ controller.post(
     }
     jwt.verify(refreshToken, process.env.REFRESH_KEY_JWT, async (err, user) => {
       const refreshTokenExists = await refreshTokenModel.findOne(
-        { username: user.username, refreshToken: refreshToken})
+        { username: user.username, refreshToken: refreshToken })
       if (!refreshTokenExists) {
         return res.status(401).json({ message: "You are not authorised."});
       }
