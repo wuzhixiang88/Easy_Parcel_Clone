@@ -4,24 +4,16 @@ const userModel = require("../models/users");
 const refreshTokenModel = require("../models/refreshtoken")
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const passport = require("passport");
 const { body, validationResult } = require("express-validator");
 
 const saltRounds = 10;
 
-// POST Route for Sign-up
 
-// Client-side validation
-/* Check 
-    1. Confirm password and password are the same.    
-*/
-// Server-side validation
-/* Check
-    1. Password is of proper length and complexity (i.e. include lowercase, uppercase and special symbols).
-    2. Email/ Username is not a duplicate
-*/
 
 controller.get(
   "/profile",
+  passport.authenticate("jwt", { session: false }),
   async (req, res) => {
     const user = userModel.findOne({ username: req.user.username }, { parcels: 0, password: 0, role: 0 })
     res.json({
@@ -32,27 +24,33 @@ controller.get(
 
 controller.put(
   "/profile",
+  passport.authenticate("jwt", { session: false }),
   async (req, res) => {
+    const inputs = {
 
+    }
   }
 );
 
-controller.post(
-  "/signup",
-  body("username").custom(async (value) => {
-    const user = await userModel.findOne({ username: value });
-    if (user) {
-      return Promise.reject("Username is already in use!");
+controller.put(
+  "/profile/changepassword",
+  passport.authenticate("jwt", { session: false }),
+  body("newPassword", "Please enter a new password.")
+  .notEmpty()
+  .custom((value) => {
+      const re = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[\W\_])[A-Za-z\d\W\_]{8,}$/
+    if (!re.test(value)) {
+      return new Error("The new password does not meet the minimum requirements.")
     }
+    return true
   }),
-  body("email", "A valid E-mail address must be entered")
-    .isEmail()
-    .normalizeEmail(),
-  body("email").custom(async (value) => {
-    const email = await userModel.findOne({ email: value });
-    if (email) {
-      return Promise.reject("E-mail is already in use!");
+  body("confirmNewPassword", "Please enter the confirmed password.")
+    .notEmpty()
+    .custom((value, { req }) => {
+    if (value !== req.body.password) {
+      throw new Error('Both passwords must match.');
     }
+    return true;
   }),
   async (req, res) => {
     const errors = validationResult(req);
@@ -61,29 +59,96 @@ controller.post(
         errors: errors.array(),
       });
     }
-    const { username, email, password, confirmpw, role } = req.body;
+    const { oldPassword, newPassword } = req.body;
+    const selectedUser = await userModel.findOne({ username: req.user.username });
+    const isCorrectPassword = bcrypt.compareSync(oldPassword, selectedUser.password)
+
+    if ((!isCorrectPassword)) {
+      res.json({ error: "The password you entered is not valid." });
+    }
+    const salt = await bcrypt.genSalt(saltRounds);
+    const hashedPassword = await bcrypt.hash(newPassword, salt);
+    await userModel.updateOne(
+        { username: username },
+        { $set: { password: hashedPassword } }
+    );
+    res.json({ message: "The password has been succesfully changed." });
+});
+
+controller.post(
+  "/signup",
+  body("username", "Please enter a valid username.")
+    .notEmpty()
+    .custom(async (value) => {
+      const user = await userModel.findOne({ username: value });
+      if (user) {
+        return Promise.reject("Username is already in use!");
+    }
+  }),
+  body("email", "Please enter a valid e-mail address.")
+    .notEmpty()
+    .bail()
+    .isEmail()
+    .normalizeEmail()
+    .bail()
+    .custom(async (value) => {
+      const email = await userModel.findOne({ email: value });
+      if (email) {
+        return Promise.reject("E-mail is already in use!");
+      }
+  }),
+  body('password', "Please enter a valid password")
+    .notEmpty()
+    .custom((value) => {
+      const re = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[\W\_])[A-Za-z\d\W\_]{8,}$/
+      if (!re.test(value)) {
+        return new Error("The password does not meet the minimum requirements.")
+    }
+    return true;
+  }),
+  body('confirmpw', "Please enter the confirmed password.")
+    .notEmpty()
+    .custom((value, { req }) => {
+      if (value !== req.body.password) {
+        throw new Error('Both passwords must match.');
+    }
+    return true;
+  }),
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({
+        errors: errors.array(),
+      });
+    }
+    const { username, email, password, role } = req.body;
     const salt = await bcrypt.genSalt(saltRounds);
     const hashedPassword = await bcrypt.hash(password, salt);
-    const hashedConfirmPassword = await bcrypt.hash(confirmpw, salt);
     const user = {
       username: username,
       email: email,
       password: hashedPassword,
       role: role,
     };
-    if (hashedPassword === hashedConfirmPassword) {
-      await userModel.create(user);
-      await refreshTokenModel.create({ username: user.username })
-      res.json({
-        username: user.username,
-      });
-    }
+    await userModel.create(user);
+    await refreshTokenModel.create({ username: user.username })
+    res.json({
+      username: user.username,
+    });
   }
 );
 
 controller.post(
-  "/login", 
+  "/login",
+  body("username", "Please enter a username").notEmpty(),
+  body("password", "Please enter a password").notEmpty(), 
   async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({
+        errors: errors.array(),
+      });
+    }
     const { username, password } = req.body;
     const selectedUser = await userModel.findOne({ username: username });
     const isCorrectPassword = bcrypt.compareSync(password, selectedUser.password);
@@ -132,9 +197,9 @@ controller.post(
       const refreshTokenExists = await refreshTokenModel.findOne(
         { username: user.username, refreshToken: refreshToken})
       if (!refreshTokenExists) {
-        return res.status(401)
+        return res.status(401).json({ message: "You are not authorised."});
       }
-      if (err) return res.status(401)
+      if (err) return res.status(401).json({ message: "You are not authorised."});
       const token = jwt.sign(
         { username: user.username },
         process.env.SECRET_KEY_JWT,
@@ -158,25 +223,46 @@ controller.post(
 )
 
 // Forgot Password Route - Might add Email Verification
-controller.put("/changepassword", async (req, res) => {
-  const { username, oldPassword, newPassword, confirmNewPassword } = req.body;
-  const selectedUser = await userModel.findOne({ username: username });
-  const isCorrectPassword = bcrypt.compareSync(oldPassword, selectedUser.password)
+controller.put(
+  "/changepassword", 
+  body("newPassword", "Please enter a new password.")
+    .notEmpty()
+    .custom((value) => {
+      const re = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[\W\_])[A-Za-z\d\W\_]{8,}$/
+      if (!re.test(value)) {
+        return new Error("Password does not meet the minimum requirements")
+      }
+      return true
+    }),
+  body("confirmNewPassword", "Please enter the confirmed password.")
+    .notEmpty()
+    .custom((value, { req }) => {
+      if (value !== req.body.password) {
+        throw new Error('Both passwords must match.');
+      }
+      return true;
+    }),
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({
+        errors: errors.array(),
+      });
+    }
+    const { username, oldPassword, newPassword } = req.body;
+    const selectedUser = await userModel.findOne({ username: username });
+    const isCorrectPassword = bcrypt.compareSync(oldPassword, selectedUser.password)
 
-  if ((!selectedUser) || (!isCorrectPassword)) {
-    res.json({ error: "The username/password entered is not valid." });
-  }
-
-  const salt = await bcrypt.genSalt(saltRounds);
-  const hashedPassword = await bcrypt.hash(newPassword, salt);
-  const hashedConfirmPassword = await bcrypt.hash(confirmNewPassword, salt);
-  if (hashedPassword === hashedConfirmPassword) {
+    if ((!selectedUser) || (!isCorrectPassword)) {
+      res.json({ error: "The username/password entered is not valid." });
+    }
+    const salt = await bcrypt.genSalt(saltRounds);
+    const hashedPassword = await bcrypt.hash(newPassword, salt);
     await userModel.updateOne(
         { username: username },
         { $set: { password: hashedPassword } }
     );
     res.json({ message: "The password has been succesfully changed." });
-  }
 });
 
 controller.get("/logout", (req, res) => {
