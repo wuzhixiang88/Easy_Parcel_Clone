@@ -168,7 +168,7 @@ const BookingDetails = ({ location, quotation, duration, parcelWeight }) => {
 
   return (
     <div id="bookingdetails">
-      <Form>
+      <Form className="form">
         <h4 className="quote-header">Complete your booking</h4>
         <h5>Sender Details</h5>
         <Form.Group>

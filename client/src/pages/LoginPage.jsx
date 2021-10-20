@@ -90,7 +90,7 @@ const LoginPage = ({ setLoggedInUserRole }) => {
   return (
     <>
       <div>
-        <Form>
+        <Form className="form">
           <Form.Group>
             <Form.Control
               name="username"
