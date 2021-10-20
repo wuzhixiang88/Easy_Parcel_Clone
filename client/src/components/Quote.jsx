@@ -170,7 +170,7 @@ const Quote = ({
   return (
     <div>
       <div id="quote">
-        <Form>
+        <Form className="form">
           <h4 className="quote-header">
             Enter Pickup, Dropoff & Parcel Weight
           </h4>

@@ -97,7 +97,7 @@ const RegisterPage = () => {
   return (
     <>
       <div>
-        <Form>
+        <Form className="form">
           <Form.Group>
             <Form.Control
               type="text"

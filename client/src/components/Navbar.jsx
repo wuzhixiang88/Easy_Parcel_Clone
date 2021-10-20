@@ -16,6 +16,9 @@ const Navbar = ({ loggedInUserRole, setLoggedInUserRole }) => {
       history.push("/");
     }
   };
+
+  const loggedInUser = localStorage.getItem("role");
+
   return (
     <div>
       <img src="https://i.imgur.com/9gChk72.gif" alt="..." height="100" />
@@ -26,12 +29,17 @@ const Navbar = ({ loggedInUserRole, setLoggedInUserRole }) => {
         <Link to="/about">
           <li className="nav-main nav-main-link">About</li>
         </Link>
-        <Link to="/deliveryman">
-          <li className="nav-main nav-main-link">
-            {/* use user session data to show a button to either Customer or Deliveryman Account */}
-            My Account
-          </li>
-        </Link>
+
+        {loggedInUser === "customer" ? (
+          <Link to="/customerinbox">
+            <li className="nav-main nav-main-link">My Inbox</li>
+          </Link>
+        ) : (
+          <Link to="/deliverymaninbox">
+            <li className="nav-main nav-main-link">My Inbox</li>
+          </Link>
+        )}
+
         {loggedInUserRole ? (
           <li
             className="nav-main btn-logout nav-main-link"
