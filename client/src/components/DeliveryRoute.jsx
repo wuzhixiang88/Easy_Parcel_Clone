@@ -25,9 +25,9 @@ const DeliveryRoute = () => {
   return (
     <>
       <div>
-        <h2>Map Route</h2>
+        <h3>Map Route</h3>
       </div>
-      <Link to="/deliveryman">Back</Link>
+
       <div>
         <iframe
           title="Route"
@@ -39,7 +39,13 @@ const DeliveryRoute = () => {
         ></iframe>
       </div>
       <div>
-        <button onClick={handleClickAccept}>Accept</button>
+        <Link to="/deliveryman">
+          <button className="btn">Back </button>
+        </Link>
+
+        <button className="btn" onClick={handleClickAccept}>
+          Accept
+        </button>
       </div>
     </>
   );

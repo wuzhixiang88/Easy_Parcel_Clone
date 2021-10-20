@@ -20,7 +20,9 @@ const CustomerPage = () => {
 
   return (
     <div id="customer-page">
-      <h2>Welcome {loggedInUser} </h2>
+      <h3>
+        Welcome {loggedInUser !== null ? loggedInUser.toUpperCase() : null}!{" "}
+      </h3>
       <Quote
         setQuotation={setQuotation}
         setDuration={setDuration}

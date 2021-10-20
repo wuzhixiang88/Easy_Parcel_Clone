@@ -3,44 +3,61 @@ import { Link } from "react-router-dom";
 
 const NavSidebar = ({ loggedInUserRole }) => {
   const [navSideBar, setNavSideBar] = useState();
-  console.log(loggedInUserRole);
 
   useEffect(() => {
     if (!loggedInUserRole) {
       setNavSideBar(
-        <ul>
-          Guest Nav
-          <li>
-            <Link to="/login">Login</Link>
-          </li>
-          <li>
-            <Link to="/signup">Sign Up</Link>
-          </li>
-        </ul>
+        <div className="sidebar-nav-link">
+          <h4 className="sidebar-nav-title">Welcome, Guest!</h4>
+          <ul>
+            <li>
+              <Link to="/login">
+                <button className="btn">Login</button>
+              </Link>
+            </li>
+            <li>
+              <Link to="/signup">
+                <button className="btn">Sign Up</button>
+              </Link>
+            </li>
+          </ul>
+        </div>
       );
     } else if (loggedInUserRole.toLowerCase() === "customer") {
       setNavSideBar(
-        <ul>
-          Customer Nav
-          <li>
-            <Link to="/customer">Book a Parcel</Link>
-          </li>
-          <li>
-            <Link to="/customerinbox">Inbox</Link>
-          </li>
-        </ul>
+        <div className="sidebar-nav-link">
+          <h4 className="sidebar-nav-title">Your Dashboard</h4>
+          <ul>
+            <li>
+              <Link to="/customer">
+                <button className="btn">Book a Parcel</button>
+              </Link>
+            </li>
+            <li>
+              <Link to="/customerinbox">
+                <button className="btn">Inbox</button>
+              </Link>
+            </li>
+          </ul>
+        </div>
       );
     } else if (loggedInUserRole.toLowerCase() === "deliveryman") {
       setNavSideBar(
-        <ul>
-          Deliveryman Nav
-          <li>
-            <Link to="/deliveryman">Available Jobs</Link>
-          </li>
-          <li>
-            <Link to="/deliverymaninbox">Accepted Jobs</Link>
-          </li>
-        </ul>
+        <div className="sidebar-nav-link">
+          <h4 className="sidebar-nav-title">Your Dashboard</h4>
+          <ul>
+            <li>
+              <Link to="/deliveryman">
+                <button className="btn">Available Jobs</button>
+              </Link>
+            </li>
+            <li>
+              <Link to="/deliverymaninbox">
+                <button className="btn">Accepted Jobs</button>
+              </Link>
+            </li>
+          </ul>
+        </div>
       );
     }
   }, [loggedInUserRole]);
