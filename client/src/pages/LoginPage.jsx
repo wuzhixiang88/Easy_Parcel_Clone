@@ -117,7 +117,11 @@ const LoginPage = ({ setLoggedInUserRole }) => {
             </Form.Control.Feedback>
           </Form.Group>
           <Form.Group style={{ marginLeft: "-5px" }}>
-            <Button variant="secondary" onClick={handleClickLogin}>
+            <Button
+              type="submit"
+              variant="secondary"
+              onClick={handleClickLogin}
+            >
               Login
             </Button>
           </Form.Group>

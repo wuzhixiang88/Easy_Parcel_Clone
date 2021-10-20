@@ -1,5 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Loader } from "@googlemaps/js-api-loader";
+import "bootstrap/dist/css/bootstrap.min.css";
+import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
 
 const STANDARD_RATE = 0.3;
 
@@ -13,21 +16,57 @@ const Quote = ({
   setParcelWeight,
 }) => {
   const [distance, setDistance] = useState();
-
   const mapRef = useRef();
   const inputLocationARef = useRef();
   const inputLocationBRef = useRef();
+  const [errors, setErrors] = useState({});
+
+  const findFormErrors = () => {
+    const newErrors = {};
+
+    // pickup point errors
+    if (
+      !inputLocationARef.current.value ||
+      inputLocationARef.current.value === ""
+    ) {
+      newErrors.origin = "Pickup point cannot be blank!";
+    }
+    // dropoff point errors
+    if (
+      !inputLocationBRef.current.value ||
+      inputLocationBRef.current.value === ""
+    ) {
+      newErrors.destination = "Dropoff point cannot be blank!";
+    }
+    // parcel weight errors
+    if (!parcelWeight || parcelWeight === "") {
+      newErrors.parcelWeight = "Parcel weight cannot be blank!";
+    } else if (parcelWeight > 20) {
+      newErrors.parcelWeight = "Parcel weight cannot exceed 20 kg!";
+    }
+
+    return newErrors;
+  };
 
   const handleParcelWeightInput = (e) => {
     setParcelWeight(e.target.value);
   };
 
-  const handleClickRequestQuotation = () => {
-    const distanceInNum = Number(distance.split(" ")[0]);
-    const quotePrice = distanceInNum * parcelWeight * STANDARD_RATE;
+  const handleClickRequestQuotation = (e) => {
+    e.preventDefault();
 
-    setShowPage({ ...showPage, showQuote: true });
-    setQuotation(quotePrice.toFixed(2));
+    const newErrors = findFormErrors();
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+    } else {
+      const distanceInNum = Number(distance.split(" ")[0]);
+      const quotePrice = distanceInNum * parcelWeight * STANDARD_RATE;
+
+      setShowPage({ ...showPage, showQuote: true });
+      setQuotation(quotePrice.toFixed(2));
+      setErrors({});
+    }
   };
 
   useEffect(() => {
@@ -121,50 +160,78 @@ const Quote = ({
         });
       }
     })();
-  }, []);
+  }, [setDuration, setLocation]);
+
+  const style = {
+    color: "red",
+    marginLeft: "0.5rem",
+  };
 
   return (
     <div>
       <div id="quote">
-        <h4 className="quote-header">Enter Pickup, Dropoff & Parcel Weight</h4>
-        <div>Pickup Point</div>
-        <div>
-          <input
-            ref={inputLocationARef}
-            id="pac-input"
-            className="input-group"
-            type="text"
-            placeholder="Origin"
-          />
-        </div>
-        <div>Dropoff Point</div>
-        <div>
-          <input
-            ref={inputLocationBRef}
-            id="pac-input2"
-            className="input-group"
-            type="text"
-            placeholder="Destination"
-          />
-          <div>Distance (Auto)</div>
+        <Form>
+          <h4 className="quote-header">
+            Enter Pickup, Dropoff & Parcel Weight
+          </h4>
+          <Form.Group>
+            <Form.Control
+              ref={inputLocationARef}
+              id="pac-input"
+              className="input-group"
+              type="text"
+              placeholder="Pickup Point"
+              isInvalid={!!errors.origin}
+            />
+            <Form.Control.Feedback type="invalid" style={style}>
+              {errors.origin}
+            </Form.Control.Feedback>
+          </Form.Group>
+          <Form.Group>
+            <Form.Control
+              ref={inputLocationBRef}
+              id="pac-input2"
+              className="input-group"
+              type="text"
+              placeholder="Dropoff Point"
+              isInvalid={!!errors.destination}
+            />
+            <Form.Control.Feedback type="invalid" style={style}>
+              {errors.destination}
+            </Form.Control.Feedback>
+          </Form.Group>
           <div ref={mapRef} id="map" style={{ display: "none" }}></div>
-        </div>
-
-        <input disabled type="text" placeholder="Distance" value={distance} />
-        <br />
-        <div>Parcel Weight</div>
-        <input
-          type="number"
-          className="input-group"
-          placeholder="Parcel Weight (kg)"
-          value={parcelWeight}
-          onChange={handleParcelWeightInput}
-        />
-        <br />
-        <button className="btn" onClick={handleClickRequestQuotation}>
-          Quote
-        </button>
-        <br />
+          <Form.Group>
+            <Form.Control
+              disabled
+              type="text"
+              placeholder="Distance (Auto)"
+              value={distance}
+            />
+          </Form.Group>
+          <Form.Group>
+            <Form.Control
+              type="number"
+              className="input-group"
+              placeholder="Parcel Weight (Kg)"
+              value={parcelWeight}
+              onChange={handleParcelWeightInput}
+              isInvalid={!!errors.parcelWeight}
+            />
+            <Form.Control.Feedback type="invalid" style={style}>
+              {errors.parcelWeight}
+            </Form.Control.Feedback>
+          </Form.Group>
+          <Form.Group style={{ marginLeft: "-5px" }}>
+            <Button
+              type="submit"
+              variant="secondary"
+              onClick={handleClickRequestQuotation}
+            >
+              Quote
+            </Button>
+          </Form.Group>
+        </Form>
       </div>
     </div>
   );

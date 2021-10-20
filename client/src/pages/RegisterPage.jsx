@@ -169,7 +169,11 @@ const RegisterPage = () => {
             </Form.Control.Feedback>
           </Form.Group>
           <Form.Group style={{ marginLeft: "-5px" }}>
-            <Button variant="secondary" onClick={handClickRegister}>
+            <Button
+              type="submit"
+              variant="secondary"
+              onClick={handClickRegister}
+            >
               Register For Free
             </Button>
           </Form.Group>
