@@ -10,7 +10,6 @@ const { body, validationResult } = require("express-validator");
 const saltRounds = 10;
 
 
-
 controller.get(
   "/profile",
   passport.authenticate("jwt", { session: false }),
@@ -160,7 +159,7 @@ controller.post(
     const token = jwt.sign(
       { username: selectedUser.username },
       process.env.SECRET_KEY_JWT,
-      { expiresIn: "15m" }
+      { expiresIn: "10s" }
     );
 
     const refreshtoken = jwt.sign(
@@ -191,15 +190,16 @@ controller.post(
       refreshToken = req.cookies.refresh;
     }
     if (refreshToken === null) {
-      return res.status(401).json({ message: "You are not authorised."});
+      return res.status(401).json({ message: "You are not authorised.1"});
     }
     jwt.verify(refreshToken, process.env.REFRESH_KEY_JWT, async (err, user) => {
+      console.log(refreshToken)
       const refreshTokenExists = await refreshTokenModel.findOne(
-        { username: user.username, refreshToken: refreshToken})
+        { username: user.username, refreshToken: refreshToken })
       if (!refreshTokenExists) {
-        return res.status(401).json({ message: "You are not authorised."});
+        return res.status(401).json({ message: "You are not authorised.2"});
       }
-      if (err) return res.status(401).json({ message: "You are not authorised."});
+      if (err) return res.status(401).json({ message: "You are not authorised.3"});
       const token = jwt.sign(
         { username: user.username },
         process.env.SECRET_KEY_JWT,
