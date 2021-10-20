@@ -8,6 +8,7 @@ const AboutUsPage = () => {
         <img
           className="images"
           src="https://i.imgur.com/tZqZIhB.png"
+          alt="..."
           width="400"
         />
 
@@ -38,6 +39,7 @@ const AboutUsPage = () => {
         <img
           className="images"
           src="https://i.imgur.com/8bCtIe9.png"
+          alt="..."
           width="400"
         />
       </div>
@@ -45,6 +47,7 @@ const AboutUsPage = () => {
         <img
           className="images"
           src="https://i.imgur.com/fEN6Mf7.png"
+          alt="..."
           width="400"
         />
 

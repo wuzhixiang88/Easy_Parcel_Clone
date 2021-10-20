@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 
 const NavSidebar = ({ loggedInUserRole }) => {
   const [navSideBar, setNavSideBar] = useState();
-  console.log(loggedInUserRole);
 
   useEffect(() => {
     if (!loggedInUserRole) {
