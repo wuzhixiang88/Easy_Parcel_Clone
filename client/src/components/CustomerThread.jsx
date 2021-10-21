@@ -20,7 +20,9 @@ const CustomerThread = () => {
 
   useEffect(() => {
     const fetchChat = async () => {
-      const response = await fetch(`/api/dashboard/chat/${parcelId}`)
+      const response = await fetch(`/api/dashboard/chat/${parcelId}`, {
+        method: "GET",
+      });
       console.log(response)
     };
     fetchChat();
