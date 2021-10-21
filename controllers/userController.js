@@ -14,7 +14,8 @@ controller.get(
   "/profile",
   passport.authenticate("jwt", { session: false }),
   async (req, res) => {
-    const user = userModel.findOne({ username: req.user.username }, { parcels: 0, password: 0, role: 0 })
+    const user = await userModel.findOne({ username: req.user.username }, { parcels: 0, password: 0, role: 0 })
+    console.log(user)
     res.json({
       user: user
     })
@@ -170,8 +171,8 @@ controller.post(
 
     await refreshTokenModel.updateOne({ username: username }, { $set: { refreshToken: refreshtoken }})
 
-    res.cookie("jwt", token, { httpOnly: true, sameSite: "strict" });
-    res.cookie("refresh", refreshtoken, { httpOnly: true, sameSite: "strict" })
+    res.cookie("jwt", token, { httpOnly: true });
+    res.cookie("refresh", refreshtoken, { httpOnly: true })
 
     res.json({
       role: selectedUser.role,
