@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
+import axiosRefreshToken from "../axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
@@ -125,12 +126,13 @@ const BookingDetails = ({ location, quotation, duration, parcelWeight }) => {
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
     } else {
-      const response = await fetch("/api/dashboard/customer/new", {
+      const response = await axiosRefreshToken({
+        url: "/api/dashboard/customer/new",
         method: "POST",
         headers: {
           "content-type": "application/json",
         },
-        body: JSON.stringify({
+        data: {
           status: "Booked",
           location: location,
           quotation: quotation,
@@ -152,10 +154,10 @@ const BookingDetails = ({ location, quotation, duration, parcelWeight }) => {
             contactNumber: receiverDetails.receiverContactNum,
             unitNum: receiverDetails.receiverUnitNum,
           },
-        }),
+        },
       });
 
-      if (response.ok) {
+      if (response.statusText === "OK") {
         history.push("/customerinbox");
       }
     }

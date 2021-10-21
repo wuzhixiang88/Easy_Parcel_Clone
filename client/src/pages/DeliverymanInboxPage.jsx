@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import axiosRefreshToken from "../axios";
 
 const DeliverymanInboxPage = () => {
   const [parcels, setParcels] = useState([]);
   useEffect(() => {
     const fetchParcels = async () => {
-      const response = await fetch("/api/dashboard/deliveryman/parcels");
-      const results = await response.json();
+      const response = await axiosRefreshToken.get(
+        "/api/dashboard/deliveryman/parcels"
+      );
+      const results = await response.data;
 
       setParcels(results.parcels);
     };
@@ -32,7 +35,7 @@ const DeliverymanInboxPage = () => {
                 origin: parcel.location.origin,
                 destination: parcel.location.destination,
                 receivingCustomer: parcel.receiverDetails.name,
-                username: parcel.deliveryman
+                username: parcel.deliveryman,
               },
             }}
           >

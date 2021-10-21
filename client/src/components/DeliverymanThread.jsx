@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
+import axiosRefreshToken from "../axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
@@ -10,26 +11,30 @@ import "./ChatRoom.css";
 
 const DeliverymanThread = () => {
   const location = useLocation();
-  const { parcelId, parcelStatus, origin, destination, receivingCustomer, username } =
-    location.state;
+  const {
+    parcelId,
+    parcelStatus,
+    origin,
+    destination,
+    receivingCustomer,
+    username,
+  } = location.state;
 
   const [status, setStatus] = useState(parcelStatus);
 
   const handleClickTransit = async () => {
-    const response = await fetch(
-      `/api/dashboard/deliveryman/parcels/${parcelId}`,
-      {
-        method: "PATCH",
-        headers: {
-          "content-type": "application/json",
-        },
-        body: JSON.stringify({
-          status: "Transit",
-        }),
-      }
-    );
+    const response = await axiosRefreshToken({
+      url: `/api/dashboard/deliveryman/parcels/${parcelId}`,
+      method: "PATCH",
+      headers: {
+        "content-type": "application/json",
+      },
+      data: JSON.stringify({
+        status: "Transit",
+      }),
+    });
 
-    if (response.ok) {
+    if (response.statusText === "OK") {
       setStatus("Transit");
     }
   };
@@ -48,7 +53,7 @@ const DeliverymanThread = () => {
       }
     );
 
-    if (response.ok) {
+    if (response.statusText === "OK") {
       setStatus("Delivered");
     }
   };

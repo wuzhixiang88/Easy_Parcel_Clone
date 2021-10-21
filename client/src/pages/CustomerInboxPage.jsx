@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import axiosRefreshToken from "../axios"
+import axiosRefreshToken from "../axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
@@ -11,8 +11,10 @@ const CustomerInboxPage = () => {
   const [parcels, setParcels] = useState([]);
   useEffect(() => {
     const fetchParcels = async () => {
-      const response = await axiosRefreshToken.get("/api/dashboard/customer/parcels");
-      const results = await response.data
+      const response = await axiosRefreshToken.get(
+        "/api/dashboard/customer/parcels"
+      );
+      const results = await response.data;
 
       setParcels(results.parcels);
     };
@@ -44,7 +46,7 @@ const CustomerInboxPage = () => {
                     origin: parcel.location.origin,
                     destination: parcel.location.destination,
                     deliveryman: parcel.deliveryman,
-                    username: parcel.customer
+                    username: parcel.customer,
                   },
                 }}
               >
