@@ -29,9 +29,9 @@ const DeliverymanThread = () => {
       headers: {
         "content-type": "application/json",
       },
-      data: JSON.stringify({
+      data: {
         status: "Transit",
-      }),
+      },
     });
 
     if (response.statusText === "OK") {
@@ -40,18 +40,16 @@ const DeliverymanThread = () => {
   };
 
   const handleClickDelivered = async () => {
-    const response = await fetch(
-      `/api/dashboard/deliveryman/parcels/${parcelId}`,
-      {
-        method: "PATCH",
-        headers: {
-          "content-type": "application/json",
-        },
-        body: JSON.stringify({
-          status: "Delivered",
-        }),
-      }
-    );
+    const response = await axiosRefreshToken({
+      url: `/api/dashboard/deliveryman/parcels/${parcelId}`,
+      method: "PATCH",
+      headers: {
+        "content-type": "application/json",
+      },
+      data: {
+        status: "Delivered",
+      },
+    });
 
     if (response.statusText === "OK") {
       setStatus("Delivered");

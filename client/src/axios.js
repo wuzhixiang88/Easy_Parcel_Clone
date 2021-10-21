@@ -12,6 +12,7 @@ axiosRefreshToken.interceptors.response.use(
             return Promise.reject(error)
         }
         if (error.response && !originalRequest._retry) {
+            console.log(error.response.data)
             originalRequest._retry = true
             await axiosRefreshToken.post("/api/users/token");
             return axiosRefreshToken(originalRequest)
