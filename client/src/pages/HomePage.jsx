@@ -3,6 +3,10 @@ import { Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Button from "react-bootstrap/Button";
 
+const loggedInUser = localStorage.getItem("role");
+console.log(loggedInUser);
+console.log(localStorage);
+
 const HomePage = () => {
   return (
     <div>
@@ -15,18 +19,19 @@ const HomePage = () => {
       />
 
       <h4>Start sending packages in 3 EZ steps!</h4>
-      <ul>
-        <li>Sign up - its free!</li>
-        <li>Get a quote</li>
-        <li>Book a Parcel!</li>
-      </ul>
-      <div style={{ marginLeft: "-5px" }}>
-        <Link to="/login">
-          <Button variant="secondary">Login</Button>
-        </Link>
-        <Link to="/signup">
-          <Button variant="secondary">Sign Up</Button>
-        </Link>
+      <h5>Sign Up - Get a Quote - Send Your Parcel!</h5>
+
+      <div>
+        {localStorage.role ? null : (
+          <div style={{ marginLeft: "-5px" }}>
+            <Link to="/login">
+              <Button variant="secondary">Login</Button>
+            </Link>
+            <Link to="/signup">
+              <Button variant="secondary">Sign Up</Button>
+            </Link>
+          </div>
+        )}
       </div>
     </div>
   );

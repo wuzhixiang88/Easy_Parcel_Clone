@@ -14,6 +14,7 @@ import DeliverymanInboxPage from "./pages/DeliverymanInboxPage";
 import AboutUsPage from "./pages/AboutUsPage";
 import DeliverymanThread from "./components/DeliverymanThread";
 import CustomerThread from "./components/CustomerThread";
+import Profile from "./pages/Profile";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
@@ -67,6 +68,9 @@ function App() {
             </Route>
             <Route exact path="/deliverymaninbox/:id">
               <DeliverymanThread />
+            </Route>
+            <Route exact path="/profile">
+              <Profile />
             </Route>
           </Switch>
         </div>
