@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import axiosRefreshToken from "../axios";
 import "bootstrap/dist/css/bootstrap.min.css";
-import axiosRefreshToken from "../axios"
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Button from "react-bootstrap/Button";

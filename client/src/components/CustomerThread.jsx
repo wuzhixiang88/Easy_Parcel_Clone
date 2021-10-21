@@ -20,9 +20,8 @@ const CustomerThread = () => {
 
   useEffect(() => {
     const fetchChat = async () => {
-      const response = await axiosRefreshToken.get(`/api/dashboard/chat/${parcelId}}`)
-      console.log(response.data)
-      const results = response.data
+      const response = await fetch(`/api/dashboard/chat/${parcelId}`)
+      console.log(response)
     };
     fetchChat();
   }, [])

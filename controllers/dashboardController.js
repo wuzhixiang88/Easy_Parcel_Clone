@@ -23,7 +23,7 @@ controller.get(
   "/chat/:id",
   passport.authenticate("jwt", { session: false }),
   async (req, res) => {
-    const chatlog = chatModel.findOne({ parcelID: req.params.id })
+    const chatlog = await chatModel.findOne({ parcelID: req.params.id })
     res.json({
       chatlog: chatlog
     })
