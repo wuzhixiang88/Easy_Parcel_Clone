@@ -4,6 +4,29 @@ const express = require("express");
 const mongoose = require("mongoose");
 const passport = require("passport");
 const strategy = require("./passport");
+const server = require("http").createServer();
+const io = require("socket.io")(server, {
+  cors: {
+    origin: "*",
+  },
+});
+const NEW_CHAT_MESSAGE_EVENT = "newChatMessage";
+
+io.on("connection", (socket) => {
+  // Join a conversation
+  const { roomId } = socket.handshake.query;
+  socket.join(roomId);
+
+  // Listen for new messages
+  socket.on(NEW_CHAT_MESSAGE_EVENT, (data) => {
+    io.in(roomId).emit(NEW_CHAT_MESSAGE_EVENT, data);
+  });
+
+  // Leave the room if the user closes the socket
+  socket.on("disconnect", () => {
+    socket.leave(roomId);
+  });
+});
 
 //Controller Routers
 const dashboardController = require("./controllers/dashboardController");
@@ -43,3 +66,4 @@ app.use("/api/dashboard", dashboardController);
 
 const PORT = process.env.PORT;
 app.listen(PORT);
+server.listen(4000);

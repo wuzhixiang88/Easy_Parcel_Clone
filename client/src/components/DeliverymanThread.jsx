@@ -4,9 +4,9 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Button from "react-bootstrap/Button";
-// import Col from "react-bootstrap/Col";
-// import Form from "react-bootstrap/Form";
-// import InputGroup from "react-bootstrap/InputGroup";
+import Form from "react-bootstrap/Form";
+import useChat from "../hooks/useChat";
+import "./ChatRoom.css";
 
 const DeliverymanThread = () => {
   const location = useLocation();
@@ -51,6 +51,21 @@ const DeliverymanThread = () => {
     if (response.ok) {
       setStatus("Delivered");
     }
+  };
+
+  const roomId = parcelId; // Gets roomId from URL
+  const { messages, sendMessage } = useChat(roomId); // Creates a websocket and manages messaging
+  const [newMessage, setNewMessage] = useState(""); // Message to be sent
+
+  const handleNewMessageChange = (event) => {
+    setNewMessage(event.target.value);
+  };
+
+  const handleSendMessage = (e) => {
+    e.preventDefault();
+
+    sendMessage(newMessage);
+    setNewMessage("");
   };
 
   return (
@@ -107,23 +122,46 @@ const DeliverymanThread = () => {
             </Button>
           ) : null}
         </Row>
-        {/* <br />
         <Row>
-          <div>TO DISPLAY CHAT MESSAGES HERE</div>
+          <h3>Chat {roomId}</h3>
+          <div className="messages-container">
+            <ol className="messages-list">
+              {messages.map((message, i) => (
+                <li
+                  key={i}
+                  className={`message-item ${
+                    message.ownedByCurrentUser
+                      ? "my-message"
+                      : "received-message"
+                  }`}
+                >
+                  {message.body}
+                </li>
+              ))}
+            </ol>
+          </div>
         </Row>
         <Row>
-          <InputGroup className="mb-3">
-            <Form.Control
-              type="text"
-              name="message"
-              autofocus="autofocus"
-              placeholder="Type here..."
-            />
-            <Button variant="outline-secondary" style={{ marginLeft: "0" }}>
-              Send
-            </Button>
-          </InputGroup>
-        </Row> */}
+          <Form>
+            <div className="input-container">
+              <Form.Control
+                value={newMessage}
+                onChange={handleNewMessageChange}
+                placeholder="Write message..."
+                autoFocus
+                style={{ height: "40px" }}
+              />
+              <Button
+                type="submit"
+                variant="outline-secondary"
+                onClick={handleSendMessage}
+                style={{ height: "40px", margin: "0" }}
+              >
+                Send
+              </Button>
+            </div>
+          </Form>
+        </Row>
       </Container>
     </>
   );
