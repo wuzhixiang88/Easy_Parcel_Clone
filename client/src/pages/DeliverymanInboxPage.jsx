@@ -32,6 +32,7 @@ const DeliverymanInboxPage = () => {
                 origin: parcel.location.origin,
                 destination: parcel.location.destination,
                 receivingCustomer: parcel.receiverDetails.name,
+                username: parcel.deliveryman
               },
             }}
           >
