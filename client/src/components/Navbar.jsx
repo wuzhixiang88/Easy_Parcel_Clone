@@ -31,12 +31,12 @@ const Navbar = ({ loggedInUserRole, setLoggedInUserRole }) => {
         </Link>
 
         {loggedInUser === "customer" ? (
-          <Link to="/customerinbox">
-            <li className="nav-main nav-main-link">My Inbox</li>
+          <Link to="/profile">
+            <li className="nav-main nav-main-link">My Profile</li>
           </Link>
         ) : (
-          <Link to="/deliverymaninbox">
-            <li className="nav-main nav-main-link">My Inbox</li>
+          <Link to="/profile">
+            <li className="nav-main nav-main-link">My Profile</li>
           </Link>
         )}
 
