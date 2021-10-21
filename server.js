@@ -4,6 +4,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const passport = require("passport");
 const strategy = require("./passport");
+const parcelModel = require("./models/parcels")
 const server = require("http").createServer();
 const io = require("socket.io")(server, {
   cors: {
@@ -18,7 +19,9 @@ io.on("connection", (socket) => {
   socket.join(roomId);
 
   // Listen for new messages
-  socket.on(NEW_CHAT_MESSAGE_EVENT, (data) => {
+  socket.on(NEW_CHAT_MESSAGE_EVENT, async (data) => {
+    const { roomId, body, senderId } = data
+    await parcelModel.updateOne({ _id: roomId }, { $push: { chatLog: { sender: senderId, body: body } }})
     io.in(roomId).emit(NEW_CHAT_MESSAGE_EVENT, data);
   });
 

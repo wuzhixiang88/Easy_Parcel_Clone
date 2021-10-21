@@ -44,6 +44,7 @@ const CustomerInboxPage = () => {
                     origin: parcel.location.origin,
                     destination: parcel.location.destination,
                     deliveryman: parcel.deliveryman,
+                    username: parcel.customer
                   },
                 }}
               >

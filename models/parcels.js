@@ -33,6 +33,7 @@ const parcelSchema = new Schema({
     unitNum: String,
     postalCode: String,
   },
+  chatLog: [Object]
 });
 
 const Parcel = mongoose.model("Parcel", parcelSchema);

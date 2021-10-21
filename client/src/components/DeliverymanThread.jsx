@@ -10,7 +10,7 @@ import "./ChatRoom.css";
 
 const DeliverymanThread = () => {
   const location = useLocation();
-  const { parcelId, parcelStatus, origin, destination, receivingCustomer } =
+  const { parcelId, parcelStatus, origin, destination, receivingCustomer, username } =
     location.state;
 
   const [status, setStatus] = useState(parcelStatus);
@@ -54,7 +54,7 @@ const DeliverymanThread = () => {
   };
 
   const roomId = parcelId; // Gets roomId from URL
-  const { messages, sendMessage } = useChat(roomId); // Creates a websocket and manages messaging
+  const { messages, sendMessage } = useChat(roomId, username); // Creates a websocket and manages messaging
   const [newMessage, setNewMessage] = useState(""); // Message to be sent
 
   const handleNewMessageChange = (event) => {
@@ -123,7 +123,7 @@ const DeliverymanThread = () => {
           ) : null}
         </Row>
         <Row>
-          <h3>Chat {roomId}</h3>
+          <h3>Chat</h3>
           <div className="messages-container">
             <ol className="messages-list">
               {messages.map((message, i) => (

@@ -10,11 +10,11 @@ import "./ChatRoom.css";
 
 const CustomerThread = () => {
   const location = useLocation();
-  const { parcelId, parcelStatus, origin, destination, deliveryman } =
+  const { parcelId, parcelStatus, origin, destination, deliveryman, username } =
     location.state;
 
   const roomId = parcelId; // Gets roomId from URL
-  const { messages, sendMessage } = useChat(roomId); // Creates a websocket and manages messaging
+  const { messages, sendMessage } = useChat(roomId, username); // Creates a websocket and manages messaging
   const [newMessage, setNewMessage] = useState(""); // Message to be sent
 
   const handleNewMessageChange = (event) => {
