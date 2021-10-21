@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import axiosRefreshToken from "../axios";
 import "bootstrap/dist/css/bootstrap.min.css";
+import axiosRefreshToken from "../axios"
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Button from "react-bootstrap/Button";
@@ -29,9 +30,9 @@ const DeliverymanThread = () => {
       headers: {
         "content-type": "application/json",
       },
-      data: JSON.stringify({
+      data: {
         status: "Transit",
-      }),
+      },
     });
 
     if (response.statusText === "OK") {
@@ -40,18 +41,16 @@ const DeliverymanThread = () => {
   };
 
   const handleClickDelivered = async () => {
-    const response = await fetch(
-      `/api/dashboard/deliveryman/parcels/${parcelId}`,
-      {
-        method: "PATCH",
-        headers: {
-          "content-type": "application/json",
-        },
-        body: JSON.stringify({
-          status: "Delivered",
-        }),
-      }
-    );
+    const response = await axiosRefreshToken({
+      url: `/api/dashboard/deliveryman/parcels/${parcelId}`,
+      method: "PATCH",
+      headers: {
+        "content-type": "application/json",
+      },
+      data: {
+        status: "Delivered",
+      },
+    });
 
     if (response.statusText === "OK") {
       setStatus("Delivered");

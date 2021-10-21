@@ -2,6 +2,7 @@ const express = require("express");
 const controller = express.Router();
 const userModel = require("../models/users");
 const parcelModel = require("../models/parcels");
+const chatModel = require("../models/chat");
 const passport = require("passport");
 const { body, validationResult } = require("express-validator");
 
@@ -17,6 +18,18 @@ function roleCheck(role) {
     }
   };
 }
+
+controller.get(
+  "/chat/:id",
+  passport.authenticate("jwt", { session: false }),
+  async (req, res) => {
+    const chatlog = chatModel.findOne({ parcelID: req.params.id })
+    res.json({
+      chatlog: chatlog
+    })
+  }
+)
+
 
 controller.get(
   "/customer/new",
@@ -140,7 +153,7 @@ controller.get(
 );
 
 controller.get(
-  "deliveryman/parcels/completed",
+  "/deliveryman/parcels/completed",
   passport.authenticate("jwt", { session: false }),
   roleCheck("deliveryman"),
   async (req, res) => {
@@ -156,6 +169,7 @@ controller.get(
     })
   }
 )
+
 
 // Show Individual Parcel Details (Customer)
 controller.get(

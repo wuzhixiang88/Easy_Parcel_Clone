@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
+import axiosRefreshToken from "../axios"
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Button from "react-bootstrap/Button";
@@ -16,6 +17,15 @@ const CustomerThread = () => {
   const roomId = parcelId; // Gets roomId from URL
   const { messages, sendMessage } = useChat(roomId, username); // Creates a websocket and manages messaging
   const [newMessage, setNewMessage] = useState(""); // Message to be sent
+
+  useEffect(() => {
+    const fetchChat = async () => {
+      const response = await axiosRefreshToken.get(`/api/dashboard/chat/${parcelId}}`)
+      console.log(response.data)
+      const results = response.data
+    };
+    fetchChat();
+  }, [])
 
   const handleNewMessageChange = (event) => {
     setNewMessage(event.target.value);
