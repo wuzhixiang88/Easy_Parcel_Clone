@@ -11,7 +11,7 @@ const useChat = (roomId, username) => {
   useEffect(() => {
     // Creates a WebSocket connection
     socketRef.current = socketIOClient(SOCKET_SERVER_URL, {
-      query: roomId,
+      query: { roomId },
     });
 
     // Listens for incoming messages
@@ -36,7 +36,7 @@ const useChat = (roomId, username) => {
     socketRef.current.emit(NEW_CHAT_MESSAGE_EVENT, {
       body: messageBody,
       senderId: username,
-      roomId: roomId
+      roomId: roomId,
     });
   };
 

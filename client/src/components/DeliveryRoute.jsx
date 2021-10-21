@@ -1,5 +1,6 @@
 import React from "react";
 import { Link, useLocation, useHistory } from "react-router-dom";
+import axiosRefreshToken from "../axios";
 
 const DeliveryRoute = () => {
   const history = useHistory();
@@ -7,17 +8,15 @@ const DeliveryRoute = () => {
   const { origin, destination, parcelId } = location.state;
 
   const handleClickAccept = async () => {
-    const response = await fetch(
-      `/api/dashboard/deliveryman/allparcels/${parcelId}`,
-      {
-        method: "PUT",
-        headers: {
-          "content-type": "application/json",
-        },
-      }
-    );
+    const response = await axiosRefreshToken({
+      url: `/api/dashboard/deliveryman/allparcels/${parcelId}`,
+      method: "PUT",
+      headers: {
+        "content-type": "application/json",
+      },
+    });
 
-    if (response.ok) {
+    if (response.statusText === "OK") {
       history.push("/deliverymaninbox");
     }
   };
