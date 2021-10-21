@@ -3,8 +3,10 @@ import axiosRefreshToken from "../axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 const Profile = () => {
-  const response = axiosRefreshToken.get("/api/dashboard/profile");
-  console.log(response);
+  //   const response = fetch("/api/users/profile", {
+  //     method: "GET",
+  //   });
+  //   console.log(response);
 
   return (
     <div>
