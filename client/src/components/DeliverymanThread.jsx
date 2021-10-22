@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import axiosRefreshToken from "../axios";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -21,6 +21,28 @@ const DeliverymanThread = () => {
   } = location.state;
 
   const [status, setStatus] = useState(parcelStatus);
+
+  const roomId = parcelId; // Gets roomId from URL
+  const { messages, sendMessage } = useChat(roomId, username); // Creates a websocket and manages messaging
+  const [newMessage, setNewMessage] = useState(""); // Message to be sent
+  const [oldMessage, setOldMessage] = useState([]);
+
+  useEffect(() => {
+    const fetchChat = async () => {
+      const response = await axiosRefreshToken(
+        `/api/dashboard/chat/${parcelId}`,
+        {
+          method: "GET",
+        }
+      );
+      const results = await response.data;
+
+      if (results.chatlog !== null) {
+        setOldMessage(results.chatlog.chatlog);
+      }
+    };
+    fetchChat();
+  }, [parcelId]);
 
   const handleClickTransit = async () => {
     const response = await axiosRefreshToken({
@@ -55,10 +77,6 @@ const DeliverymanThread = () => {
       setStatus("Delivered");
     }
   };
-
-  const roomId = parcelId; // Gets roomId from URL
-  const { messages, sendMessage } = useChat(roomId, username); // Creates a websocket and manages messaging
-  const [newMessage, setNewMessage] = useState(""); // Message to be sent
 
   const handleNewMessageChange = (event) => {
     setNewMessage(event.target.value);
@@ -126,46 +144,58 @@ const DeliverymanThread = () => {
               </Button>
             ) : null}
           </Row>
-          <Row>
-            <h3>Chat</h3>
-            <div className="messages-container">
-              <ol className="messages-list">
-                {messages.map((message, i) => (
-                  <li
-                    key={i}
-                    className={`message-item ${
-                      message.ownedByCurrentUser
-                        ? "my-message"
-                        : "received-message"
-                    }`}
-                  >
-                    {message.body}
-                  </li>
-                ))}
-              </ol>
-            </div>
-          </Row>
-          <Row>
-            <Form>
-              <div className="input-container">
-                <Form.Control
-                  value={newMessage}
-                  onChange={handleNewMessageChange}
-                  placeholder="Write message..."
-                  autoFocus
-                  style={{ height: "40px" }}
-                />
-                <Button
-                  type="submit"
-                  variant="outline-secondary"
-                  onClick={handleSendMessage}
-                  style={{ height: "40px", margin: "0" }}
-                >
-                  Send
-                </Button>
+          {status !== "Booked" ? (
+            <Row>
+              <h3>Chat</h3>
+              <div className="messages-container">
+                <ol className="messages-list">
+                  {oldMessage.map((oldMessage, i) => (
+                    <li
+                      key={i}
+                      className={`message-item ${
+                        oldMessage.senderID === username
+                          ? "my-message"
+                          : "received-message"
+                      }`}
+                    >
+                      {oldMessage.body}
+                    </li>
+                  ))}
+                  {messages.map((message, i) => (
+                    <li
+                      key={i}
+                      className={`message-item ${
+                        message.ownedByCurrentUser
+                          ? "my-message"
+                          : "received-message"
+                      }`}
+                    >
+                      {message.body}
+                    </li>
+                  ))}
+                </ol>
               </div>
-            </Form>
-          </Row>
+              <Form>
+                <div className="input-container">
+                  <Form.Control
+                    value={newMessage}
+                    onChange={handleNewMessageChange}
+                    placeholder="Write message..."
+                    autoFocus
+                    style={{ height: "40px" }}
+                  />
+                  <Button
+                    type="submit"
+                    variant="outline-secondary"
+                    onClick={handleSendMessage}
+                    style={{ height: "40px", margin: "0" }}
+                  >
+                    Send
+                  </Button>
+                </div>
+              </Form>
+            </Row>
+          ) : null}
         </Container>
       </>
     </div>

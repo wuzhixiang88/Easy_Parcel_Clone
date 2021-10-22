@@ -17,8 +17,6 @@ const Navbar = ({ loggedInUserRole, setLoggedInUserRole }) => {
     }
   };
 
-  const loggedInUser = localStorage.getItem("role");
-
   return (
     <div>
       <img src="https://i.imgur.com/9gChk72.gif" alt="..." height="100" />
@@ -30,7 +28,7 @@ const Navbar = ({ loggedInUserRole, setLoggedInUserRole }) => {
           <li className="nav-main nav-main-link">About</li>
         </Link>
 
-        {loggedInUser === "customer" ? (
+        {loggedInUserRole === "customer" ? (
           <Link to="/profile">
             <li className="nav-main nav-main-link">My Profile</li>
           </Link>
