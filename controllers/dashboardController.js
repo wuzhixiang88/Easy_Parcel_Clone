@@ -23,25 +23,24 @@ controller.get(
   "/chat/:id",
   passport.authenticate("jwt", { session: false }),
   async (req, res) => {
-    const chatlog = await chatModel.findOne({ parcelID: req.params.id })
+    const chatlog = await chatModel.findOne({ parcelID: req.params.id });
     res.json({
-      chatlog: chatlog
-    })
+      chatlog: chatlog,
+    });
   }
-)
-
+);
 
 controller.get(
   "/customer/new",
   passport.authenticate("jwt", { session: false }),
   roleCheck("customer"),
   async (req, res) => {
-    const user = userModel.findOne({ username: req.user.username })
+    const user = userModel.findOne({ username: req.user.username });
     res.json({
-      user: user.username
-    })
+      user: user.username,
+    });
   }
-)
+);
 
 // Post A Parcel Route (Customer) - Add Server Side Validation
 controller.post(
@@ -93,9 +92,9 @@ controller.get(
       .findOne({ username: req.user.username })
       .populate({
         path: "parcels",
-        match: { $not: { status: "Delivered" }}
+        match: { $not: { status: "Delivered" } },
       })
-      .exec()
+      .exec();
     res.json({
       parcels: parcels.parcels,
     });
@@ -111,15 +110,14 @@ controller.get(
       .findOne({ username: req.user.username })
       .populate({
         path: "parcels",
-        match: { status: "Delivered" }
+        match: { status: "Delivered" },
       })
-      .exec()
+      .exec();
     res.json({
       parcels: parcels.parcels,
     });
   }
 );
-
 
 // Show all Available Orders (Deliveryman)
 controller.get(
@@ -143,7 +141,7 @@ controller.get(
       .findOne({ username: req.user.username })
       .populate({
         path: "parcels",
-        match: { $or: [{ status: "Accepted" }, { status: "Transit" }]}
+        match: { $or: [{ status: "Accepted" }, { status: "Transit" }] },
       })
       .exec();
     res.json({
@@ -161,15 +159,14 @@ controller.get(
       .findOne({ username: req.user.username })
       .populate({
         path: "parcels",
-        match: { status: "Delivered" }
+        match: { status: "Delivered" },
       })
       .exec();
     res.json({
-      parcels: parcelsDelivered
-    })
+      parcels: parcelsDelivered,
+    });
   }
-)
-
+);
 
 // Show Individual Parcel Details (Customer)
 controller.get(
