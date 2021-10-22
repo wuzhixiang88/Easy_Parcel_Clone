@@ -108,7 +108,7 @@ controller.get(
       .findOne({ username: req.user.username })
       .populate({
         path: "parcels",
-        match: { $not: { status: "Delivered" } },
+        match: { status: { $ne: "Delivered" } },
       })
       .exec();
     res.json({
