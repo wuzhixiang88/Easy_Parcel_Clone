@@ -11,8 +11,7 @@ axiosRefreshToken.interceptors.response.use(
         if (error.response.status === 401 && originalRequest.url === "http://localhost:3000/api/users/token") {
             return Promise.reject(error)
         }
-        if (error.response && !originalRequest._retry) {
-            console.log(error.response.data)
+        if (error.response.status === 401 && error.response.data.error === "Token has expired" && !originalRequest._retry) {
             originalRequest._retry = true
             await axiosRefreshToken.post("/api/users/token");
             return axiosRefreshToken(originalRequest)

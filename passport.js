@@ -24,11 +24,10 @@ const userStrategy = new Strategy(options, (payload, done) => {
     if (err) {
       return done(err, null)
     }
-    if (!user) {
-      return done(null, false, { message: "User is not authorized"})
-    }
     if (user) {
       return done(null, { username: user.username, role: user.role });
+    } else {
+      return done(new Error("This user is not authorised."), false)
     }
   })
 });

@@ -15,7 +15,7 @@ const CustomerInboxPage = () => {
         "/api/dashboard/customer/parcels"
       );
       const results = await response.data;
-
+      
       setParcels(results.parcels);
     };
     fetchParcels();
