@@ -76,15 +76,16 @@ controller.post(
         errors: errors.array(),
       });
     }
+    const { status, location, quotation, duration, parcelDetails, senderDetails, receiverDetails } = req.body
     const inputs = {
       customer: req.user.username,
-      status: req.body.status,
-      location: req.body.location,
-      quotation: req.body.quotation,
-      duration: req.body.duration,
-      parcelDetails: req.body.parcelDetails,
-      senderDetails: req.body.senderDetails,
-      receiverDetails: req.body.receiverDetails,
+      status: status,
+      location: location,
+      quotation: quotation,
+      duration: duration,
+      parcelDetails: parcelDetails,
+      senderDetails: senderDetails,
+      receiverDetails: receiverDetails,
     };
     const newParcel = await parcelModel.create(inputs);
     await userModel.updateOne(

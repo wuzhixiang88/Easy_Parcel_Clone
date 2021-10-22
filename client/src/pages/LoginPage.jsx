@@ -11,6 +11,7 @@ const LoginPage = ({ setLoggedInUserRole }) => {
   });
   const history = useHistory();
   const [errors, setErrors] = useState({});
+  const [serverError, setServerError] = useState("")
 
   const findFormErrors = () => {
     const { username, password } = userDetails;
@@ -67,7 +68,7 @@ const LoginPage = ({ setLoggedInUserRole }) => {
       const result = await response.json();
 
       if (result.error) {
-        alert("Cannot login");
+        setServerError(result.error)
       } else {
         localStorage.setItem("username", result.username);
         localStorage.setItem("role", result.role);
@@ -114,6 +115,9 @@ const LoginPage = ({ setLoggedInUserRole }) => {
             />
             <Form.Control.Feedback type="invalid" style={style}>
               {errors.password}
+            </Form.Control.Feedback>
+            <Form.Control.Feedback type="invalid" style={style}>
+              {serverError}
             </Form.Control.Feedback>
           </Form.Group>
           <Form.Group style={{ marginLeft: "-5px" }}>
