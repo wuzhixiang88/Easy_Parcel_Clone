@@ -37,9 +37,17 @@ controller.put(
   "/profile",
   passport_authenticate_jwt,
   async (req, res) => {
+    const { firstName, lastName, homeAddress, contactNumber } = req.body
     const inputs = {
-
+      firstName: firstName,
+      lastName: lastName,
+      homeAddress: homeAddress, 
+      contactNumber: contactNumber,
     }
+    await userModel.updateOne(
+      { username: req.user.username },
+      { $set: inputs }
+    );
   }
 );
 
@@ -173,7 +181,7 @@ controller.post(
     const token = jwt.sign(
       { username: selectedUser.username },
       process.env.SECRET_KEY_JWT,
-      { expiresIn: "10s" }
+      { expiresIn: "10m" }
     );
 
     const refreshtoken = jwt.sign(
@@ -216,7 +224,7 @@ controller.post(
       const token = jwt.sign(
         { username: user.username },
         process.env.SECRET_KEY_JWT,
-        { expiresIn: "10s" }
+        { expiresIn: "10m" }
       );
       const newRefreshToken = jwt.sign(
         { username: user.username },

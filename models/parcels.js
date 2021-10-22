@@ -21,7 +21,6 @@ const parcelSchema = new Schema({
     name: String,
     emailAddress: String,
     contactNumber: String,
-    address: String,
     unitNum: String,
     postalCode: String,
   },
@@ -29,9 +28,7 @@ const parcelSchema = new Schema({
     name: String,
     emailAddress: String,
     contactNumber: String,
-    address: String,
-    unitNum: String,
-    postalCode: String,
+    unitNum: String
   },
 });
 

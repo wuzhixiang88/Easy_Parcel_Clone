@@ -14,6 +14,7 @@ const RegisterPage = () => {
   });
   const history = useHistory();
   const [errors, setErrors] = useState({});
+  const [serverError, setServerError] = useState({})
 
   const findFormErrors = () => {
     const { username, password, confirmpw, email, role } = registerDetails;
@@ -44,6 +45,15 @@ const RegisterPage = () => {
 
     return newErrors;
   };
+
+  const findServerErrors = (errorArray) => {
+    const newServerErrors = {};
+    for (const item of errorArray) {
+      newServerErrors[`${item.param}`] = `${item.msg}`
+    }
+
+    return newServerErrors
+  }
 
   const handleInputChange = (e) => {
     const key = e.target.name;
@@ -83,12 +93,17 @@ const RegisterPage = () => {
           role: registerDetails.role,
         }),
       });
+      const result = await response.json();
+
+      if (result.errors) {
+        const newServerErrors = findServerErrors(result.errors)
+        setServerError(newServerErrors)
+      }
       if (response.ok) {
         history.push("/login");
       }
     }
   };
-
   const style = {
     color: "red",
     marginLeft: "0.5rem",
@@ -110,6 +125,9 @@ const RegisterPage = () => {
             <Form.Control.Feedback type="invalid" style={style}>
               {errors.username}
             </Form.Control.Feedback>
+            <Form.Control.Feedback type="invalid" style={style}>
+              {serverError.username}
+            </Form.Control.Feedback>
           </Form.Group>
           <Form.Group>
             <Form.Control
@@ -122,6 +140,9 @@ const RegisterPage = () => {
             />
             <Form.Control.Feedback type="invalid" style={style}>
               {errors.password}
+            </Form.Control.Feedback>
+            <Form.Control.Feedback type="invalid" style={style}>
+              {serverError.password}
             </Form.Control.Feedback>
           </Form.Group>
           <Form.Group>
@@ -136,6 +157,9 @@ const RegisterPage = () => {
             <Form.Control.Feedback type="invalid" style={style}>
               {errors.confirmpw}
             </Form.Control.Feedback>
+            <Form.Control.Feedback type="invalid" style={style}>
+              {serverError.confirmpw}
+            </Form.Control.Feedback>
           </Form.Group>
           <Form.Group>
             <Form.Control
@@ -148,6 +172,9 @@ const RegisterPage = () => {
             />
             <Form.Control.Feedback type="invalid" style={style}>
               {errors.email}
+            </Form.Control.Feedback>
+            <Form.Control.Feedback type="invalid" style={style}>
+              {serverError.email}
             </Form.Control.Feedback>
           </Form.Group>
           <Form.Group>
