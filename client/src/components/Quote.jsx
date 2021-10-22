@@ -178,7 +178,6 @@ const Quote = ({
             <Form.Control
               ref={inputLocationARef}
               id="pac-input"
-              className="input-group"
               type="text"
               placeholder="Pickup Point"
               isInvalid={!!errors.origin}
@@ -191,7 +190,6 @@ const Quote = ({
             <Form.Control
               ref={inputLocationBRef}
               id="pac-input2"
-              className="input-group"
               type="text"
               placeholder="Dropoff Point"
               isInvalid={!!errors.destination}
@@ -212,7 +210,6 @@ const Quote = ({
           <Form.Group>
             <Form.Control
               type="number"
-              className="input-group"
               placeholder="Parcel Weight (Kg)"
               value={parcelWeight}
               onChange={handleParcelWeightInput}

@@ -90,115 +90,112 @@ const DeliverymanThread = () => {
   };
 
   return (
-    <div className="thread-wrapper">
-      <>
-        <Container style={{ width: "800px" }}>
-          <Row>
-            <Link to="/deliverymaninbox">
-              <Button variant="secondary" style={{ marginLeft: "0" }}>
-                Back To Inbox
-              </Button>
-            </Link>
-          </Row>
-          <Row>
-            <h3>Parcel ID: {parcelId}</h3>
-          </Row>
-          <Row>
-            <h4>Current Status: {status}</h4>
-          </Row>
-          <Row>
-            <h5>Receiving Customer: {receivingCustomer}</h5>
-          </Row>
-          <Row>
-            <iframe
-              title="Route"
-              width="800"
-              height="500"
-              loading="lazy"
-              allowfullscreen
-              src={`https://www.google.com/maps/embed/v1/directions?key=${process.env.REACT_APP_GMAP_API_KEY}&origin=${origin}&destination=${destination}`}
-            ></iframe>
-          </Row>
-          <Row>
-            {status === "Accepted" ? (
-              <Button
-                variant="success"
-                onClick={handleClickTransit}
-                style={{ marginLeft: "0" }}
-              >
-                Update Parcel Status to "Transit"
-              </Button>
-            ) : null}
-            {status === "Transit" ? (
-              <Button
-                variant="success"
-                onClick={handleClickDelivered}
-                style={{ marginLeft: "0" }}
-              >
-                Update Parcel Status to "Delivered"
-              </Button>
-            ) : null}
-            {status === "Delivered" ? (
-              <Button disabled variant="dark" style={{ marginLeft: "0" }}>
-                Job Completed
-              </Button>
-            ) : null}
-          </Row>
-          {status !== "Booked" ? (
-            <Row>
-              <h3>Chat</h3>
-              <div className="messages-container">
-                <ol className="messages-list">
-                  {oldMessage.map((oldMessage, i) => (
-                    <li
-                      key={i}
-                      className={`message-item ${
-                        oldMessage.senderID === username
-                          ? "my-message"
-                          : "received-message"
-                      }`}
-                    >
-                      {oldMessage.body}
-                    </li>
-                  ))}
-                  {messages.map((message, i) => (
-                    <li
-                      key={i}
-                      className={`message-item ${
-                        message.ownedByCurrentUser
-                          ? "my-message"
-                          : "received-message"
-                      }`}
-                    >
-                      {message.body}
-                    </li>
-                  ))}
-                </ol>
-              </div>
-              <Form>
-                <div className="input-container">
-                  <Form.Control
-                    value={newMessage}
-                    onChange={handleNewMessageChange}
-                    placeholder="Write message..."
-                    autoFocus
-                    style={{ height: "40px" }}
-                  />
-                  <Button
-                    type="submit"
-                    variant="outline-secondary"
-                    onClick={handleSendMessage}
-                    style={{ height: "40px", margin: "0" }}
-                  >
-                    Send
-                  </Button>
-                </div>
-              </Form>
-            </Row>
+    <>
+      <Container style={{ width: "800px" }}>
+        <Row>
+          <Link to="/deliverymaninbox">
+            <Button variant="secondary" style={{ marginLeft: "0" }}>
+              Back To Inbox
+            </Button>
+          </Link>
+        </Row>
+        <Row>
+          <h3>Parcel ID: {parcelId}</h3>
+        </Row>
+        <Row>
+          <h4>Current Status: {status}</h4>
+        </Row>
+        <Row>
+          <h5>Receiving Customer: {receivingCustomer}</h5>
+        </Row>
+        <Row>
+          <iframe
+            title="Route"
+            width="800"
+            height="500"
+            loading="lazy"
+            allowfullscreen
+            src={`https://www.google.com/maps/embed/v1/directions?key=${process.env.REACT_APP_GMAP_API_KEY}&origin=${origin}&destination=${destination}`}
+          ></iframe>
+        </Row>
+        <Row>
+          {status === "Accepted" ? (
+            <Button
+              variant="success"
+              onClick={handleClickTransit}
+              style={{ marginLeft: "0" }}
+            >
+              Update Parcel Status to "Transit"
+            </Button>
           ) : null}
-        </Container>
-      </>
-    </div>
+          {status === "Transit" ? (
+            <Button
+              variant="success"
+              onClick={handleClickDelivered}
+              style={{ marginLeft: "0" }}
+            >
+              Update Parcel Status to "Delivered"
+            </Button>
+          ) : null}
+          {status === "Delivered" ? (
+            <Button disabled variant="dark" style={{ marginLeft: "0" }}>
+              Job Completed
+            </Button>
+          ) : null}
+        </Row>
+        {status !== "Booked" ? (
+          <Row>
+            <h3>Chat</h3>
+            <div className="messages-container">
+              <ol className="messages-list">
+                {oldMessage.map((oldMessage, i) => (
+                  <li
+                    key={i}
+                    className={`message-item ${
+                      oldMessage.senderID === username
+                        ? "my-message"
+                        : "received-message"
+                    }`}
+                  >
+                    {oldMessage.body}
+                  </li>
+                ))}
+                {messages.map((message, i) => (
+                  <li
+                    key={i}
+                    className={`message-item ${
+                      message.ownedByCurrentUser
+                        ? "my-message"
+                        : "received-message"
+                    }`}
+                  >
+                    {message.body}
+                  </li>
+                ))}
+              </ol>
+            </div>
+            <Form>
+              <div className="input-container">
+                <Form.Control
+                  value={newMessage}
+                  onChange={handleNewMessageChange}
+                  placeholder="Write message..."
+                  style={{ height: "40px" }}
+                />
+                <Button
+                  type="submit"
+                  variant="outline-secondary"
+                  onClick={handleSendMessage}
+                  style={{ height: "40px", margin: "0" }}
+                >
+                  Send
+                </Button>
+              </div>
+            </Form>
+          </Row>
+        ) : null}
+      </Container>
+    </>
   );
 };
 
