@@ -3,10 +3,6 @@ import { Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Button from "react-bootstrap/Button";
 
-const loggedInUser = localStorage.getItem("role");
-console.log(loggedInUser);
-console.log(localStorage);
-
 const HomePage = () => {
   return (
     <div>
