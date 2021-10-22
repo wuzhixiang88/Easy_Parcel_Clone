@@ -50,11 +50,11 @@ const DeliverymanInboxPage = () => {
               </p>
               <p>
                 <b>From: </b>
-                {JSON.stringify(parcel.location.origin)}
+                {parcel.location.origin}
               </p>
               <p>
                 <b>To: </b>
-                {JSON.stringify(parcel.location.destination)}
+                {parcel.location.destination}
               </p>
               <p>
                 <b>Fee: </b>${parcel.quotation}

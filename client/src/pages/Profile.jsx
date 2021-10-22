@@ -1,20 +1,20 @@
 import React from "react";
-import axiosRefreshToken from "../axios";
+// import axiosRefreshToken from "../axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 const Profile = () => {
-  //   const response = fetch("/api/users/profile", {
-  //     method: "GET",
-  //   });
-  //   console.log(response);
+  // const response = await axiosRefreshToken.get("/api/users/profile", {
+  //   method: "GET",
+  // });
+  // const userProfile = response.data.user;
 
   return (
     <div>
       <h3>My Profile</h3>
 
       <div>
-        <li>Username: {localStorage.username}</li>
-        <li>My Role: {localStorage.role}</li>
+        <li>Username: </li>
+        <li>My Role: </li>
       </div>
     </div>
   );

@@ -37,7 +37,7 @@ function App() {
         <div id="page-wrapper">
           <Switch>
             <Route exact path="/">
-              <HomePage />
+              <HomePage loggedInUserRole={loggedInUserRole} />
             </Route>
             <Route exact path="/about">
               <AboutUsPage />
