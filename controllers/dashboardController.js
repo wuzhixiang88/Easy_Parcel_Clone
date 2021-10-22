@@ -12,16 +12,31 @@ function roleCheck(role) {
     if (req.user.role.includes(role)) {
       next();
     } else {
-      res
+      return res
         .status(401)
         .json({ message: "You are not authorised to access this page." });
     }
   };
 }
 
+// Authenticate middleware
+
+function passport_authenticate_jwt(req, res, next) {
+    return passport.authenticate("jwt", { session: false }, (err, user) => {
+      if (err) {
+        return res.status(401).json({ error: "Token has expired"})
+      };
+      if (!user) {
+        return res.status(403).json({ error: "This user is not authorised." })
+      }
+      req.user = user
+      next()
+    })(req, res, next);
+}
+
 controller.get(
   "/chat/:id",
-  passport.authenticate("jwt", { session: false }),
+  passport_authenticate_jwt,
   async (req, res) => {
     const chatlog = await chatModel.findOne({ parcelID: req.params.id });
     res.json({
@@ -32,7 +47,7 @@ controller.get(
 
 controller.get(
   "/customer/new",
-  passport.authenticate("jwt", { session: false }),
+  passport_authenticate_jwt,
   roleCheck("customer"),
   async (req, res) => {
     const user = userModel.findOne({ username: req.user.username });
@@ -45,7 +60,7 @@ controller.get(
 // Post A Parcel Route (Customer) - Add Server Side Validation
 controller.post(
   "/customer/new",
-  passport.authenticate("jwt", { session: false }),
+  passport_authenticate_jwt,
   roleCheck("customer"),
   body("senderDetails.emailAddress", "A valid E-mail address must be entered")
     .isEmail()
@@ -85,7 +100,7 @@ controller.post(
 // Show Parcel Status (Customer)
 controller.get(
   "/customer/parcels",
-  passport.authenticate("jwt", { session: false }),
+  passport_authenticate_jwt,
   roleCheck("customer"),
   async (req, res) => {
     const parcels = await userModel
@@ -103,7 +118,7 @@ controller.get(
 
 controller.get(
   "/customer/parcels/completed",
-  passport.authenticate("jwt", { session: false }),
+  passport_authenticate_jwt,
   roleCheck("customer"),
   async (req, res) => {
     const parcels = await userModel
@@ -122,7 +137,7 @@ controller.get(
 // Show all Available Orders (Deliveryman)
 controller.get(
   "/deliveryman/allparcels",
-  passport.authenticate("jwt", { session: false }),
+  passport_authenticate_jwt,
   roleCheck("deliveryman"),
   async (req, res) => {
     const availableParcels = await parcelModel.find({ status: "Booked" });
@@ -134,7 +149,7 @@ controller.get(
 //show deliveryman accepted orders
 controller.get(
   "/deliveryman/parcels",
-  passport.authenticate("jwt", { session: false }),
+  passport_authenticate_jwt,
   roleCheck("deliveryman"),
   async (req, res) => {
     const parcels = await userModel
@@ -152,7 +167,7 @@ controller.get(
 
 controller.get(
   "/deliveryman/parcels/completed",
-  passport.authenticate("jwt", { session: false }),
+  passport_authenticate_jwt,
   roleCheck("deliveryman"),
   async (req, res) => {
     const parcelsDelivered = await userModel
@@ -171,7 +186,7 @@ controller.get(
 // Show Individual Parcel Details (Customer)
 controller.get(
   "/customer/parcels/:id",
-  passport.authenticate("jwt", { session: false }),
+  passport_authenticate_jwt,
   roleCheck("customer"),
   async (req, res) => {
     const parcelDetails = await parcelModel.findOne({ _id: req.params.id });
@@ -184,7 +199,7 @@ controller.get(
 // Show Individual Parcel Details (Deliveryman)
 controller.get(
   "/deliveryman/allparcels/:id",
-  passport.authenticate("jwt", { session: false }),
+  passport_authenticate_jwt,
   roleCheck("deliveryman"),
   async (req, res) => {
     const availableParcelDetails = await parcelModel.findOne({
@@ -198,7 +213,7 @@ controller.get(
 
 controller.get(
   "/deliveryman/parcels/:id",
-  passport.authenticate("jwt", { session: false }),
+  passport_authenticate_jwt,
   roleCheck("deliveryman"),
   async (req, res) => {
     const acceptedParcelDetails = await parcelModel.findOne({
@@ -218,7 +233,7 @@ controller.put("/orders/:id");
 
 controller.put(
   "/deliveryman/allparcels/:id",
-  passport.authenticate("jwt", { session: false }),
+  passport_authenticate_jwt,
   roleCheck("deliveryman"),
   async (req, res) => {
     const inputs = {
@@ -238,7 +253,7 @@ controller.put(
 
 controller.patch(
   "/deliveryman/parcels/:id",
-  passport.authenticate("jwt", { session: false }),
+  passport_authenticate_jwt,
   roleCheck("deliveryman"),
   async (req, res) => {
     const inputs = {
@@ -255,7 +270,7 @@ controller.patch(
 
 controller.delete(
   "/customer/parcels/:id",
-  passport.authenticate("jwt", { session: false }),
+  passport_authenticate_jwt,
   roleCheck("customer"),
   async (req, res) => {
     await parcelModel.deleteOne({ id: req.params.id });

@@ -9,13 +9,24 @@ const { body, validationResult } = require("express-validator");
 
 const saltRounds = 10;
 
+function passport_authenticate_jwt(req, res, next) {
+  return passport.authenticate("jwt", { session: false }, (err, user) => {
+    if (err) {
+      return res.status(401).json({ error: "Token has expired"})
+    };
+    if (!user) {
+      return res.status(403).json({ error: "This user is not authorised." })
+    }
+    req.user = user
+    next()
+  })(req, res, next);
+}
 
 controller.get(
   "/profile",
-  passport.authenticate("jwt", { session: false }),
+  passport_authenticate_jwt,
   async (req, res) => {
     const user = await userModel.findOne({ username: req.user.username }, { parcels: 0, password: 0, role: 0 })
-    console.log(user)
     res.json({
       user: user
     })
@@ -24,7 +35,7 @@ controller.get(
 
 controller.put(
   "/profile",
-  passport.authenticate("jwt", { session: false }),
+  passport_authenticate_jwt,
   async (req, res) => {
     const inputs = {
 
@@ -34,13 +45,13 @@ controller.put(
 
 controller.put(
   "/profile/changepassword",
-  passport.authenticate("jwt", { session: false }),
+  passport_authenticate_jwt,
   body("newPassword", "Please enter a new password.")
   .notEmpty()
   .custom((value) => {
       const re = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[\W\_])[A-Za-z\d\W\_]{8,}$/
     if (!re.test(value)) {
-      return new Error("The new password does not meet the minimum requirements.")
+      throw new Error("The new password does not meet the minimum requirements.")
     }
     return true
   }),
@@ -72,7 +83,7 @@ controller.put(
         { username: username },
         { $set: { password: hashedPassword } }
     );
-    res.json({ message: "The password has been succesfully changed." });
+    return res.json({ message: "The password has been succesfully changed." });
 });
 
 controller.post(
@@ -101,11 +112,13 @@ controller.post(
     .notEmpty()
     .custom((value) => {
       const re = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[\W\_])[A-Za-z\d\W\_]{8,}$/
-      if (!re.test(value)) {
-        return new Error("The password does not meet the minimum requirements.")
+      const checkPw = re.test(value)
+      if (!checkPw) {
+        throw new Error("The password does not meet the minimum requirements.")
+      }
+      return true;
     }
-    return true;
-  }),
+  ),
   body('confirmpw', "Please enter the confirmed password.")
     .notEmpty()
     .custom((value, { req }) => {
@@ -132,7 +145,7 @@ controller.post(
     };
     await userModel.create(user);
     await refreshTokenModel.create({ username: user.username })
-    res.json({
+    return res.json({
       username: user.username,
     });
   }
@@ -154,13 +167,13 @@ controller.post(
     const isCorrectPassword = bcrypt.compareSync(password, selectedUser.password);
 
     if ((!selectedUser) || (!isCorrectPassword)) {
-      res.json({ error: "The username/password entered is not valid." });
+      return res.json({ error: "The username/password entered is not valid." });
     }
 
     const token = jwt.sign(
       { username: selectedUser.username },
       process.env.SECRET_KEY_JWT,
-      { expiresIn: "15m" }
+      { expiresIn: "10s" }
     );
 
     const refreshtoken = jwt.sign(
@@ -174,7 +187,7 @@ controller.post(
     res.cookie("jwt", token, { httpOnly: true });
     res.cookie("refresh", refreshtoken, { httpOnly: true })
 
-    res.json({
+    return res.json({
       role: selectedUser.role,
       username: selectedUser.username
     });
@@ -203,7 +216,7 @@ controller.post(
       const token = jwt.sign(
         { username: user.username },
         process.env.SECRET_KEY_JWT,
-        { expiresIn: "15m" }
+        { expiresIn: "10s" }
       );
       const newRefreshToken = jwt.sign(
         { username: user.username },
@@ -230,7 +243,7 @@ controller.put(
     .custom((value) => {
       const re = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[\W\_])[A-Za-z\d\W\_]{8,}$/
       if (!re.test(value)) {
-        return new Error("Password does not meet the minimum requirements")
+        throw new Error("Password does not meet the minimum requirements")
       }
       return true
     }),
@@ -254,7 +267,7 @@ controller.put(
     const isCorrectPassword = bcrypt.compareSync(oldPassword, selectedUser.password)
 
     if ((!selectedUser) || (!isCorrectPassword)) {
-      res.json({ error: "The username/password entered is not valid." });
+      return res.json({ error: "The username/password entered is not valid." });
     }
     const salt = await bcrypt.genSalt(saltRounds);
     const hashedPassword = await bcrypt.hash(newPassword, salt);
@@ -262,13 +275,13 @@ controller.put(
         { username: username },
         { $set: { password: hashedPassword } }
     );
-    res.json({ message: "The password has been succesfully changed." });
+    return res.json({ message: "The password has been succesfully changed." });
 });
 
 controller.get("/logout", (req, res) => {
   res.clearCookie("jwt", {httpOnly: true});
   res.clearCookie("refresh", {httpOnly: true});
-  res.json({ message: "You have logged out successfully." });
+  return res.json({ message: "You have logged out successfully." });
 });
 
 module.exports = controller;
